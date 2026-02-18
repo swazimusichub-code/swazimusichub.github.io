@@ -1,0 +1,1214 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swazi Music Hub - Admin Dashboard</title>
+    <style>
+        /* Same base styles as artist dashboard */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--cream);
+            color: var(--deep-night);
+            line-height: 1.6;
+        }
+
+        :root {
+            --deep-night: #0a1c24;
+            --teal-depths: #1e4a5f;
+            --african-sky: #2a6b84;
+            --savanna-sun: #e6b17e;
+            --terracotta: #d4945a;
+            --cream: #f5f0e8;
+            --forest: #2e7a5e;
+            --earth: #8b5a3c;
+            --success: #51cf66;
+            --warning: #fcc419;
+            --danger: #ff6b6b;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', 'Segoe UI', sans-serif;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        /* Navigation - same as index */
+        .navbar {
+            background: var(--deep-night);
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 800;
+            color: var(--savanna-sun);
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .logo span {
+            color: white;
+            font-size: 0.7em;
+            font-weight: 300;
+            margin-left: 5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1.1em;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--savanna-sun);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.1);
+            padding: 8px 15px;
+            border-radius: 40px;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            background: var(--savanna-sun);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--deep-night);
+            font-weight: bold;
+        }
+
+        .user-name {
+            color: white;
+            font-weight: 600;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.8em;
+            color: white;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--deep-night);
+            z-index: 1001;
+            padding: 80px 20px 20px;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-nav.active {
+            transform: translateX(0);
+        }
+
+        .mobile-nav-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2em;
+            color: white;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .mobile-nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.5em;
+            padding: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
+
+        .mobile-nav-links a:hover,
+        .mobile-nav-links a.active {
+            color: var(--savanna-sun);
+            padding-left: 25px;
+        }
+
+        /* Dashboard Layout */
+        .dashboard-container {
+            display: flex;
+            min-height: calc(100vh - 80px);
+            background: var(--cream);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: white;
+            box-shadow: 4px 0 20px rgba(0,0,0,0.05);
+            padding: 30px 0;
+            position: sticky;
+            top: 80px;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+        }
+
+        .admin-profile {
+            text-align: center;
+            padding: 0 20px 30px;
+            border-bottom: 2px solid var(--cream);
+        }
+
+        .admin-avatar-large {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--deep-night), var(--teal-depths));
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5em;
+            color: white;
+            border: 4px solid var(--savanna-sun);
+        }
+
+        .admin-profile h3 {
+            color: var(--deep-night);
+            margin-bottom: 5px;
+        }
+
+        .admin-profile p {
+            color: var(--savanna-sun);
+            font-weight: 600;
+        }
+
+        .sidebar-nav {
+            padding: 30px 20px;
+        }
+
+        .sidebar-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 20px;
+            margin-bottom: 5px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--earth);
+            font-weight: 500;
+        }
+
+        .sidebar-nav-item:hover {
+            background: var(--cream);
+            color: var(--deep-night);
+        }
+
+        .sidebar-nav-item.active {
+            background: var(--savanna-sun);
+            color: var(--deep-night);
+            font-weight: 600;
+        }
+
+        .sidebar-nav-item .icon {
+            font-size: 1.3em;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-header h1 {
+            font-size: 2.2em;
+            color: var(--deep-night);
+        }
+
+        .dashboard-header h1 span {
+            color: var(--savanna-sun);
+        }
+
+        .date-display {
+            color: var(--earth);
+            font-size: 1.1em;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border-bottom: 4px solid transparent;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            border-bottom-color: var(--savanna-sun);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--cream);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            color: var(--teal-depths);
+        }
+
+        .stat-info h3 {
+            font-size: 1.8em;
+            color: var(--deep-night);
+            margin-bottom: 5px;
+        }
+
+        .stat-info p {
+            color: var(--earth);
+            font-weight: 500;
+        }
+
+        .stat-change {
+            margin-left: auto;
+            font-size: 0.9em;
+            padding: 5px 10px;
+            border-radius: 20px;
+        }
+
+        .stat-change.positive {
+            background: rgba(46, 122, 94, 0.1);
+            color: var(--forest);
+        }
+
+        .stat-change.warning {
+            background: rgba(244, 196, 66, 0.1);
+            color: var(--warning);
+        }
+
+        /* Section Cards */
+        .section-card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .section-header h2 {
+            font-size: 1.6em;
+            color: var(--deep-night);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--savanna-sun);
+            color: var(--deep-night);
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-outline:hover {
+            background: var(--savanna-sun);
+            transform: translateY(-2px);
+        }
+
+        /* Tables */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            text-align: left;
+            padding: 15px;
+            color: var(--teal-depths);
+            font-weight: 600;
+            border-bottom: 2px solid var(--savanna-sun);
+        }
+
+        .data-table td {
+            padding: 15px;
+            border-bottom: 1px solid var(--cream);
+        }
+
+        .data-table tr:hover td {
+            background: var(--cream);
+        }
+
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        .status-badge.active {
+            background: rgba(46, 122, 94, 0.1);
+            color: var(--forest);
+        }
+
+        .status-badge.pending {
+            background: rgba(244, 196, 66, 0.1);
+            color: var(--warning);
+        }
+
+        .status-badge.suspended {
+            background: rgba(255, 107, 107, 0.1);
+            color: var(--danger);
+        }
+
+        .action-btn {
+            background: transparent;
+            border: none;
+            font-size: 1.2em;
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: var(--cream);
+            transform: scale(1.1);
+        }
+
+        .view-btn:hover {
+            color: var(--teal-depths);
+        }
+
+        .approve-btn:hover {
+            color: var(--forest);
+        }
+
+        .reject-btn:hover {
+            color: var(--danger);
+        }
+
+        /* Alerts */
+        .alert {
+            padding: 15px 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .alert-warning {
+            background: rgba(244, 196, 66, 0.1);
+            border-left: 4px solid var(--warning);
+        }
+
+        .alert-info {
+            background: rgba(230, 177, 126, 0.1);
+            border-left: 4px solid var(--savanna-sun);
+        }
+
+        /* Charts */
+        .chart-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: flex-end;
+            height: 250px;
+            margin: 30px 0;
+        }
+
+        .chart-bar-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 60px;
+        }
+
+        .chart-bar {
+            width: 40px;
+            background: linear-gradient(to top, var(--teal-depths), var(--african-sky));
+            border-radius: 8px 8px 0 0;
+            transition: height 0.3s;
+            margin-bottom: 10px;
+        }
+
+        .chart-label {
+            color: var(--earth);
+            font-size: 0.9em;
+        }
+
+        /* Pending Items List */
+        .pending-list {
+            list-style: none;
+        }
+
+        .pending-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid var(--cream);
+        }
+
+        .pending-item:hover {
+            background: var(--cream);
+            border-radius: 12px;
+        }
+
+        .pending-info h4 {
+            font-size: 1.1em;
+            margin-bottom: 3px;
+        }
+
+        .pending-info p {
+            color: var(--earth);
+            font-size: 0.9em;
+        }
+
+        .pending-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--deep-night);
+            color: white;
+            padding: 60px 5% 30px;
+            margin-top: 50px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            color: var(--savanna-sun);
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        .footer-col a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            transition: color 0.3s;
+        }
+
+        .footer-col a:hover {
+            color: var(--savanna-sun);
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+            font-size: 1.5em;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* Toast */
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 2000;
+        }
+
+        .toast {
+            background: white;
+            color: var(--deep-night);
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateX(400px);
+            transition: transform 0.3s;
+            margin-top: 10px;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--forest);
+        }
+
+        .toast.error {
+            border-left: 4px solid var(--danger);
+        }
+
+        .toast.info {
+            border-left: 4px solid var(--savanna-sun);
+        }
+
+        /* Loading */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--cream);
+            border-top-color: var(--savanna-sun);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .siswati-label {
+            font-style: italic;
+            color: var(--savanna-sun);
+            font-size: 0.9em;
+            margin-left: 5px;
+        }
+
+        /* Mobile */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 240px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                position: static;
+                height: auto;
+            }
+
+            .main-content {
+                padding: 20px;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .data-table {
+                font-size: 0.9em;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">SWAZI MUSIC HUB <span>siSwati music to the world</span></a>
+        
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="admin-dashboard.html" class="active">Admin</a>
+            <div class="user-menu" onclick="showToast('Admin menu', 'info')">
+                <div class="user-avatar">BD</div>
+                <span class="user-name">Bongiswa Dlamini</span>
+            </div>
+        </div>
+        
+        <button class="mobile-menu-btn">☰</button>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav">
+        <button class="mobile-nav-close">&times;</button>
+        <div class="mobile-nav-links">
+            <a href="index.html">🏠 Home</a>
+            <a href="admin-dashboard.html">📊 Dashboard</a>
+            <a href="admin-artists.html">🎤 Artists</a>
+            <a href="admin-music.html" class="active">🎵 Music</a>
+            <a href="admin-pending.html" class="active">⏳ Pending</a>
+            <a href="admin-users.html">👥 Users</a>
+            <a href="admin-payments.html">💰 Payments</a>
+            <a href="admin-reports.html">📋 Reports</a>
+            <a href="admin-settings.html">⚙️ Settings</a>
+            <a href="#" class="active">⚙️ Admin</a>
+            <a href="sign in.html" class="btn-primary" style="text-align: center;">🚪 Sign Out</a>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="admin-profile">
+                <div class="admin-avatar-large">⚙️</div>
+                <h3>Bongiswa Dlamini</h3>
+                <p>Platform Administrator</p>
+            </div>
+
+            <div class="sidebar-nav">
+                <a href="admin-dashboard.html" class="sidebar-nav-item">
+                    <span class="icon">📊</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="admin-artists.html" class="sidebar-nav-item">
+                    <span class="icon">🎤</span>
+                    <span>Artists</span>
+                </a>
+                <a href="admin-music.html" class="sidebar-nav-item">
+                    <span class="icon">🎵</span>
+                    <span>Music</span>
+                </a>
+                <a href="admin-pending.html" class="sidebar-nav-item">
+                    <span class="icon">⏳</span>
+                    <span>Pending</span>
+                </a>
+                <a href="admin-users.html" class="sidebar-nav-item">
+                    <span class="icon">👥</span>
+                    <span>Users</span>
+                </a>
+                <a href="admin-payments.html" class="sidebar-nav-item">
+                    <span class="icon">💰</span>
+                    <span>Payments</span>
+                </a>
+                <a href="admin-reports.html" class="sidebar-nav-item">
+                    <span class="icon">📋</span>
+                    <span>Reports</span>
+                </a>
+                <a href="admin-settings.html" class="sidebar-nav-item active">
+                    <span class="icon">⚙️</span>
+                    <span>Settings</span>
+                </a>
+                <div class="sidebar-nav-item active" onclick="switchAdminTab('overview')">
+                    <span class="icon">📊</span>
+                    <span>Overview </span>
+                </div>
+                <div class="sidebar-nav-item" onclick="switchAdminTab('artists')">
+                    <span class="icon">🎤</span>
+                    <span>Artists </span>
+                </div>
+                <div class="sidebar-nav-item" onclick="switchAdminTab('music')">
+                    <span class="icon">🎵</span>
+                    <span>Music </span>
+                </div>
+                <div class="sidebar-nav-item" onclick="switchAdminTab('pending')">
+                    <span class="icon">⏳</span>
+                    <span>Pending </span>
+                </div>
+                <div class="sidebar-nav-item" onclick="switchAdminTab('users')">
+                    <span class="icon">👥</span>
+                    <span>Users </span>
+                </div>
+                <div class="sidebar-nav-item" onclick="switchAdminTab('reports')">
+                    <span class="icon">📋</span>
+                    <span>Reports </span>
+                </div>
+                <div class="sidebar-nav-item" onclick="switchAdminTab('payments')">
+                    <span class="icon">💰</span>
+                    <span>Payments </span>
+                </div>
+                <div class="sidebar-nav-item" onclick="switchAdminTab('settings')">
+                    <span class="icon">⚙️</span>
+                    <span>Settings </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Overview Tab -->
+            <div id="overview-tab">
+                <div class="dashboard-header">
+                    <div>
+                        <h1>Admin <span>Dashboard</span></h1>
+                        <p class="date-display">Tuesday, 15 March 2025</p>
+                    </div>
+                    <button class="btn-outline" onclick="showToast('Refreshing data...', 'info')">
+                        🔄 Refresh
+                    </button>
+                </div>
+
+                <!-- Alert -->
+                <div class="alert alert-warning">
+                    <span>⚠️</span>
+                    <span><strong>24 pending approvals</strong> - New artist registrations need review</span>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">🎤</div>
+                        <div class="stat-info">
+                            <h3>1,234</h3>
+                            <p>Total Artists</p>
+                        </div>
+                        <div class="stat-change positive">+45 this month</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">🎵</div>
+                        <div class="stat-info">
+                            <h3>8,901</h3>
+                            <p>Total Tracks</p>
+                        </div>
+                        <div class="stat-change positive">+234 this week</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-info">
+                            <h3>45,678</h3>
+                            <p>Total Users</p>
+                        </div>
+                        <div class="stat-change positive">+1,234</div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">💰</div>
+                        <div class="stat-info">
+                            <h3>E123,456</h3>
+                            <p>Monthly Revenue</p>
+                        </div>
+                        <div class="stat-change positive">+15%</div>
+                    </div>
+                </div>
+
+                <!-- Platform Overview Chart -->
+                <div class="section-card">
+                    <div class="section-header">
+                        <h2>📈 Platform Growth </h2>
+                    </div>
+
+                    <div class="chart-container">
+                        <div class="chart-bar-wrapper">
+                            <div class="chart-bar" style="height: 150px;"></div>
+                            <span class="chart-label">Jan</span>
+                        </div>
+                        <div class="chart-bar-wrapper">
+                            <div class="chart-bar" style="height: 180px;"></div>
+                            <span class="chart-label">Feb</span>
+                        </div>
+                        <div class="chart-bar-wrapper">
+                            <div class="chart-bar" style="height: 220px;"></div>
+                            <span class="chart-label">Mar</span>
+                        </div>
+                        <div class="chart-bar-wrapper">
+                            <div class="chart-bar" style="height: 190px;"></div>
+                            <span class="chart-label">Apr</span>
+                        </div>
+                        <div class="chart-bar-wrapper">
+                            <div class="chart-bar" style="height: 250px;"></div>
+                            <span class="chart-label">May</span>
+                        </div>
+                        <div class="chart-bar-wrapper">
+                            <div class="chart-bar" style="height: 280px;"></div>
+                            <span class="chart-label">Jun</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pending Approvals -->
+                <div class="section-card">
+                    <div class="section-header">
+                        <h2>⏳ Pending Approvals </h2>
+                        <button class="btn-outline" onclick="showToast('View all pending', 'info')">View All</button>
+                    </div>
+
+                    <ul class="pending-list">
+                        <li class="pending-item">
+                            <div class="pending-info">
+                                <h4>Thobile Mkhwanazi</h4>
+                                <p>Artist Registration • Afro Soul</p>
+                            </div>
+                            <div class="pending-actions">
+                                <button class="action-btn approve-btn" onclick="showToast('Artist approved!', 'success')">✅</button>
+                                <button class="action-btn reject-btn" onclick="showToast('Artist rejected', 'error')">❌</button>
+                                <button class="action-btn view-btn" onclick="showToast('View details', 'info')">👁️</button>
+                            </div>
+                        </li>
+
+                        <li class="pending-item">
+                            <div class="pending-info">
+                                <h4>"Inhlitiyo Yami" - New Track</h4>
+                                <p>Jahboy • Uploaded 2 hours ago</p>
+                            </div>
+                            <div class="pending-actions">
+                                <button class="action-btn approve-btn" onclick="showToast('Track approved!', 'success')">✅</button>
+                                <button class="action-btn reject-btn" onclick="showToast('Track rejected', 'error')">❌</button>
+                                <button class="action-btn view-btn" onclick="showToast('Preview track', 'info')">👁️</button>
+                            </div>
+                        </li>
+
+                        <li class="pending-item">
+                            <div class="pending-info">
+                                <h4>Swazi Music Festival</h4>
+                                <p>Event Submission • 15 May 2025</p>
+                            </div>
+                            <div class="pending-actions">
+                                <button class="action-btn approve-btn" onclick="showToast('Event approved!', 'success')">✅</button>
+                                <button class="action-btn reject-btn" onclick="showToast('Event rejected', 'error')">❌</button>
+                                <button class="action-btn view-btn" onclick="showToast('View details', 'info')">👁️</button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="section-card">
+                    <div class="section-header">
+                        <h2>📋 Recent Platform Activity</h2>
+                    </div>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Time</th>
+                                <th>User</th>
+                                <th>Action</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>2 min ago</td>
+                                <td>Jahboy</td>
+                                <td>Uploaded new track</td>
+                                <td><span class="status-badge pending">Pending</span></td>
+                            </tr>
+                            <tr>
+                                <td>15 min ago</td>
+                                <td>Bholoja</td>
+                                <td>Updated profile</td>
+                                <td><span class="status-badge active">Approved</span></td>
+                            </tr>
+                            <tr>
+                                <td>1 hour ago</td>
+                                <td>Sandziso Mamba</td>
+                                <td>Withdrew earnings</td>
+                                <td><span class="status-badge active">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>3 hours ago</td>
+                                <td>Void</td>
+                                <td>Reported issue</td>
+                                <td><span class="status-badge pending">In Review</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Pending Tab -->
+            <div id="pending-tab" style="display: none;">
+                <div class="dashboard-header">
+                    <h1>Lokulindzile <span>Kuvunywa</span></h1>
+                    <p class="date-display">Pending Approvals</p>
+                </div>
+
+                <div class="section-card">
+                    <div class="section-header">
+                        <h2>🎤 New Artist Registrations</h2>
+                    </div>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Artist</th>
+                                <th>Genre</th>
+                                <th>Submitted</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Thobile Mkhwanazi</strong></td>
+                                <td>Afro Soul</td>
+                                <td>2 hours ago</td>
+                                <td>
+                                    <button class="action-btn approve-btn" onclick="showToast('Approved!', 'success')">✅</button>
+                                    <button class="action-btn reject-btn" onclick="showToast('Rejected', 'error')">❌</button>
+                                    <button class="action-btn view-btn" onclick="showToast('View details', 'info')">👁️</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mlamuli Dlamini</strong></td>
+                                <td>Traditional</td>
+                                <td>5 hours ago</td>
+                                <td>
+                                    <button class="action-btn approve-btn" onclick="showToast('Approved!', 'success')">✅</button>
+                                    <button class="action-btn reject-btn" onclick="showToast('Rejected', 'error')">❌</button>
+                                    <button class="action-btn view-btn" onclick="showToast('View details', 'info')">👁️</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="section-card">
+                    <div class="section-header">
+                        <h2>🎵 New Track Submissions</h2>
+                    </div>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Track</th>
+                                <th>Artist</th>
+                                <th>Duration</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Inhlitiyo Yami</strong></td>
+                                <td>Jahboy</td>
+                                <td>3:45</td>
+                                <td>
+                                    <button class="action-btn approve-btn" onclick="showToast('Approved!', 'success')">✅</button>
+                                    <button class="action-btn reject-btn" onclick="showToast('Rejected', 'error')">❌</button>
+                                    <button class="action-btn view-btn" onclick="showToast('Preview', 'info')">👁️</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Siyagiya</strong></td>
+                                <td>Lihle</td>
+                                <td>4:12</td>
+                                <td>
+                                    <button class="action-btn approve-btn" onclick="showToast('Approved!', 'success')">✅</button>
+                                    <button class="action-btn reject-btn" onclick="showToast('Rejected', 'error')">❌</button>
+                                    <button class="action-btn view-btn" onclick="showToast('Preview', 'info')">👁️</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="section-card">
+                    <div class="section-header">
+                        <h2>📅 Event Submissions</h2>
+                    </div>
+
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Event</th>
+                                <th>Venue</th>
+                                <th>Date</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Swazi Music Festival</strong></td>
+                                <td>Mavuso Centre</td>
+                                <td>15 May 2025</td>
+                                <td>
+                                    <button class="action-btn approve-btn" onclick="showToast('Approved!', 'success')">✅</button>
+                                    <button class="action-btn reject-btn" onclick="showToast('Rejected', 'error')">❌</button>
+                                    <button class="action-btn view-btn" onclick="showToast('View details', 'info')">👁️</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Swazi Music Hub</h4>
+                <p>siSwati music to the world.</p>
+                <div class="social-links">
+                    <a href="#" onclick="showToast('Social links coming soon!', 'info')">📘</a>
+                    <a href="#" onclick="showToast('Social links coming soon!', 'info')">🐦</a>
+                    <a href="#" onclick="showToast('Social links coming soon!', 'info')">📷</a>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Admin Links</h4>
+                <a href="#" onclick="showToast('Admin docs coming soon!', 'info')">Documentation</a>
+                <a href="#" onclick="showToast('Support tickets', 'info')">Support Tickets</a>
+                <a href="#" onclick="showToast('System logs', 'info')">System Logs</a>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <a href="ts&cs.html">Terms of Use</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="copyright.html">Copyright</a>
+                <a href="legal.html">Licensing</a>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>© 2025 Swazi Music Hub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Toast Container -->
+    <div class="toast-container"></div>
+
+    <script>
+        // Tab switching
+        function switchAdminTab(tabName) {
+            // Hide all tabs
+            document.getElementById('overview-tab').style.display = 'none';
+            document.getElementById('pending-tab').style.display = 'none';
+            
+            // Show selected tab
+            document.getElementById(tabName + '-tab').style.display = 'block';
+            
+            // Update sidebar active state
+            document.querySelectorAll('.sidebar-nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            showToast(`Switched to ${tabName} view`, 'info');
+        }
+
+        // Toast notifications
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `<span>${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}</span><span>${message}</span>`;
+            
+            document.querySelector('.toast-container').appendChild(toast);
+            
+            setTimeout(() => toast.classList.add('show'), 10);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Mobile menu
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('.mobile-nav').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        document.querySelector('.mobile-nav-close').addEventListener('click', function() {
+            document.querySelector('.mobile-nav').classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        // Active nav link
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        document.querySelectorAll('.nav-links a, .mobile-nav-links a').forEach(link => {
+            const href = link.getAttribute('href');
+            if (href === currentPage) {
+                link.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>

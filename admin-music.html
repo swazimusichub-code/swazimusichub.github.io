@@ -1,0 +1,1708 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swazi Music Hub - Admin: Music Management</title>
+    <style>
+        /* Complete theme - same as index */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--cream);
+            color: var(--deep-night);
+            line-height: 1.6;
+        }
+
+        :root {
+            --deep-night: #0a1c24;
+            --teal-depths: #1e4a5f;
+            --african-sky: #2a6b84;
+            --savanna-sun: #e6b17e;
+            --terracotta: #d4945a;
+            --cream: #f5f0e8;
+            --forest: #2e7a5e;
+            --earth: #8b5a3c;
+            --success: #51cf66;
+            --warning: #fcc419;
+            --danger: #ff6b6b;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', 'Segoe UI', sans-serif;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: var(--deep-night);
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 800;
+            color: var(--savanna-sun);
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .logo span {
+            color: white;
+            font-size: 0.7em;
+            font-weight: 300;
+            margin-left: 5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1.1em;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--savanna-sun);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.1);
+            padding: 8px 15px;
+            border-radius: 40px;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            background: var(--savanna-sun);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--deep-night);
+            font-weight: bold;
+        }
+
+        .user-name {
+            color: white;
+            font-weight: 600;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.8em;
+            color: white;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--deep-night);
+            z-index: 1001;
+            padding: 80px 20px 20px;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-nav.active {
+            transform: translateX(0);
+        }
+
+        .mobile-nav-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2em;
+            color: white;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .mobile-nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.5em;
+            padding: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
+
+        .mobile-nav-links a:hover,
+        .mobile-nav-links a.active {
+            color: var(--savanna-sun);
+            padding-left: 25px;
+        }
+
+        /* Dashboard Layout */
+        .dashboard-container {
+            display: flex;
+            min-height: calc(100vh - 80px);
+            background: var(--cream);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: white;
+            box-shadow: 4px 0 20px rgba(0,0,0,0.05);
+            padding: 30px 0;
+            position: sticky;
+            top: 80px;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+        }
+
+        .admin-profile {
+            text-align: center;
+            padding: 0 20px 30px;
+            border-bottom: 2px solid var(--cream);
+        }
+
+        .admin-avatar-large {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--deep-night), var(--teal-depths));
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5em;
+            color: white;
+            border: 4px solid var(--savanna-sun);
+        }
+
+        .admin-profile h3 {
+            color: var(--deep-night);
+            margin-bottom: 5px;
+        }
+
+        .admin-profile p {
+            color: var(--savanna-sun);
+            font-weight: 600;
+        }
+
+        .sidebar-nav {
+            padding: 30px 20px;
+        }
+
+        .sidebar-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 20px;
+            margin-bottom: 5px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--earth);
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .sidebar-nav-item:hover {
+            background: var(--cream);
+            color: var(--deep-night);
+        }
+
+        .sidebar-nav-item.active {
+            background: var(--savanna-sun);
+            color: var(--deep-night);
+            font-weight: 600;
+        }
+
+        .sidebar-nav-item .icon {
+            font-size: 1.3em;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .page-header h1 {
+            font-size: 2.2em;
+            color: var(--deep-night);
+        }
+
+        .page-header h1 span {
+            color: var(--savanna-sun);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            background: var(--savanna-sun);
+            color: var(--deep-night);
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1em;
+        }
+
+        .btn-primary:hover {
+            background: var(--terracotta);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--savanna-sun);
+            color: var(--deep-night);
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-outline:hover {
+            background: var(--savanna-sun);
+            transform: translateY(-2px);
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--cream);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            color: var(--teal-depths);
+        }
+
+        .stat-info h3 {
+            font-size: 1.5em;
+            color: var(--deep-night);
+        }
+
+        .stat-info p {
+            color: var(--earth);
+            font-size: 0.9em;
+        }
+
+        /* Filter Bar */
+        .filter-bar {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .search-box {
+            flex: 2;
+            min-width: 250px;
+            display: flex;
+            align-items: center;
+            background: var(--cream);
+            border-radius: 40px;
+            padding: 5px 20px;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 12px 10px;
+            border: none;
+            background: transparent;
+            font-size: 1em;
+            outline: none;
+        }
+
+        .search-box button {
+            background: transparent;
+            border: none;
+            font-size: 1.2em;
+            cursor: pointer;
+            color: var(--teal-depths);
+        }
+
+        .filter-select {
+            padding: 12px 25px;
+            border: 2px solid var(--cream);
+            border-radius: 40px;
+            background: white;
+            font-size: 0.95em;
+            cursor: pointer;
+            outline: none;
+            min-width: 150px;
+        }
+
+        .filter-select:hover {
+            border-color: var(--savanna-sun);
+        }
+
+        /* Music Grid */
+        .music-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .music-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            border-bottom: 4px solid transparent;
+        }
+
+        .music-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            border-bottom-color: var(--savanna-sun);
+        }
+
+        .music-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--teal-depths), var(--african-sky));
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            color: white;
+        }
+
+        .music-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .music-card:hover .music-overlay {
+            opacity: 1;
+        }
+
+        .play-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--savanna-sun);
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+        }
+
+        .music-info {
+            padding: 20px;
+        }
+
+        .music-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 10px;
+        }
+
+        .music-header h3 {
+            font-size: 1.2em;
+            color: var(--deep-night);
+        }
+
+        .status-badge.small {
+            padding: 3px 10px;
+            font-size: 0.8em;
+        }
+
+        .music-artist {
+            color: var(--savanna-sun);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .music-meta {
+            display: flex;
+            gap: 15px;
+            color: var(--earth);
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+
+        .music-stats {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-top: 1px solid var(--cream);
+            border-bottom: 1px solid var(--cream);
+            margin-bottom: 15px;
+        }
+
+        .music-stat {
+            text-align: center;
+        }
+
+        .music-stat .value {
+            font-weight: 700;
+            color: var(--deep-night);
+        }
+
+        .music-stat .label {
+            font-size: 0.8em;
+            color: var(--earth);
+        }
+
+        .music-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .action-btn {
+            background: transparent;
+            border: none;
+            font-size: 1.2em;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            background: var(--cream);
+            transform: scale(1.1);
+        }
+
+        .edit-btn:hover { color: var(--teal-depths); }
+        .view-btn:hover { color: var(--savanna-sun); }
+        .delete-btn:hover { color: var(--danger); }
+        .approve-btn:hover { color: var(--forest); }
+        .reject-btn:hover { color: var(--danger); }
+
+        /* Table View */
+        .table-container {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            overflow-x: auto;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            text-align: left;
+            padding: 15px;
+            color: var(--teal-depths);
+            font-weight: 600;
+            border-bottom: 2px solid var(--savanna-sun);
+        }
+
+        .data-table td {
+            padding: 15px;
+            border-bottom: 1px solid var(--cream);
+        }
+
+        .data-table tr:hover td {
+            background: var(--cream);
+        }
+
+        .table-image {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--teal-depths), var(--african-sky));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        /* Status Badges */
+        .status-badge {
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-size: 0.9em;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-badge.active {
+            background: rgba(46, 122, 94, 0.1);
+            color: var(--forest);
+        }
+
+        .status-badge.pending {
+            background: rgba(244, 196, 66, 0.1);
+            color: var(--warning);
+        }
+
+        .status-badge.rejected {
+            background: rgba(255, 107, 107, 0.1);
+            color: var(--danger);
+        }
+
+        .status-badge.featured {
+            background: rgba(230, 177, 126, 0.1);
+            color: var(--savanna-sun);
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 40px;
+        }
+
+        .page-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--cream);
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .page-btn:hover,
+        .page-btn.active {
+            background: var(--savanna-sun);
+            border-color: var(--savanna-sun);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .modal-header h2 {
+            color: var(--deep-night);
+        }
+
+        .close-modal {
+            font-size: 2em;
+            cursor: pointer;
+            color: var(--earth);
+            transition: color 0.3s;
+        }
+
+        .close-modal:hover {
+            color: var(--danger);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--deep-night);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--cream);
+            border-radius: 12px;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--savanna-sun);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .btn-submit {
+            background: var(--savanna-sun);
+            color: var(--deep-night);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .btn-submit:hover {
+            background: var(--terracotta);
+            transform: translateY(-2px);
+        }
+
+        /* View Toggle */
+        .view-toggle {
+            display: flex;
+            gap: 10px;
+        }
+
+        .view-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid var(--cream);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.2em;
+        }
+
+        .view-btn:hover,
+        .view-btn.active {
+            background: var(--savanna-sun);
+            border-color: var(--savanna-sun);
+        }
+
+        /* Bulk Actions */
+        .bulk-actions {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .bulk-checkbox {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        /* Toast */
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 2000;
+        }
+
+        .toast {
+            background: white;
+            color: var(--deep-night);
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateX(400px);
+            transition: transform 0.3s;
+            margin-top: 10px;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success { border-left: 4px solid var(--forest); }
+        .toast.error { border-left: 4px solid var(--danger); }
+        .toast.info { border-left: 4px solid var(--savanna-sun); }
+
+        /* Loading */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--cream);
+            border-top-color: var(--savanna-sun);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .siswati-label {
+            font-style: italic;
+            color: var(--savanna-sun);
+            font-size: 0.9em;
+            margin-left: 5px;
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar { width: 240px; }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-container { flex-direction: column; }
+            .sidebar {
+                width: 100%;
+                position: static;
+                height: auto;
+            }
+            .main-content { padding: 20px; }
+            .music-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+            .form-row { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">SWAZI MUSIC HUB <span>siSwati to the world</span></a>
+        
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="#" class="active">Admin</a>
+            <div class="user-menu" onclick="showToast('Admin menu', 'info')">
+                <div class="user-avatar">A</div>
+                <span class="user-name">Admin</span>
+            </div>
+        </div>
+        
+        <button class="mobile-menu-btn">☰</button>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav">
+        <button class="mobile-nav-close">&times;</button>
+        <div class="mobile-nav-links">
+            <a href="index.html">🏠 Home</a>
+            <a href="admin-dashboard.html">📊 Dashboard</a>
+            <a href="admin-artists.html">🎤 Artists</a>
+            <a href="admin-music.html" class="active">🎵 Music</a>
+            <a href="admin-pending.html">⏳ Pending</a>
+            <a href="admin-users.html">👥 Users</a>
+            <a href="admin-payments.html">💰 Payments</a>
+            <a href="admin-reports.html">📋 Reports</a>
+            <a href="admin-settings.html">⚙️ Settings</a>
+            <a href="sign in.html" class="btn-primary" style="text-align: center;">🚪 Sign Out</a>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="admin-profile">
+                <div class="admin-avatar-large">⚙️</div>
+                <h3>Bongiswa Dlamini</h3>
+                <p>Platform Administrator</p>
+            </div>
+
+            <div class="sidebar-nav">
+                <a href="admin-dashboard.html" class="sidebar-nav-item">
+                    <span class="icon">📊</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="admin-artists.html" class="sidebar-nav-item">
+                    <span class="icon">🎤</span>
+                    <span>Artists</span>
+                </a>
+                <a href="admin-music.html" class="sidebar-nav-item active">
+                    <span class="icon">🎵</span>
+                    <span>Music</span>
+                </a>
+                <a href="admin-pending.html" class="sidebar-nav-item">
+                    <span class="icon">⏳</span>
+                    <span>Pending</span>
+                </a>
+                <a href="admin-users.html" class="sidebar-nav-item">
+                    <span class="icon">👥</span>
+                    <span>Users</span>
+                </a>
+                <a href="admin-payments.html" class="sidebar-nav-item">
+                    <span class="icon">💰</span>
+                    <span>Payments</span>
+                </a>
+                <a href="admin-reports.html" class="sidebar-nav-item">
+                    <span class="icon">📋</span>
+                    <span>Reports</span>
+                </a>
+                <a href="admin-settings.html" class="sidebar-nav-item">
+                    <span class="icon">⚙️</span>
+                    <span>Settings</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="page-header">
+                <div>
+                    <h1>🎵 Music <span>Management</span></h1>
+                    <p class="date-display">Total Tracks: 8,901 | Approved: 8,456 | Pending: 445</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-primary" onclick="openModal('addMusicModal')">➕ Add New Track</button>
+                    <div class="view-toggle">
+                        <button class="view-btn active" onclick="toggleView('grid')">🔲</button>
+                        <button class="view-btn" onclick="toggleView('table')">☰</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">🎵</div>
+                    <div class="stat-info">
+                        <h3>8,901</h3>
+                        <p>Total Tracks</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⏳</div>
+                    <div class="stat-info">
+                        <h3>445</h3>
+                        <p>Pending</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">⭐</div>
+                    <div class="stat-info">
+                        <h3>234</h3>
+                        <p>Featured</p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">💰</div>
+                    <div class="stat-info">
+                        <h3>E1.2M</h3>
+                        <p>Revenue</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Filter Bar -->
+            <div class="filter-bar">
+                <div class="search-box">
+                    <input type="text" placeholder="Funa ingoma... (Search tracks)" id="musicSearch">
+                    <button onclick="searchMusic()">🔍</button>
+                </div>
+                <select class="filter-select" id="statusFilter" onchange="filterMusic()">
+                    <option value="all">Tonkhe (All Status)</option>
+                    <option value="approved">Approved</option>
+                    <option value="pending">Pending</option>
+                    <option value="featured">Featured</option>
+                    <option value="rejected">Rejected</option>
+                </select>
+                <select class="filter-select" id="genreFilter" onchange="filterMusic()">
+                    <option value="all">Tonkhe tinhlobo (All Genres)</option>
+                    <option value="afropop">Afro Pop</option>
+                    <option value="traditional">Traditional</option>
+                    <option value="gospel">Gospel</option>
+                    <option value="hiphop">Hip Hop</option>
+                </select>
+                <select class="filter-select" id="artistFilter" onchange="filterMusic()">
+                    <option value="all">Bonkhe baculi (All Artists)</option>
+                    <option value="jahboy">Jahboy</option>
+                    <option value="bholoja">Bholoja</option>
+                    <option value="void">Void</option>
+                </select>
+            </div>
+
+            <!-- Bulk Actions -->
+            <div class="bulk-actions">
+                <input type="checkbox" class="bulk-checkbox" id="selectAll" onchange="toggleSelectAll()">
+                <span>Select All</span>
+                <button class="btn-outline" onclick="bulkApprove()" style="padding: 8px 20px;">✅ Approve Selected</button>
+                <button class="btn-outline" onclick="bulkReject()" style="padding: 8px 20px;">❌ Reject Selected</button>
+                <button class="btn-outline" onclick="bulkDelete()" style="padding: 8px 20px;">🗑️ Delete Selected</button>
+            </div>
+
+            <!-- Grid View -->
+            <div id="gridView" class="music-grid">
+                <!-- Track 1 - Featured -->
+                <div class="music-card" data-status="featured" data-genre="afropop" data-artist="jahboy">
+                    <div class="music-image">
+                        🎵
+                        <div class="music-overlay">
+                            <button class="play-btn" onclick="previewTrack('ngiyashisa')">▶</button>
+                        </div>
+                    </div>
+                    <div class="music-info">
+                        <div class="music-header">
+                            <h3>Ngiyashisa</h3>
+                            <span class="status-badge small featured">Featured ⭐</span>
+                        </div>
+                        <div class="music-artist">Jahboy</div>
+                        <div class="music-meta">
+                            <span>🎤 Afro Pop</span>
+                            <span>⏱️ 3:45</span>
+                        </div>
+                        <div class="music-stats">
+                            <div class="music-stat">
+                                <div class="value">234K</div>
+                                <div class="label">plays</div>
+                            </div>
+                            <div class="music-stat">
+                                <div class="value">12.4K</div>
+                                <div class="label">likes</div>
+                            </div>
+                            <div class="music-stat">
+                                <div class="value">E3,450</div>
+                                <div class="label">revenue</div>
+                            </div>
+                        </div>
+                        <div class="music-actions">
+                            <button class="action-btn view-btn" onclick="viewTrack('ngiyashisa')">👁️</button>
+                            <button class="action-btn edit-btn" onclick="editTrack('ngiyashisa')">✏️</button>
+                            <button class="action-btn delete-btn" onclick="deleteTrack('ngiyashisa')">🗑️</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Track 2 - Approved -->
+                <div class="music-card" data-status="approved" data-genre="traditional" data-artist="bholoja">
+                    <div class="music-image">
+                        🥁
+                        <div class="music-overlay">
+                            <button class="play-btn" onclick="previewTrack('siyalilanda')">▶</button>
+                        </div>
+                    </div>
+                    <div class="music-info">
+                        <div class="music-header">
+                            <h3>Siyalilanda</h3>
+                            <span class="status-badge small active">Approved ✓</span>
+                        </div>
+                        <div class="music-artist">Bholoja</div>
+                        <div class="music-meta">
+                            <span>🥁 Traditional</span>
+                            <span>⏱️ 4:12</span>
+                        </div>
+                        <div class="music-stats">
+                            <div class="music-stat">
+                                <div class="value">156K</div>
+                                <div class="label">plays</div>
+                            </div>
+                            <div class="music-stat">
+                                <div class="value">8.2K</div>
+                                <div class="label">likes</div>
+                            </div>
+                            <div class="music-stat">
+                                <div class="value">E2,340</div>
+                                <div class="label">revenue</div>
+                            </div>
+                        </div>
+                        <div class="music-actions">
+                            <button class="action-btn view-btn" onclick="viewTrack('siyalilanda')">👁️</button>
+                            <button class="action-btn edit-btn" onclick="editTrack('siyalilanda')">✏️</button>
+                            <button class="action-btn delete-btn" onclick="deleteTrack('siyalilanda')">🗑️</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Track 3 - Pending -->
+                <div class="music-card" data-status="pending" data-genre="gospel" data-artist="thobile">
+                    <div class="music-image">
+                        🎹
+                        <div class="music-overlay">
+                            <button class="play-btn" onclick="previewTrack('inhlitiyo')">▶</button>
+                        </div>
+                    </div>
+                    <div class="music-info">
+                        <div class="music-header">
+                            <h3>Inhlitiyo Yami</h3>
+                            <span class="status-badge small pending">Pending Review</span>
+                        </div>
+                        <div class="music-artist">Thobile Mkhwanazi</div>
+                        <div class="music-meta">
+                            <span>🎹 Gospel</span>
+                            <span>⏱️ 4:05</span>
+                        </div>
+                        <div class="music-stats">
+                            <div class="music-stat">
+                                <div class="value">0</div>
+                                <div class="label">plays</div>
+                            </div>
+                            <div class="music-stat">
+                                <div class="value">0</div>
+                                <div class="label">likes</div>
+                            </div>
+                            <div class="music-stat">
+                                <div class="value">E0</div>
+                                <div class="label">revenue</div>
+                            </div>
+                        </div>
+                        <div class="music-actions">
+                            <button class="action-btn approve-btn" onclick="approveTrack('inhlitiyo')">✅</button>
+                            <button class="action-btn reject-btn" onclick="rejectTrack('inhlitiyo')">❌</button>
+                            <button class="action-btn view-btn" onclick="viewTrack('inhlitiyo')">👁️</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Track 4 - Approved -->
+                <div class="music-card" data-status="approved" data-genre="hiphop" data-artist="void">
+                    <div class="music-image">
+                        🎸
+                        <div class="music-overlay">
+                            <button class="play-btn" onclick="previewTrack('2025flow')">▶</button>
+                        </div>
+                    </div>
+                    <div class="music-info">
+                        <div class="music-header">
+                            <h3>2025 Flow</h3>
+                            <span class="status-badge small active">Approved ✓</span>
+                        </div>
+                        <div class="music-artist">Void</div>
+                        <div class="music-meta">
+                            <span>🎸 Hip Hop</span>
+                            <span>⏱️ 3:18</span>
+                        </div>
+                        <div class="music-stats">
+                            <div class="music-stat">
+                                <div class="value">98K</div>
+                                <div class="label">plays</div>
+                            </div>
+                            <div class="music-stat">
+                                <div class="value">6.8K</div>
+                                <div class="label">likes</div>
+                            </div>
+                            <div class="music-stat">
+                                <div class="value">E1,470</div>
+                                <div class="label">revenue</div>
+                            </div>
+                        </div>
+                        <div class="music-actions">
+                            <button class="action-btn view-btn" onclick="viewTrack('2025flow')">👁️</button>
+                            <button class="action-btn edit-btn" onclick="editTrack('2025flow')">✏️</button>
+                            <button class="action-btn delete-btn" onclick="deleteTrack('2025flow')">🗑️</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Track 5 - Pending -->
+                <div class="music-card" data-status="pending" data-genre="traditional" data-artist="mswaka">
+                    <div class="music-image">
+                        🪘
+                        <div class="music-overlay">
+                            <button class="play-btn" onclick="previewTrack('sibhaca')">▶</button>
+                        </div>
+                    </div>
+                    <div class="music-info">
+                        <div class="music-header">
+                            <h3>Sibhaca King</h3>
+                            <span class="status-badge small pending">Pending Review</span>
+                        </div>
+                        <div class="music-artist">Mswakayicile</div>
+                        <div class="music-meta">
+                            <span>🪘 Traditional</span>
+                            <span>⏱️ 4:56</span>
+                        </div>
+                        <div class="music-stats">
+                            <div class="music-stat">
+                                <div class="value">5.3K</div>
+                                <div class="label">plays</div>
+                            </div>
+                            <div class="music-stat">
+                                <div class="value">234</div>
+                                <div class="label">likes</div>
+                            </div>
+                            <div class="music-stat">
+                                <div class="value">E80</div>
+                                <div class="label">revenue</div>
+                            </div>
+                        </div>
+                        <div class="music-actions">
+                            <button class="action-btn approve-btn" onclick="approveTrack('sibhaca')">✅</button>
+                            <button class="action-btn reject-btn" onclick="rejectTrack('sibhaca')">❌</button>
+                            <button class="action-btn view-btn" onclick="viewTrack('sibhaca')">👁️</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Track 6 - Featured -->
+                <div class="music-card" data-status="featured" data-genre="jazz" data-artist="blackcoffee">
+                    <div class="music-image">
+                        🎺
+                        <div class="music-overlay">
+                            <button class="play-btn" onclick="previewTrack('mantabane')">▶</button>
+                        </div>
+                    </div>
+                    <div class="music-info">
+                        <div class="music-header">
+                            <h3>Mantabane</h3>
+                            <span class="status-badge small featured">Featured ⭐</span>
+                        </div>
+                        <div class="music-artist">Black Coffee</div>
+                        <div class="music-meta">
+                            <span>🎺 Jazz</span>
+                            <span>⏱️ 6:42</span>
+                        </div>
+                        <div class="music-stats">
+                            <div class="music-stat">
+                                <div class="value">2.1M</div>
+                                <div class="label">plays</div>
+                            </div>
+                            <div class="music-stat">
+                                <div class="value">45K</div>
+                                <div class="label">likes</div>
+                            </div>
+                            <div class="music-stat">
+                                <div class="value">E31,500</div>
+                                <div class="label">revenue</div>
+                            </div>
+                        </div>
+                        <div class="music-actions">
+                            <button class="action-btn view-btn" onclick="viewTrack('mantabane')">👁️</button>
+                            <button class="action-btn edit-btn" onclick="editTrack('mantabane')">✏️</button>
+                            <button class="action-btn delete-btn" onclick="deleteTrack('mantabane')">🗑️</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Table View (Hidden by default) -->
+            <div id="tableView" class="table-container" style="display: none;">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th><input type="checkbox" class="bulk-checkbox" onchange="toggleSelectAllTable()"></th>
+                            <th>Track</th>
+                            <th>Artist</th>
+                            <th>Genre</th>
+                            <th>Duration</th>
+                            <th>Plays</th>
+                            <th>Revenue</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="checkbox" class="row-checkbox"></td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <div class="table-image">🎵</div>
+                                    <strong>uDlala Ngenhlitiyo</strong>
+                                </div>
+                            </td>
+                            <td>Boyzen Sz</td>
+                            <td>Afro Pop</td>
+                            <td>1:03</td>
+                            <td>234K</td>
+                            <td>E3,450</td>
+                            <audio src="C:\Users\PC\Desktop\the Swazi Music Hub\assets\Alex Beats Boyzen Sz Duet.mp3"></audio>
+                            <td><span class="status-badge featured">Featured</span></td>
+                            <td>
+                                <button class="action-btn view-btn" onclick="viewTrack('ngiyashisa')">👁️</button>
+                                <button class="action-btn edit-btn" onclick="editTrack('ngiyashisa')">✏️</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" class="row-checkbox"></td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <div class="table-image">🥁</div>
+                                    <strong>Siyalilanda</strong>
+                                </div>
+                            </td>
+                            <td>Bholoja</td>
+                            <td>Traditional</td>
+                            <td>4:12</td>
+                            <td>156K</td>
+                            <td>E2,340</td>
+                            <td><span class="status-badge active">Approved</span></td>
+                            <td>
+                                <button class="action-btn view-btn" onclick="viewTrack('siyalilanda')">👁️</button>
+                                <button class="action-btn edit-btn" onclick="editTrack('siyalilanda')">✏️</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" class="row-checkbox"></td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 10px;">
+                                    <div class="table-image">🎹</div>
+                                    <strong>Inhlitiyo Yami</strong>
+                                </div>
+                            </td>
+                            <td>Thobile Mkhwanazi</td>
+                            <td>Gospel</td>
+                            <td>4:05</td>
+                            <td>0</td>
+                            <td>E0</td>
+                            <td><span class="status-badge pending">Pending</span></td>
+                            <td>
+                                <button class="action-btn approve-btn" onclick="approveTrack('inhlitiyo')">✅</button>
+                                <button class="action-btn reject-btn" onclick="rejectTrack('inhlitiyo')">❌</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn">3</button>
+                <button class="page-btn">4</button>
+                <button class="page-btn">5</button>
+                <button class="page-btn">→</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Music Modal -->
+    <div class="modal" id="addMusicModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>➕ Add New Track</h2>
+                <span class="close-modal" onclick="closeModal('addMusicModal')">&times;</span>
+            </div>
+            <form onsubmit="event.preventDefault(); addTrack();">
+                <div class="form-group">
+                    <label>Track Title / Ligama Lengingoma</label>
+                    <input type="text" placeholder="Enter track title" required>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Artist / Mculi</label>
+                        <select required>
+                            <option>Jahboy</option>
+                            <option>Bholoja</option>
+                            <option>Sandziso Mamba</option>
+                            <option>Void</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Genre / Tinhlobo</label>
+                        <select required>
+                            <option>Afro Pop</option>
+                            <option>Traditional</option>
+                            <option>Gospel</option>
+                            <option>Hip Hop</option>
+                            <option>Jazz</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Duration / Bude Besikhatsi</label>
+                        <input type="text" placeholder="3:45" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Release Date / Lusuku</label>
+                        <input type="date" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Audio File</label>
+                    <input type="file" accept="audio/*" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Album Artwork</label>
+                    <input type="file" accept="image/*">
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="featuredTrack">
+                    <label for="featuredTrack">Mark as Featured Track</label>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="explicitContent">
+                    <label for="explicitContent">Contains Explicit Content</label>
+                </div>
+
+                <button type="submit" class="btn-submit">➕ Add Track</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit Music Modal -->
+    <div class="modal" id="editMusicModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>✏️ Edit Track</h2>
+                <span class="close-modal" onclick="closeModal('editMusicModal')">&times;</span>
+            </div>
+            <form onsubmit="event.preventDefault(); updateTrack();">
+                <div class="form-group">
+                    <label>Track Title</label>
+                    <input type="text" value="Ngiyashisa" required>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Artist</label>
+                        <select>
+                            <option selected>Jahboy</option>
+                            <option>Bholoja</option>
+                            <option>Sandziso Mamba</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Genre</label>
+                        <select>
+                            <option selected>Afro Pop</option>
+                            <option>Traditional</option>
+                            <option>Gospel</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Status</label>
+                    <select>
+                        <option>Approved</option>
+                        <option>Pending</option>
+                        <option>Featured</option>
+                        <option>Rejected</option>
+                    </select>
+                </div>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="editFeatured" checked>
+                    <label for="editFeatured">Featured Track</label>
+                </div>
+
+                <button type="submit" class="btn-submit">💾 Update Track</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Preview Modal -->
+    <div class="modal" id="previewModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🎵 Now Playing</h2>
+                <span class="close-modal" onclick="closeModal('previewModal')">&times;</span>
+            </div>
+            <div style="text-align: center;">
+                <div style="font-size: 5em; margin: 20px 0;">🎵</div>
+                <h3>Ngiyashisa</h3>
+                <p style="color: var(--savanna-sun);">Jahboy</p>
+                <div style="background: var(--cream); height: 4px; border-radius: 2px; margin: 20px 0;">
+                    <div style="width: 45%; height: 100%; background: var(--savanna-sun); border-radius: 2px;"></div>
+                </div>
+                <p>1:24 / 3:45</p>
+                <div style="display: flex; gap: 20px; justify-content: center; margin-top: 20px;">
+                    <button class="btn-outline" style="font-size: 1.5em;">⏮️</button>
+                    <button class="btn-primary" style="font-size: 1.5em; width: 60px; height: 60px; border-radius: 50%;">⏸️</button>
+                    <button class="btn-outline" style="font-size: 1.5em;">⏭️</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container"></div>
+
+    <script>
+        // View toggle
+        function toggleView(view) {
+            const gridView = document.getElementById('gridView');
+            const tableView = document.getElementById('tableView');
+            const buttons = document.querySelectorAll('.view-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            if (view === 'grid') {
+                gridView.style.display = 'grid';
+                tableView.style.display = 'none';
+            } else {
+                gridView.style.display = 'none';
+                tableView.style.display = 'block';
+            }
+        }
+
+        // Modal functions
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Track actions
+        function viewTrack(track) {
+            showToast(`Viewing ${track} details`, 'info');
+        }
+
+        function editTrack(track) {
+            showToast(`Editing ${track}`, 'info');
+            openModal('editMusicModal');
+        }
+
+        function deleteTrack(track) {
+            if (confirm(`Are you sure you want to delete ${track}?`)) {
+                showToast(`${track} deleted`, 'success');
+            }
+        }
+
+        function approveTrack(track) {
+            showToast(`${track} approved!`, 'success');
+        }
+
+        function rejectTrack(track) {
+            showToast(`${track} rejected`, 'error');
+        }
+
+        function previewTrack(track) {
+            openModal('previewModal');
+        }
+
+        function addTrack() {
+            showToast('New track added successfully!', 'success');
+            closeModal('addMusicModal');
+        }
+
+        function updateTrack() {
+            showToast('Track updated successfully!', 'success');
+            closeModal('editMusicModal');
+        }
+
+        // Bulk actions
+        function toggleSelectAll() {
+            const selectAll = document.getElementById('selectAll');
+            const checkboxes = document.querySelectorAll('.music-card input[type="checkbox"]');
+            checkboxes.forEach(cb => {
+                if (cb) cb.checked = selectAll.checked;
+            });
+        }
+
+        function toggleSelectAllTable() {
+            const selectAll = event.target;
+            const checkboxes = document.querySelectorAll('.row-checkbox');
+            checkboxes.forEach(cb => cb.checked = selectAll.checked);
+        }
+
+        function bulkApprove() {
+            showToast('Selected tracks approved!', 'success');
+        }
+
+        function bulkReject() {
+            showToast('Selected tracks rejected', 'error');
+        }
+
+        function bulkDelete() {
+            if (confirm('Delete selected tracks?')) {
+                showToast('Selected tracks deleted', 'success');
+            }
+        }
+
+        // Filter and search
+        function filterMusic() {
+            const status = document.getElementById('statusFilter').value;
+            const genre = document.getElementById('genreFilter').value;
+            const artist = document.getElementById('artistFilter').value;
+            showToast(`Filtering by: ${status}, ${genre}, ${artist}`, 'info');
+        }
+
+        function searchMusic() {
+            const query = document.getElementById('musicSearch').value;
+            if (query) {
+                showToast(`Searching for "${query}"...`, 'info');
+            }
+        }
+
+        // Toast
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `<span>${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}</span><span>${message}</span>`;
+            
+            document.querySelector('.toast-container').appendChild(toast);
+            
+            setTimeout(() => toast.classList.add('show'), 10);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Mobile menu
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('.mobile-nav').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        document.querySelector('.mobile-nav-close').addEventListener('click', function() {
+            document.querySelector('.mobile-nav').classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        // Close modal on outside click
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.classList.remove('active');
+            }
+        }
+
+        // Active nav link
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        document.querySelectorAll('.nav-links a, .mobile-nav-links a').forEach(link => {
+            const href = link.getAttribute('href');
+            if (href === currentPage) {
+                link.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>

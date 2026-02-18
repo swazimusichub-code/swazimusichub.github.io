@@ -1,0 +1,1813 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swazi Music Hub - Admin: Settings</title>
+    <style>
+        /* Complete theme - same as index */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--cream);
+            color: var(--deep-night);
+            line-height: 1.6;
+        }
+
+        :root {
+            --deep-night: #0a1c24;
+            --teal-depths: #1e4a5f;
+            --african-sky: #2a6b84;
+            --savanna-sun: #e6b17e;
+            --terracotta: #d4945a;
+            --cream: #f5f0e8;
+            --forest: #2e7a5e;
+            --earth: #8b5a3c;
+            --success: #51cf66;
+            --warning: #fcc419;
+            --danger: #ff6b6b;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', 'Segoe UI', sans-serif;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: var(--deep-night);
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 800;
+            color: var(--savanna-sun);
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .logo span {
+            color: white;
+            font-size: 0.7em;
+            font-weight: 300;
+            margin-left: 5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1.1em;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--savanna-sun);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.1);
+            padding: 8px 15px;
+            border-radius: 40px;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            background: var(--savanna-sun);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--deep-night);
+            font-weight: bold;
+        }
+
+        .user-name {
+            color: white;
+            font-weight: 600;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.8em;
+            color: white;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+        }
+
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--deep-night);
+            z-index: 1001;
+            padding: 80px 20px 20px;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-nav.active {
+            transform: translateX(0);
+        }
+
+        .mobile-nav-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2em;
+            color: white;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .mobile-nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.5em;
+            padding: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
+
+        .mobile-nav-links a:hover,
+        .mobile-nav-links a.active {
+            color: var(--savanna-sun);
+            padding-left: 25px;
+        }
+
+        /* Dashboard Layout */
+        .dashboard-container {
+            display: flex;
+            min-height: calc(100vh - 80px);
+            background: var(--cream);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: white;
+            box-shadow: 4px 0 20px rgba(0,0,0,0.05);
+            padding: 30px 0;
+            position: sticky;
+            top: 80px;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+        }
+
+        .admin-profile {
+            text-align: center;
+            padding: 0 20px 30px;
+            border-bottom: 2px solid var(--cream);
+        }
+
+        .admin-avatar-large {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, var(--deep-night), var(--teal-depths));
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5em;
+            color: white;
+            border: 4px solid var(--savanna-sun);
+        }
+
+        .admin-profile h3 {
+            color: var(--deep-night);
+            margin-bottom: 5px;
+        }
+
+        .admin-profile p {
+            color: var(--savanna-sun);
+            font-weight: 600;
+        }
+
+        .sidebar-nav {
+            padding: 30px 20px;
+        }
+
+        .sidebar-nav-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 20px;
+            margin-bottom: 5px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--earth);
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .sidebar-nav-item:hover {
+            background: var(--cream);
+            color: var(--deep-night);
+        }
+
+        .sidebar-nav-item.active {
+            background: var(--savanna-sun);
+            color: var(--deep-night);
+            font-weight: 600;
+        }
+
+        .sidebar-nav-item .icon {
+            font-size: 1.3em;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 40px;
+            overflow-y: auto;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .page-header h1 {
+            font-size: 2.2em;
+            color: var(--deep-night);
+        }
+
+        .page-header h1 span {
+            color: var(--savanna-sun);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-primary {
+            background: var(--savanna-sun);
+            color: var(--deep-night);
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1em;
+        }
+
+        .btn-primary:hover {
+            background: var(--terracotta);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--savanna-sun);
+            color: var(--deep-night);
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-outline:hover {
+            background: var(--savanna-sun);
+            transform: translateY(-2px);
+        }
+
+        /* Settings Navigation */
+        .settings-nav {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .settings-nav-item {
+            padding: 12px 25px;
+            border-radius: 40px;
+            background: var(--cream);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .settings-nav-item:hover {
+            background: var(--savanna-sun);
+        }
+
+        .settings-nav-item.active {
+            background: var(--savanna-sun);
+        }
+
+        /* Settings Sections */
+        .settings-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--cream);
+        }
+
+        .section-header h2 {
+            font-size: 1.4em;
+            color: var(--deep-night);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-header h2 .icon {
+            color: var(--savanna-sun);
+        }
+
+        /* Form Styles */
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--deep-night);
+        }
+
+        .form-group label .siswati {
+            color: var(--savanna-sun);
+            font-size: 0.9em;
+            font-style: italic;
+            margin-left: 5px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--cream);
+            border-radius: 12px;
+            font-size: 1em;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--savanna-sun);
+        }
+
+        .form-group input[type="file"] {
+            padding: 10px;
+            background: var(--cream);
+        }
+
+        .form-group input[type="color"] {
+            height: 50px;
+            padding: 5px;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .input-group input {
+            flex: 1;
+        }
+
+        .input-group button {
+            padding: 12px 25px;
+            background: var(--cream);
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .input-group button:hover {
+            background: var(--savanna-sun);
+        }
+
+        /* Toggle Switch */
+        .toggle-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--cream);
+        }
+
+        .toggle-item:last-child {
+            border-bottom: none;
+        }
+
+        .toggle-info h4 {
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .toggle-info p {
+            color: var(--earth);
+            font-size: 0.9em;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: var(--cream);
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .toggle-switch.active {
+            background: var(--forest);
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .toggle-switch.active::after {
+            left: 33px;
+        }
+
+        /* Permission Grid */
+        .permissions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .permission-card {
+            background: var(--cream);
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+
+        .permission-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .permission-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .permission-header h4 {
+            font-size: 1.1em;
+        }
+
+        .permission-role {
+            font-size: 0.85em;
+            padding: 3px 10px;
+            border-radius: 20px;
+            background: white;
+        }
+
+        .permission-role.admin { color: var(--deep-night); }
+        .permission-role.manager { color: var(--teal-depths); }
+        .permission-role.editor { color: var(--savanna-sun); }
+
+        .permission-list {
+            list-style: none;
+        }
+
+        .permission-list li {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.95em;
+        }
+
+        .permission-list li::before {
+            content: '✓';
+            color: var(--forest);
+            font-weight: bold;
+        }
+
+        /* API Keys */
+        .api-key-item {
+            background: var(--cream);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .api-key-info h4 {
+            margin-bottom: 5px;
+        }
+
+        .api-key-info p {
+            color: var(--earth);
+            font-size: 0.9em;
+            font-family: monospace;
+        }
+
+        .api-key-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .api-key-actions button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .api-key-actions .copy {
+            background: var(--teal-depths);
+            color: white;
+        }
+
+        .api-key-actions .copy:hover {
+            background: var(--african-sky);
+        }
+
+        .api-key-actions .regenerate {
+            background: var(--warning);
+            color: var(--deep-night);
+        }
+
+        .api-key-actions .delete {
+            background: var(--danger);
+            color: white;
+        }
+
+        /* Integration Cards */
+        .integrations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 20px 0;
+        }
+
+        .integration-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .integration-card:hover {
+            border-color: var(--savanna-sun);
+            transform: translateY(-3px);
+        }
+
+        .integration-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--cream);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+        }
+
+        .integration-info {
+            flex: 1;
+        }
+
+        .integration-info h4 {
+            margin-bottom: 5px;
+        }
+
+        .integration-info p {
+            color: var(--earth);
+            font-size: 0.9em;
+            margin-bottom: 10px;
+        }
+
+        .integration-status {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: 600;
+        }
+
+        .integration-status.connected {
+            background: rgba(46, 122, 94, 0.1);
+            color: var(--forest);
+        }
+
+        .integration-status.disconnected {
+            background: rgba(139, 90, 60, 0.1);
+            color: var(--earth);
+        }
+
+        /* Backup Items */
+        .backup-item {
+            background: var(--cream);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .backup-info h4 {
+            margin-bottom: 5px;
+        }
+
+        .backup-info p {
+            color: var(--earth);
+            font-size: 0.9em;
+        }
+
+        .backup-size {
+            font-weight: 600;
+            color: var(--teal-depths);
+        }
+
+        .backup-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .backup-actions button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .backup-actions .restore {
+            background: var(--teal-depths);
+            color: white;
+        }
+
+        .backup-actions .download {
+            background: var(--savanna-sun);
+            color: var(--deep-night);
+        }
+
+        /* Danger Zone */
+        .danger-zone {
+            background: rgba(255, 107, 107, 0.05);
+            border: 2px solid var(--danger);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 40px;
+        }
+
+        .danger-zone h3 {
+            color: var(--danger);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .danger-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 107, 107, 0.2);
+        }
+
+        .danger-item:last-child {
+            border-bottom: none;
+        }
+
+        .danger-info h4 {
+            margin-bottom: 5px;
+        }
+
+        .danger-info p {
+            color: var(--earth);
+        }
+
+        .btn-danger {
+            background: var(--danger);
+            color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-danger:hover {
+            background: #ff5252;
+            transform: translateY(-2px);
+        }
+
+        /* Toast */
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 2000;
+        }
+
+        .toast {
+            background: white;
+            color: var(--deep-night);
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateX(400px);
+            transition: transform 0.3s;
+            margin-top: 10px;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success { border-left: 4px solid var(--forest); }
+        .toast.error { border-left: 4px solid var(--danger); }
+        .toast.info { border-left: 4px solid var(--savanna-sun); }
+
+        /* Loading */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--cream);
+            border-top-color: var(--savanna-sun);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .siswati-label {
+            font-style: italic;
+            color: var(--savanna-sun);
+            font-size: 0.9em;
+            margin-left: 5px;
+        }
+
+        @media (max-width: 1024px) {
+            .sidebar { width: 240px; }
+            .form-grid { grid-template-columns: 1fr; }
+            .form-group.full-width { grid-column: span 1; }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-container { flex-direction: column; }
+            .sidebar {
+                width: 100%;
+                position: static;
+                height: auto;
+            }
+            .main-content { padding: 20px; }
+            .nav-links { display: none; }
+            .mobile-menu-btn { display: block; }
+            .api-key-item { flex-direction: column; }
+            .danger-item { flex-direction: column; gap: 15px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">SWAZI MUSIC HUB <span>siSwati to the world</span></a>
+        
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="#" class="active">Admin</a>
+            <div class="user-menu" onclick="showToast('Admin menu', 'info')">
+                <div class="user-avatar">A</div>
+                <span class="user-name">Admin</span>
+            </div>
+        </div>
+        
+        <button class="mobile-menu-btn">☰</button>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav">
+        <button class="mobile-nav-close">&times;</button>
+        <div class="mobile-nav-links">
+            <a href="index.html">🏠 Home</a>
+            <a href="admin-dashboard.html">📊 Dashboard</a>
+            <a href="admin-artists.html">🎤 Artists</a>
+            <a href="admin-music.html">🎵 Music</a>
+            <a href="admin-pending.html">⏳ Pending</a>
+            <a href="admin-users.html">👥 Users</a>
+            <a href="admin-payments.html">💰 Payments</a>
+            <a href="admin-reports.html">📋 Reports</a>
+            <a href="admin-settings.html" class="active">⚙️ Settings</a>
+            <a href="signin.html" class="btn-primary" style="text-align: center;">🚪 Sign Out</a>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="admin-profile">
+                <div class="admin-avatar-large">⚙️</div>
+                <h3>Bongiswa Dlamini</h3>
+                <p>Platform Administrator</p>
+            </div>
+
+            <div class="sidebar-nav">
+                <a href="admin-dashboard.html" class="sidebar-nav-item">
+                    <span class="icon">📊</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="admin-artists.html" class="sidebar-nav-item">
+                    <span class="icon">🎤</span>
+                    <span>Artists</span>
+                </a>
+                <a href="admin-music.html" class="sidebar-nav-item">
+                    <span class="icon">🎵</span>
+                    <span>Music</span>
+                </a>
+                <a href="admin-pending.html" class="sidebar-nav-item">
+                    <span class="icon">⏳</span>
+                    <span>Pending</span>
+                </a>
+                <a href="admin-users.html" class="sidebar-nav-item">
+                    <span class="icon">👥</span>
+                    <span>Users</span>
+                </a>
+                <a href="admin-payments.html" class="sidebar-nav-item">
+                    <span class="icon">💰</span>
+                    <span>Payments</span>
+                </a>
+                <a href="admin-reports.html" class="sidebar-nav-item">
+                    <span class="icon">📋</span>
+                    <span>Reports</span>
+                </a>
+                <a href="admin-settings.html" class="sidebar-nav-item active">
+                    <span class="icon">⚙️</span>
+                    <span>Settings</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="page-header">
+                <div>
+                    <h1>⚙️ Settings <span>Management</span></h1>
+                    <p class="date-display">Configure and customize platform settings</p>
+                </div>
+                <div class="header-actions">
+                    <button class="btn-primary" onclick="saveAllSettings()">💾 Save All Changes</button>
+                    <button class="btn-outline" onclick="resetSettings()">↺ Reset</button>
+                </div>
+            </div>
+
+            <!-- Settings Navigation -->
+            <div class="settings-nav">
+                <span class="settings-nav-item active" onclick="switchSetting('general')">🏠 General</span>
+                <span class="settings-nav-item" onclick="switchSetting('branding')">🎨 Branding</span>
+                <span class="settings-nav-item" onclick="switchSetting('payments')">💰 Payments</span>
+                <span class="settings-nav-item" onclick="switchSetting('email')">📧 Email</span>
+                <span class="settings-nav-item" onclick="switchSetting('security')">🔒 Security</span>
+                <span class="settings-nav-item" onclick="switchSetting('permissions')">👥 Permissions</span>
+                <span class="settings-nav-item" onclick="switchSetting('api')">🔌 API</span>
+                <span class="settings-nav-item" onclick="switchSetting('backup')">💾 Backup</span>
+            </div>
+
+            <!-- General Settings -->
+            <div id="general" class="settings-section">
+                <div class="section-header">
+                    <h2><span class="icon">🏠</span> General Settings <span class="siswati-label"></span></h2>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Platform Name <span class="siswati"></span></label>
+                        <input type="text" value="Swazi Music Hub">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tagline <span class="siswati"></span></label>
+                        <input type="text" value="siSwati Music to the World">
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>Platform Description <span class="siswati"></span></label>
+                        <textarea rows="3">Swazi Music Hub is a dedicated digital platform designed to showcase, promote, and distribute Eswatini's musical talent globally.</textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Contact Email <span class="siswati"></span></label>
+                        <input type="email" value="info@swazimusichub.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Support Email</label>
+                        <input type="email" value="support@swazimusichub.com">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Phone Number</label>
+                        <input type="text" value="+268 7818 8614">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Address</label>
+                        <input type="text" value="123 Somhlolo Road, Mbabane, Eswatini">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Timezone</label>
+                        <select>
+                            <option>Africa/Mbabane (GMT+2)</option>
+                            <option>Africa/Johannesburg</option>
+                            <option>UTC</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Date Format</label>
+                        <select>
+                            <option>DD/MM/YYYY</option>
+                            <option>MM/DD/YYYY</option>
+                            <option>YYYY-MM-DD</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Language</label>
+                        <select>
+                            <option>English (Default)</option>
+                            <option>siSwati</option>
+                            <option>Bilingual (English/siSwati)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Toggle Settings -->
+                <div style="margin-top: 30px;">
+                    <div class="toggle-item">
+                        <div class="toggle-info">
+                            <h4>Maintenance Mode</h4>
+                            <p>Temporarily disable access to the platform for non-admin users</p>
+                        </div>
+                        <div class="toggle-switch" onclick="toggleSetting(this)"></div>
+                    </div>
+
+                    <div class="toggle-item">
+                        <div class="toggle-info">
+                            <h4>User Registration</h4>
+                            <p>Allow new users to create accounts on the platform</p>
+                        </div>
+                        <div class="toggle-switch active" onclick="toggleSetting(this)"></div>
+                    </div>
+
+                    <div class="toggle-item">
+                        <div class="toggle-info">
+                            <h4>Artist Verification Required</h4>
+                            <p>Require admin approval before artists can upload music</p>
+                        </div>
+                        <div class="toggle-switch active" onclick="toggleSetting(this)"></div>
+                    </div>
+
+                    <div class="toggle-item">
+                        <div class="toggle-info">
+                            <h4>Enable Comments</h4>
+                            <p>Allow users to comment on tracks and playlists</p>
+                        </div>
+                        <div class="toggle-switch active" onclick="toggleSetting(this)"></div>
+                    </div>
+
+                    <div class="toggle-item">
+                        <div class="toggle-info">
+                            <h4>Show Explicit Content</h4>
+                            <p>Display tracks marked as explicit (requires age verification)</p>
+                        </div>
+                        <div class="toggle-switch" onclick="toggleSetting(this)"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Branding Settings -->
+            <div id="branding" class="settings-section" style="display: none;">
+                <div class="section-header">
+                    <h2><span class="icon">🎨</span> Branding Settings <span class="siswati-label"></span></h2>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Logo Upload</label>
+                        <input type="file" accept="image/*">
+                        <p style="color: var(--earth); font-size: 0.9em; margin-top: 5px;">Recommended size: 200x50px, PNG or SVG</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Favicon</label>
+                        <input type="file" accept="image/*">
+                        <p style="color: var(--earth); font-size: 0.9em; margin-top: 5px;">32x32px, ICO or PNG</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Primary Color</label>
+                        <div class="input-group">
+                            <input type="color" value="#0a1c24">
+                            <input type="text" value="#0A1C24">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Secondary Color</label>
+                        <div class="input-group">
+                            <input type="color" value="#1e4a5f">
+                            <input type="text" value="#1E4A5F">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Accent Color</label>
+                        <div class="input-group">
+                            <input type="color" value="#e6b17e">
+                            <input type="text" value="#E6B17E">
+                        </div>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>Custom CSS</label>
+                        <textarea rows="5" placeholder="/* Add custom CSS here */"></textarea>
+                    </div>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <h3 style="margin-bottom: 15px;">Social Media Links</h3>
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Facebook</label>
+                            <input type="url" value="https://facebook.com/swazimusichub">
+                        </div>
+                        <div class="form-group">
+                            <label>Twitter/X</label>
+                            <input type="url" value="https://twitter.com/swazimusichub">
+                        </div>
+                        <div class="form-group">
+                            <label>Instagram</label>
+                            <input type="url" value="https://instagram.com/swazimusichub">
+                        </div>
+                        <div class="form-group">
+                            <label>YouTube</label>
+                            <input type="url" value="https://youtube.com/swazimusichub">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Settings -->
+            <div id="payments" class="settings-section" style="display: none;">
+                <div class="section-header">
+                    <h2><span class="icon">💰</span> Payment Settings <span class="siswati-label"></span></h2>
+                </div>
+
+                <h3 style="margin: 20px 0 15px;">Currency & Rates</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Base Currency</label>
+                        <select>
+                            <option>Eswatini Lilangeni (E) - Default</option>
+                            <option>South African Rand (R)</option>
+                            <option>US Dollar ($)</option>
+                            <option>Euro (€)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Platform Fee (%)</label>
+                        <input type="number" value="30" min="0" max="100">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Minimum Payout</label>
+                        <input type="number" value="200">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Payout Schedule</label>
+                        <select>
+                            <option>Monthly</option>
+                            <option>Bi-weekly</option>
+                            <option>Weekly</option>
+                            <option>Manual</option>
+                        </select>
+                    </div>
+                </div>
+
+                <h3 style="margin: 30px 0 15px;">Payment Gateways</h3>
+                <div class="toggle-item">
+                    <div class="toggle-info">
+                        <h4>Credit/Debit Cards (Visa/Mastercard)</h4>
+                        <p>Accept payments via credit and debit cards</p>
+                    </div>
+                    <div class="toggle-switch active" onclick="toggleSetting(this)"></div>
+                </div>
+
+                <div class="toggle-item">
+                    <div class="toggle-info">
+                        <h4>PayPal</h4>
+                        <p>Accept payments via PayPal</p>
+                    </div>
+                    <div class="toggle-switch active" onclick="toggleSetting(this)"></div>
+                </div>
+
+                <div class="toggle-item">
+                    <div class="toggle-info">
+                        <h4>MTN Mobile Money</h4>
+                        <p>Accept payments via MTN Mobile Money</p>
+                    </div>
+                    <div class="toggle-switch active" onclick="toggleSetting(this)"></div>
+                </div>
+
+                <div class="toggle-item">
+                    <div class="toggle-info">
+                        <h4>eWallet</h4>
+                        <p>Accept payments via eWallet</p>
+                    </div>
+                    <div class="toggle-switch" onclick="toggleSetting(this)"></div>
+                </div>
+
+                <h3 style="margin: 30px 0 15px;">API Credentials</h3>
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Stripe Public Key</label>
+                        <input type="text" value="pk_live_xxxxxxxxxxxxxx">
+                    </div>
+                    <div class="form-group">
+                        <label>Stripe Secret Key</label>
+                        <input type="password" value="sk_live_xxxxxxxxxxxxxx">
+                    </div>
+                    <div class="form-group">
+                        <label>PayPal Client ID</label>
+                        <input type="text" value="AYsdgfsd123456789">
+                    </div>
+                    <div class="form-group">
+                        <label>PayPal Secret</label>
+                        <input type="password" value="ELsdgfsd987654321">
+                    </div>
+                    <div class="form-group">
+                        <label>MTN MoMo API Key</label>
+                        <input type="text" value="MTN-API-XXXX-XXXX">
+                    </div>
+                    <div class="form-group">
+                        <label>MTN MoMo Secret</label>
+                        <input type="password" value="mtn_secret_xxxx">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security Settings -->
+            <div id="security" class="settings-section" style="display: none;">
+                <div class="section-header">
+                    <h2><span class="icon">🔒</span> Security Settings <span class="siswati-label"></span></h2>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Session Timeout (minutes)</label>
+                        <input type="number" value="30">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Max Login Attempts</label>
+                        <input type="number" value="5">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password Minimum Length</label>
+                        <input type="number" value="8">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Two-Factor Authentication</label>
+                        <select>
+                            <option>Required for Admins</option>
+                            <option>Optional for All</option>
+                            <option>Disabled</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="toggle-item">
+                    <div class="toggle-info">
+                        <h4>Require Email Verification</h4>
+                        <p>Users must verify email before accessing platform</p>
+                    </div>
+                    <div class="toggle-switch active" onclick="toggleSetting(this)"></div>
+                </div>
+
+                <div class="toggle-item">
+                    <div class="toggle-info">
+                        <h4>reCAPTCHA on Login</h4>
+                        <p>Protect against brute force attacks</p>
+                    </div>
+                    <div class="toggle-switch active" onclick="toggleSetting(this)"></div>
+                </div>
+
+                <div class="toggle-item">
+                    <div class="toggle-info">
+                        <h4>IP Whitelist for Admin</h4>
+                        <p>Restrict admin access to specific IP addresses</p>
+                    </div>
+                    <div class="toggle-switch" onclick="toggleSetting(this)"></div>
+                </div>
+
+                <h3 style="margin: 30px 0 15px;">IP Whitelist</h3>
+                <div class="form-group">
+                    <label>Allowed IPs (one per line)</label>
+                    <textarea rows="4" placeholder="192.168.1.1&#10;10.0.0.1&#10;172.16.0.0/12"></textarea>
+                </div>
+
+                <h3 style="margin: 30px 0 15px;">Security Logs</h3>
+                <div class="backup-item">
+                    <div class="backup-info">
+                        <h4>Login Attempts Log</h4>
+                        <p>Last 24 hours: 1,234 attempts | 23 failed</p>
+                    </div>
+                    <div class="backup-actions">
+                        <button class="download" onclick="downloadLog('login')">📥 Download</button>
+                        <button class="restore" onclick="viewLog('login')">👁️ View</button>
+                    </div>
+                </div>
+
+                <div class="backup-item">
+                    <div class="backup-info">
+                        <h4>Admin Actions Log</h4>
+                        <p>Last 7 days: 456 actions recorded</p>
+                    </div>
+                    <div class="backup-actions">
+                        <button class="download" onclick="downloadLog('admin')">📥 Download</button>
+                        <button class="restore" onclick="viewLog('admin')">👁️ View</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Permissions Settings -->
+            <div id="permissions" class="settings-section" style="display: none;">
+                <div class="section-header">
+                    <h2><span class="icon">👥</span> Role Permissions <span class="siswati-label">(Emalungelo Ebasebenti)</span></h2>
+                </div>
+
+                <div class="permissions-grid">
+                    <div class="permission-card">
+                        <div class="permission-header">
+                            <h4>Administrator</h4>
+                            <span class="permission-role admin">Full Access</span>
+                        </div>
+                        <ul class="permission-list">
+                            <li>Full platform access</li>
+                            <li>Manage all users</li>
+                            <li>Manage all content</li>
+                            <li>View all reports</li>
+                            <li>System settings</li>
+                            <li>Payment management</li>
+                        </ul>
+                    </div>
+
+                    <div class="permission-card">
+                        <div class="permission-header">
+                            <h4>Content Manager</h4>
+                            <span class="permission-role manager">Content Only</span>
+                        </div>
+                        <ul class="permission-list">
+                            <li>Manage music tracks</li>
+                            <li>Manage artists</li>
+                            <li>Manage playlists</li>
+                            <li>Review pending content</li>
+                            <li>Cannot access payments</li>
+                            <li>Cannot manage users</li>
+                        </ul>
+                    </div>
+
+                    <div class="permission-card">
+                        <div class="permission-header">
+                            <h4>Finance Manager</h4>
+                            <span class="permission-role manager">Finance Only</span>
+                        </div>
+                        <ul class="permission-list">
+                            <li>View payment reports</li>
+                            <li>Process withdrawals</li>
+                            <li>Manage payouts</li>
+                            <li>View revenue analytics</li>
+                            <li>Cannot edit content</li>
+                            <li>Cannot manage users</li>
+                        </ul>
+                    </div>
+
+                    <div class="permission-card">
+                        <div class="permission-header">
+                            <h4>Moderator</h4>
+                            <span class="permission-role editor">Limited Access</span>
+                        </div>
+                        <ul class="permission-list">
+                            <li>Review pending content</li>
+                            <li>Flag inappropriate content</li>
+                            <li>Manage comments</li>
+                            <li>View basic reports</li>
+                            <li>Cannot edit users</li>
+                            <li>Cannot access settings</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3 style="margin: 30px 0 15px;">Custom Roles</h3>
+                <button class="btn-outline" onclick="addCustomRole()">➕ Add Custom Role</button>
+            </div>
+
+            <!-- API Settings -->
+            <div id="api" class="settings-section" style="display: none;">
+                <div class="section-header">
+                    <h2><span class="icon">🔌</span> API Settings <span class="siswati-label"></span></h2>
+                </div>
+
+                <div class="toggle-item">
+                    <div class="toggle-info">
+                        <h4>Enable Public API</h4>
+                        <p>Allow third-party applications to access platform data</p>
+                    </div>
+                    <div class="toggle-switch" onclick="toggleSetting(this)"></div>
+                </div>
+
+                <div class="toggle-item">
+                    <div class="toggle-info">
+                        <h4>Rate Limiting</h4>
+                        <p>Limit API requests per minute per key</p>
+                    </div>
+                    <div class="toggle-switch active" onclick="toggleSetting(this)"></div>
+                </div>
+
+                <h3 style="margin: 30px 0 15px;">API Keys</h3>
+                
+                <div class="api-key-item">
+                    <div class="api-key-info">
+                        <h4>Production Key</h4>
+                        <p>sk_live_swazi_hub_8f7d3a9b2c1e5f6g7h8i9j0k</p>
+                    </div>
+                    <div class="api-key-actions">
+                        <button class="copy" onclick="copyAPIKey(this)">📋 Copy</button>
+                        <button class="regenerate" onclick="regenerateKey('prod')">🔄 Regenerate</button>
+                        <button class="delete" onclick="deleteKey('prod')">🗑️ Delete</button>
+                    </div>
+                </div>
+
+                <div class="api-key-item">
+                    <div class="api-key-info">
+                        <h4>Development Key</h4>
+                        <p>sk_test_swazi_hub_1a2b3c4d5e6f7g8h9i0j</p>
+                    </div>
+                    <div class="api-key-actions">
+                        <button class="copy" onclick="copyAPIKey(this)">📋 Copy</button>
+                        <button class="regenerate" onclick="regenerateKey('dev')">🔄 Regenerate</button>
+                        <button class="delete" onclick="deleteKey('dev')">🗑️ Delete</button>
+                    </div>
+                </div>
+
+                <div class="api-key-item">
+                    <div class="api-key-info">
+                        <h4>Mobile App Key</h4>
+                        <p>sk_mobile_swazi_hub_9z8y7x6w5v4u3t2s1r</p>
+                    </div>
+                    <div class="api-key-actions">
+                        <button class="copy" onclick="copyAPIKey(this)">📋 Copy</button>
+                        <button class="regenerate" onclick="regenerateKey('mobile')">🔄 Regenerate</button>
+                        <button class="delete" onclick="deleteKey('mobile')">🗑️ Delete</button>
+                    </div>
+                </div>
+
+                <button class="btn-outline" onclick="generateNewKey()">🔑 Generate New API Key</button>
+
+                <h3 style="margin: 30px 0 15px;">Webhook Endpoints</h3>
+                <div class="form-group">
+                    <label>Payment Webhook URL</label>
+                    <input type="url" value="https://api.swazimusichub.com/webhooks/payment">
+                </div>
+                <div class="form-group">
+                    <label>User Webhook URL</label>
+                    <input type="url" value="https://api.swazimusichub.com/webhooks/user">
+                </div>
+            </div>
+
+            <!-- Backup Settings -->
+            <div id="backup" class="settings-section" style="display: none;">
+                <div class="section-header">
+                    <h2><span class="icon">💾</span> Backup & Restore <span class="siswati-label"></span></h2>
+                </div>
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label>Auto-backup Frequency</label>
+                        <select>
+                            <option>Daily</option>
+                            <option>Weekly</option>
+                            <option>Monthly</option>
+                            <option>Manual Only</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Backup Retention (days)</label>
+                        <input type="number" value="30">
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label>Backup Location</label>
+                        <input type="text" value="s3://swazi-music-hub-backups/">
+                    </div>
+                </div>
+
+                <h3 style="margin: 30px 0 15px;">Available Backups</h3>
+                
+                <div class="backup-item">
+                    <div class="backup-info">
+                        <h4>Full Platform Backup</h4>
+                        <p>2025-03-15 03:00 AM</p>
+                        <span class="backup-size">2.3 GB</span>
+                    </div>
+                    <div class="backup-actions">
+                        <button class="restore" onclick="restoreBackup('full-0315')">↺ Restore</button>
+                        <button class="download" onclick="downloadBackup('full-0315')">📥 Download</button>
+                    </div>
+                </div>
+
+                <div class="backup-item">
+                    <div class="backup-info">
+                        <h4>Database Only</h4>
+                        <p>2025-03-14 03:00 AM</p>
+                        <span class="backup-size">456 MB</span>
+                    </div>
+                    <div class="backup-actions">
+                        <button class="restore" onclick="restoreBackup('db-0314')">↺ Restore</button>
+                        <button class="download" onclick="downloadBackup('db-0314')">📥 Download</button>
+                    </div>
+                </div>
+
+                <div class="backup-item">
+                    <div class="backup-info">
+                        <h4>Media Files</h4>
+                        <p>2025-03-13 03:00 AM</p>
+                        <span class="backup-size">1.8 GB</span>
+                    </div>
+                    <div class="backup-actions">
+                        <button class="restore" onclick="restoreBackup('media-0313')">↺ Restore</button>
+                        <button class="download" onclick="downloadBackup('media-0313')">📥 Download</button>
+                    </div>
+                </div>
+
+                <button class="btn-primary" style="margin-top: 20px;" onclick="createBackup()">🔄 Create Backup Now</button>
+            </div>
+
+            <!-- Danger Zone -->
+            <div class="danger-zone">
+                <h3><span class="icon">⚠️</span> Danger Zone <span class="siswati-label">(Indzawo Leyingozi)</span></h3>
+                
+                <div class="danger-item">
+                    <div class="danger-info">
+                        <h4>Clear All Cache</h4>
+                        <p>Clear all cached data and temporary files</p>
+                    </div>
+                    <button class="btn-danger" onclick="clearCache()">🗑️ Clear Cache</button>
+                </div>
+
+                <div class="danger-item">
+                    <div class="danger-info">
+                        <h4>Reset All Settings</h4>
+                        <p>Reset all platform settings to default values</p>
+                    </div>
+                    <button class="btn-danger" onclick="resetAllSettings()">↺ Reset All</button>
+                </div>
+
+                <div class="danger-item">
+                    <div class="danger-info">
+                        <h4>Delete Inactive Users</h4>
+                        <p>Permanently delete users inactive for over 2 years</p>
+                    </div>
+                    <button class="btn-danger" onclick="deleteInactiveUsers()">👥 Delete Users</button>
+                </div>
+
+                <div class="danger-item">
+                    <div class="danger-info">
+                        <h4>Export All Data</h4>
+                        <p>Export complete platform data (GDPR compliance)</p>
+                    </div>
+                    <button class="btn-danger" style="background: var(--teal-depths);" onclick="exportAllData()">📥 Export Data</button>
+                </div>
+
+                <div class="danger-item">
+                    <div class="danger-info">
+                        <h4>Delete Platform</h4>
+                        <p>Permanently delete the entire platform and all data</p>
+                    </div>
+                    <button class="btn-danger" style="background: #8b0000;" onclick="deletePlatform()">🔥 Delete Platform</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container"></div>
+
+    <script>
+        // Switch between settings sections
+        function switchSetting(section) {
+            // Hide all sections
+            document.querySelectorAll('.settings-section').forEach(el => {
+                el.style.display = 'none';
+            });
+            
+            // Show selected section
+            document.getElementById(section).style.display = 'block';
+            
+            // Update active tab
+            document.querySelectorAll('.settings-nav-item').forEach(el => {
+                el.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+        }
+
+        // Toggle switch
+        function toggleSetting(element) {
+            element.classList.toggle('active');
+            const setting = element.previousElementSibling.querySelector('h4').textContent;
+            const state = element.classList.contains('active') ? 'enabled' : 'disabled';
+            showToast(`${setting} ${state}`, 'info');
+        }
+
+        // Save all settings
+        function saveAllSettings() {
+            showToast('Saving all settings...', 'info');
+            setTimeout(() => {
+                showToast('All settings saved successfully!', 'success');
+            }, 1000);
+        }
+
+        // Reset settings
+        function resetSettings() {
+            if (confirm('Reset all unsaved changes?')) {
+                showToast('Settings reset to last saved', 'info');
+            }
+        }
+
+        // API Key actions
+        function copyAPIKey(button) {
+            const keyText = button.closest('.api-key-item').querySelector('p').textContent;
+            navigator.clipboard.writeText(keyText).then(() => {
+                showToast('API key copied to clipboard!', 'success');
+            });
+        }
+
+        function regenerateKey(keyName) {
+            if (confirm(`Regenerate ${keyName} API key?`)) {
+                showToast(`New ${keyName} API key generated`, 'success');
+            }
+        }
+
+        function deleteKey(keyName) {
+            if (confirm(`Are you sure you want to delete the ${keyName} API key?`)) {
+                showToast(`${keyName} API key deleted`, 'error');
+            }
+        }
+
+        function generateNewKey() {
+            showToast('Generating new API key...', 'info');
+            setTimeout(() => {
+                showToast('New API key generated!', 'success');
+            }, 1000);
+        }
+
+        // Backup actions
+        function restoreBackup(backupId) {
+            if (confirm(`Restore backup from ${backupId}? This will overwrite current data.`)) {
+                showToast(`Restoring backup...`, 'info');
+                setTimeout(() => {
+                    showToast('Backup restored successfully!', 'success');
+                }, 2000);
+            }
+        }
+
+        function downloadBackup(backupId) {
+            showToast(`Downloading backup...`, 'info');
+            setTimeout(() => {
+                showToast('Backup downloaded!', 'success');
+            }, 1500);
+        }
+
+        function createBackup() {
+            showToast('Creating backup...', 'info');
+            setTimeout(() => {
+                showToast('Backup created successfully!', 'success');
+            }, 2000);
+        }
+
+        // Log actions
+        function downloadLog(logType) {
+            showToast(`Downloading ${logType} log...`, 'info');
+        }
+
+        function viewLog(logType) {
+            showToast(`Viewing ${logType} log`, 'info');
+        }
+
+        // Custom role
+        function addCustomRole() {
+            showToast('Custom role creator opened', 'info');
+        }
+
+        // Danger zone actions
+        function clearCache() {
+            if (confirm('Clear all cached data?')) {
+                showToast('Cache cleared successfully!', 'success');
+            }
+        }
+
+        function resetAllSettings() {
+            if (confirm('Reset all settings to default? This cannot be undone.')) {
+                showToast('Settings reset to default', 'warning');
+            }
+        }
+
+        function deleteInactiveUsers() {
+            if (confirm('Delete all users inactive for 2+ years? This cannot be undone.')) {
+                showToast('Inactive users deleted', 'error');
+            }
+        }
+
+        function exportAllData() {
+            showToast('Preparing data export...', 'info');
+            setTimeout(() => {
+                showToast('Data export ready for download', 'success');
+            }, 2000);
+        }
+
+        function deletePlatform() {
+            if (confirm('⚠️ WARNING: This will permanently delete the ENTIRE platform. Type "DELETE" to confirm:')) {
+                const confirmation = prompt('Type "DELETE" to confirm:');
+                if (confirmation === 'DELETE') {
+                    showToast('Platform deletion initiated', 'error');
+                }
+            }
+        }
+
+        // Toast
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `<span>${type === 'success' ? '✅' : type === 'error' ? '❌' : type === 'warning' ? '⚠️' : 'ℹ️'}</span><span>${message}</span>`;
+            
+            document.querySelector('.toast-container').appendChild(toast);
+            
+            setTimeout(() => toast.classList.add('show'), 10);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Mobile menu
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('.mobile-nav').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        document.querySelector('.mobile-nav-close').addEventListener('click', function() {
+            document.querySelector('.mobile-nav').classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        // Active nav link
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        document.querySelectorAll('.nav-links a, .mobile-nav-links a').forEach(link => {
+            const href = link.getAttribute('href');
+            if (href === currentPage) {
+                link.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>

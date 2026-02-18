@@ -1,0 +1,1357 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swazi Music Hub - Artist Dashboard</title>
+    <style>
+        /* Complete index theme - same as all other pages */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f0e8;
+            color: #0a1c24;
+            line-height: 1.6;
+        }
+
+        :root {
+            --deep-night: #0a1c24;
+            --teal-depths: #1e4a5f;
+            --african-sky: #2a6b84;
+            --savanna-sun: #e6b17e;
+            --terracotta: #d4945a;
+            --cream: #f5f0e8;
+            --forest: #2e7a5e;
+            --earth: #8b5a3c;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', 'Segoe UI', sans-serif;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        /* Navigation - exactly same as index */
+        .navbar {
+            background: var(--deep-night);
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 800;
+            color: var(--savanna-sun);
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .logo span {
+            color: white;
+            font-size: 0.7em;
+            font-weight: 300;
+            margin-left: 5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1.1em;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--savanna-sun);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.1);
+            padding: 5px 15px 5px 5px;
+            border-radius: 40px;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: var(--savanna-sun);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--deep-night);
+            font-weight: bold;
+        }
+
+        .user-name {
+            color: white;
+            font-weight: 600;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.8em;
+            color: white;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--deep-night);
+            z-index: 1001;
+            padding: 80px 20px 20px;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-nav.active {
+            transform: translateX(0);
+        }
+
+        .mobile-nav-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2em;
+            color: white;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .mobile-nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.5em;
+            padding: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
+
+        .mobile-nav-links a:hover,
+        .mobile-nav-links a.active {
+            color: var(--savanna-sun);
+            padding-left: 25px;
+        }
+
+        /* Dashboard Layout */
+        .dashboard-container {
+            display: flex;
+            min-height: calc(100vh - 80px);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: white;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+            padding: 30px 0;
+            position: sticky;
+            top: 80px;
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+        }
+
+        .artist-profile {
+            text-align: center;
+            padding: 0 20px 20px;
+            border-bottom: 2px solid var(--cream);
+        }
+
+        .artist-avatar-large {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--teal-depths), var(--african-sky));
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            color: white;
+            border: 3px solid var(--savanna-sun);
+        }
+
+        .artist-profile h3 {
+            color: var(--deep-night);
+            margin-bottom: 5px;
+        }
+
+        .artist-profile p {
+            color: var(--savanna-sun);
+            font-weight: 600;
+        }
+
+        .sidebar-menu {
+            list-style: none;
+            padding: 20px;
+        }
+
+        .sidebar-menu li {
+            margin-bottom: 5px;
+        }
+
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            color: var(--earth);
+            text-decoration: none;
+            border-radius: 12px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+
+        .sidebar-menu a:hover,
+        .sidebar-menu a.active {
+            background: var(--cream);
+            color: var(--deep-night);
+            transform: translateX(5px);
+        }
+
+        .sidebar-menu a.active {
+            background: var(--savanna-sun);
+            color: var(--deep-night);
+        }
+
+        .menu-icon {
+            font-size: 1.3em;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            background: var(--cream);
+        }
+
+        /* Welcome Banner */
+        .welcome-banner {
+            background: linear-gradient(135deg, var(--teal-depths), var(--deep-night));
+            border-radius: 20px;
+            padding: 30px;
+            color: white;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .welcome-text h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .welcome-text h1 span {
+            color: var(--savanna-sun);
+        }
+
+        .upload-btn {
+            background: var(--savanna-sun);
+            color: var(--deep-night);
+            border: none;
+            padding: 15px 35px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .upload-btn:hover {
+            background: var(--terracotta);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            border-bottom-color: var(--savanna-sun);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: var(--cream);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8em;
+        }
+
+        .stat-change {
+            font-size: 0.9em;
+            padding: 5px 10px;
+            border-radius: 20px;
+            background: #e8f5e9;
+            color: var(--forest);
+        }
+
+        .stat-change.negative {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .stat-number {
+            font-size: 2.2em;
+            font-weight: 800;
+            color: var(--deep-night);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: var(--earth);
+            font-size: 0.95em;
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 40px 0 20px;
+        }
+
+        .section-header h2 {
+            font-size: 1.8em;
+            color: var(--deep-night);
+        }
+
+        .view-all {
+            color: var(--teal-depths);
+            text-decoration: none;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* Tracks Table */
+        .tracks-table {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        .table-header {
+            display: grid;
+            grid-template-columns: 50px 2fr 1fr 1fr 1fr 100px;
+            padding: 15px 20px;
+            background: var(--cream);
+            font-weight: 700;
+            color: var(--deep-night);
+            border-bottom: 2px solid var(--savanna-sun);
+        }
+
+        .table-row {
+            display: grid;
+            grid-template-columns: 50px 2fr 1fr 1fr 1fr 100px;
+            padding: 15px 20px;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            transition: background 0.3s;
+        }
+
+        .table-row:hover {
+            background: var(--cream);
+        }
+
+        .track-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .track-thumb {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--teal-depths), var(--african-sky));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .track-title {
+            font-weight: 600;
+        }
+
+        .track-artist {
+            color: var(--earth);
+            font-size: 0.9em;
+        }
+
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-published {
+            background: #e8f5e9;
+            color: var(--forest);
+        }
+
+        .status-draft {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .status-pending {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .action-btn {
+            background: transparent;
+            border: none;
+            font-size: 1.2em;
+            cursor: pointer;
+            margin: 0 5px;
+            color: var(--earth);
+            transition: color 0.3s;
+        }
+
+        .action-btn:hover {
+            color: var(--savanna-sun);
+        }
+
+        /* Albums Grid */
+        .albums-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .album-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .album-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .album-cover {
+            height: 180px;
+            background: linear-gradient(135deg, var(--teal-depths), var(--african-sky));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            color: white;
+            position: relative;
+        }
+
+        .album-actions {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            gap: 5px;
+        }
+
+        .album-action-btn {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(5px);
+            border: none;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .album-action-btn:hover {
+            background: var(--savanna-sun);
+            color: var(--deep-night);
+        }
+
+        .album-info {
+            padding: 20px;
+        }
+
+        .album-info h4 {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+
+        .album-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--earth);
+            font-size: 0.9em;
+        }
+
+        /* Earnings Chart */
+        .earnings-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        .chart-container {
+            height: 250px;
+            margin-top: 20px;
+            display: flex;
+            align-items: flex-end;
+            gap: 15px;
+        }
+
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(to top, var(--teal-depths), var(--african-sky));
+            border-radius: 8px 8px 0 0;
+            min-height: 50px;
+            position: relative;
+            transition: height 0.3s;
+        }
+
+        .chart-bar:hover {
+            background: var(--savanna-sun);
+        }
+
+        .chart-bar::after {
+            content: attr(data-value);
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.85em;
+            color: var(--earth);
+        }
+
+        .chart-labels {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .chart-label {
+            flex: 1;
+            text-align: center;
+            color: var(--earth);
+            font-size: 0.9em;
+        }
+
+        /* Recent Activity */
+        .activity-list {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--cream);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .activity-details {
+            flex: 1;
+        }
+
+        .activity-details p {
+            margin-bottom: 3px;
+        }
+
+        .activity-time {
+            color: var(--earth);
+            font-size: 0.85em;
+        }
+
+        /* Upload Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 24px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .modal-header h2 {
+            color: var(--deep-night);
+        }
+
+        .close-modal {
+            font-size: 2em;
+            cursor: pointer;
+            color: var(--earth);
+        }
+
+        .upload-form .form-group {
+            margin-bottom: 25px;
+        }
+
+        .upload-form label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--deep-night);
+        }
+
+        .upload-form input,
+        .upload-form select,
+        .upload-form textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid var(--cream);
+            border-radius: 12px;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+
+        .upload-form input:focus,
+        .upload-form select:focus,
+        .upload-form textarea:focus {
+            outline: none;
+            border-color: var(--savanna-sun);
+        }
+
+        .file-upload {
+            border: 2px dashed var(--cream);
+            padding: 40px;
+            text-align: center;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .file-upload:hover {
+            border-color: var(--savanna-sun);
+            background: var(--cream);
+        }
+
+        .file-upload-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .modal-footer {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            margin-top: 30px;
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 2000;
+        }
+
+        .toast {
+            background: white;
+            color: var(--deep-night);
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateX(400px);
+            transition: transform 0.3s;
+            margin-top: 10px;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--forest);
+        }
+
+        .toast.error {
+            border-left: 4px solid #ff6b6b;
+        }
+
+        .toast.info {
+            border-left: 4px solid var(--savanna-sun);
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--cream);
+            border-top-color: var(--savanna-sun);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .siswati-label {
+            font-style: italic;
+            color: var(--savanna-sun);
+            font-size: 0.9em;
+            margin-left: 5px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 220px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .dashboard-container {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                position: static;
+                height: auto;
+            }
+
+            .table-header {
+                display: none;
+            }
+
+            .table-row {
+                grid-template-columns: 1fr;
+                gap: 10px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation - exactly same as index but with user menu -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">SWAZI MUSIC HUB <span>siSwati to the world</span></a>
+        
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="music.html">Music</a>
+            <a href="events.html">Events</a>
+            <div class="user-menu" onclick="showToast('User menu coming soon!', 'info')">
+                <div class="user-avatar">JB</div>
+                <span class="user-name">Jahboy</span>
+            </div>
+        </div>
+        
+        <button class="mobile-menu-btn">☰</button>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav">
+        <button class="mobile-nav-close">&times;</button>
+        <div class="mobile-nav-links">
+            <a href="index.html">🏠 Home</a>
+            <a href="music.html">🎵 Music</a>
+            <a href="events.html">📅 Events</a>
+            <a href="#" class="active">📊 Dashboard</a>
+            <a href="signin.html" class="btn-primary" style="text-align: center;">🚪 Logout</a>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Dashboard Container -->
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="artist-profile">
+                <div class="artist-avatar-large">🎤</div>
+                <h3>Jahboy</h3>
+                <p>Afro Pop / Reggae</p>
+                <p style="font-size: 0.9em; margin-top: 5px;">Member since 2023</p>
+            </div>
+            
+            <ul class="sidebar-menu">
+                <li><a href="#" class="active"><span class="menu-icon">📊</span> Overview</a></li>
+                <li><a href="#" onclick="showToast('My Music section', 'info')"><span class="menu-icon">🎵</span> My Music</a></li>
+                <li><a href="#" onclick="showToast('Albums section', 'info')"><span class="menu-icon">💿</span> Albums</a></li>
+                <li><a href="#" onclick="showToast('Analytics section', 'info')"><span class="menu-icon">📈</span> Analytics</a></li>
+                <li><a href="#" onclick="showToast('Earnings section', 'info')"><span class="menu-icon">💰</span> Earnings</a></li>
+                <li><a href="#" onclick="showToast('Fans section', 'info')"><span class="menu-icon">👥</span> Fans</a></li>
+                <li><a href="#" onclick="showToast('Promotions section', 'info')"><span class="menu-icon">📢</span> Promotions</a></li>
+                <li><a href="#" onclick="showToast('Settings section', 'info')"><span class="menu-icon">⚙️</span> Settings</a></li>
+            </ul>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Welcome Banner -->
+            <div class="welcome-banner">
+                <div class="welcome-text">
+                    <h1>Sanibonani, <span>Jahboy!</span></h1>
+                    <p>Your music reached 12,345 listeners this week 🎉</p>
+                </div>
+                <button class="upload-btn" onclick="openUploadModal()">
+                    <span>⬆️</span> Faka Ingoma (Upload Music)
+                </button>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon">🎵</div>
+                        <span class="stat-change">+12</span>
+                    </div>
+                    <div class="stat-number">45</div>
+                    <div class="stat-label">Total Tracks</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon">👥</div>
+                        <span class="stat-change">+234</span>
+                    </div>
+                    <div class="stat-number">12.4K</div>
+                    <div class="stat-label">Followers</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon">▶️</div>
+                        <span class="stat-change">+1.2K</span>
+                    </div>
+                    <div class="stat-number">45.6K</div>
+                    <div class="stat-label">Monthly Streams</div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon">💰</div>
+                        <span class="stat-change positive">+E234</span>
+                    </div>
+                    <div class="stat-number">E1,890</div>
+                    <div class="stat-label">This Month</div>
+                </div>
+            </div>
+
+            <!-- Recent Tracks -->
+            <div class="section-header">
+                <h2>Recent Tracks <span class="siswati-label">(Tingoma Takho)</span></h2>
+                <a href="#" class="view-all" onclick="showToast('View all tracks', 'info')">Bona konkhe →</a>
+            </div>
+
+            <div class="tracks-table">
+                <div class="table-header">
+                    <div>#</div>
+                    <div>Track</div>
+                    <div>Plays</div>
+                    <div>Revenue</div>
+                    <div>Status</div>
+                    <div>Actions</div>
+                </div>
+                
+                <div class="table-row">
+                    <div>1</div>
+                    <div class="track-info">
+                        <div class="track-thumb">🎵</div>
+                        <div>
+                            <div class="track-title">Ngiyashisa</div>
+                            <div class="track-artist">Jahboy</div>
+                        </div>
+                    </div>
+                    <div>12,345</div>
+                    <div>E370</div>
+                    <div><span class="status-badge status-published">Published</span></div>
+                    <div>
+                        <button class="action-btn" onclick="showToast('Edit track', 'info')">✏️</button>
+                        <button class="action-btn" onclick="showToast('View stats', 'info')">📊</button>
+                        <button class="action-btn" onclick="showToast('More options', 'info')">⋯</button>
+                    </div>
+                </div>
+                
+                <div class="table-row">
+                    <div>2</div>
+                    <div class="track-info">
+                        <div class="track-thumb">🎵</div>
+                        <div>
+                            <div class="track-title">Siyalilanda</div>
+                            <div class="track-artist">Jahboy ft. Bholoja</div>
+                        </div>
+                    </div>
+                    <div>8,901</div>
+                    <div>E267</div>
+                    <div><span class="status-badge status-published">Published</span></div>
+                    <div>
+                        <button class="action-btn" onclick="showToast('Edit track', 'info')">✏️</button>
+                        <button class="action-btn" onclick="showToast('View stats', 'info')">📊</button>
+                        <button class="action-btn" onclick="showToast('More options', 'info')">⋯</button>
+                    </div>
+                </div>
+                
+                <div class="table-row">
+                    <div>3</div>
+                    <div class="track-info">
+                        <div class="track-thumb">🎵</div>
+                        <div>
+                            <div class="track-title">New Vibes</div>
+                            <div class="track-artist">Jahboy</div>
+                        </div>
+                    </div>
+                    <div>0</div>
+                    <div>E0</div>
+                    <div><span class="status-badge status-draft">Draft</span></div>
+                    <div>
+                        <button class="action-btn" onclick="showToast('Edit track', 'info')">✏️</button>
+                        <button class="action-btn" onclick="showToast('Publish', 'info')">🚀</button>
+                        <button class="action-btn" onclick="showToast('Delete', 'info')">🗑️</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Albums -->
+            <div class="section-header">
+                <h2>Your Albums <span class="siswati-label">(Tifihlobo Takho)</span></h2>
+                <a href="#" class="view-all" onclick="showToast('Create new album', 'info')">➕ Yenta ifihlobo</a>
+            </div>
+
+            <div class="albums-grid">
+                <div class="album-card">
+                    <div class="album-cover">
+                        🎤
+                        <div class="album-actions">
+                            <button class="album-action-btn" onclick="showToast('Edit album', 'info')">✏️</button>
+                            <button class="album-action-btn" onclick="showToast('Share album', 'info')">📤</button>
+                        </div>
+                    </div>
+                    <div class="album-info">
+                        <h4>The King</h4>
+                        <div class="album-meta">
+                            <span>2024</span>
+                            <span>14 tracks</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="album-card">
+                    <div class="album-cover">
+                        🎵
+                        <div class="album-actions">
+                            <button class="album-action-btn" onclick="showToast('Edit album', 'info')">✏️</button>
+                            <button class="album-action-btn" onclick="showToast('Share album', 'info')">📤</button>
+                        </div>
+                    </div>
+                    <div class="album-info">
+                        <h4>Rise Up</h4>
+                        <div class="album-meta">
+                            <span>2023</span>
+                            <span>10 tracks</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="album-card">
+                    <div class="album-cover">
+                        🎸
+                        <div class="album-actions">
+                            <button class="album-action-btn" onclick="showToast('Edit album', 'info')">✏️</button>
+                            <button class="album-action-btn" onclick="showToast('Share album', 'info')">📤</button>
+                        </div>
+                    </div>
+                    <div class="album-info">
+                        <h4>First Steps</h4>
+                        <div class="album-meta">
+                            <span>2022</span>
+                            <span>8 tracks</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Earnings Chart -->
+            <div class="earnings-card">
+                <div class="section-header">
+                    <h2>Earnings Overview <span class="siswati-label">(Male eMali)</span></h2>
+                    <select class="filter-select" style="padding: 8px 15px; border-radius: 20px; border: 2px solid var(--cream);" onchange="showToast('Chart updated', 'info')">
+                        <option>Last 7 days</option>
+                        <option>Last 30 days</option>
+                        <option>Last 3 months</option>
+                        <option>Last year</option>
+                    </select>
+                </div>
+                
+                <div class="chart-container">
+                    <div class="chart-bar" style="height: 150px;" data-value="E234"></div>
+                    <div class="chart-bar" style="height: 200px;" data-value="E345"></div>
+                    <div class="chart-bar" style="height: 280px;" data-value="E456"></div>
+                    <div class="chart-bar" style="height: 180px;" data-value="E289"></div>
+                    <div class="chart-bar" style="height: 320px;" data-value="E512"></div>
+                    <div class="chart-bar" style="height: 250px;" data-value="E401"></div>
+                    <div class="chart-bar" style="height: 290px;" data-value="E467"></div>
+                </div>
+                
+                <div class="chart-labels">
+                    <span class="chart-label">Mon</span>
+                    <span class="chart-label">Tue</span>
+                    <span class="chart-label">Wed</span>
+                    <span class="chart-label">Thu</span>
+                    <span class="chart-label">Fri</span>
+                    <span class="chart-label">Sat</span>
+                    <span class="chart-label">Sun</span>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="section-header">
+                <h2>Recent Activity <span class="siswati-label">(Umsebenti Wakho)</span></h2>
+            </div>
+
+            <div class="activity-list">
+                <div class="activity-item">
+                    <div class="activity-icon">❤️</div>
+                    <div class="activity-details">
+                        <p><strong>Thobile Mkhwanazi</strong> followed you</p>
+                        <div class="activity-time">5 minutes ago</div>
+                    </div>
+                </div>
+                
+                <div class="activity-item">
+                    <div class="activity-icon">▶️</div>
+                    <div class="activity-details">
+                        <p><strong>Ngiyashisa</strong> reached 10,000 streams</p>
+                        <div class="activity-time">2 hours ago</div>
+                    </div>
+                </div>
+                
+                <div class="activity-item">
+                    <div class="activity-icon">💰</div>
+                    <div class="activity-details">
+                        <p>New earnings: <strong>E234.56</strong> added to your balance</p>
+                        <div class="activity-time">Yesterday</div>
+                    </div>
+                </div>
+                
+                <div class="activity-item">
+                    <div class="activity-icon">📝</div>
+                    <div class="activity-details">
+                        <p>Your track <strong>New Vibes</strong> is ready for review</p>
+                        <div class="activity-time">2 days ago</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upload Modal -->
+    <div class="modal" id="uploadModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Faka Ingoma (Upload Music)</h2>
+                <span class="close-modal" onclick="closeUploadModal()">&times;</span>
+            </div>
+            
+            <form class="upload-form">
+                <div class="file-upload" onclick="showToast('File selector would open', 'info')">
+                    <div class="file-upload-icon">⬆️</div>
+                    <p>Click to select audio file</p>
+                    <p style="font-size: 0.9em; color: var(--earth);">MP3, WAV, or FLAC (max 50MB)</p>
+                </div>
+                
+                <div class="form-group">
+                    <label>Track Title <span class="siswati-label">(Sihloko)</span></label>
+                    <input type="text" placeholder="e.g., Ngiyashisa" value="New Vibes">
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Genre <span class="siswati-label">(Luhlobo)</span></label>
+                        <select>
+                            <option>Afro Pop</option>
+                            <option>Traditional</option>
+                            <option>Gospel</option>
+                            <option>Hip Hop</option>
+                            <option>Jazz</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Language <span class="siswati-label">(Lulwimi)</span></label>
+                        <select>
+                            <option>siSwati</option>
+                            <option>English</option>
+                            <option>Zulu</option>
+                            <option>Other</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Album (Optional)</label>
+                    <select>
+                        <option>Single (not in album)</option>
+                        <option>The King</option>
+                        <option>Rise Up</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Release Date</label>
+                    <input type="date" value="2025-02-15">
+                </div>
+                
+                <div class="form-group">
+                    <label>Track Credits <span class="siswati-label">(Featuring)</span></label>
+                    <input type="text" placeholder="e.g., ft. Bholoja">
+                </div>
+                
+                <div class="form-group">
+                    <label>Lyrics (Optional)</label>
+                    <textarea rows="4" placeholder="Enter song lyrics..."></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Price (if download)</label>
+                        <input type="number" placeholder="E10.00">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Status</label>
+                        <select>
+                            <option>Publish now</option>
+                            <option>Save as draft</option>
+                            <option>Schedule</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn-secondary" onclick="closeUploadModal()">Cancel</button>
+                    <button type="button" class="btn-primary" onclick="showToast('Track uploaded successfully!', 'success'); closeUploadModal()">Upload Track</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container"></div>
+
+    <script>
+        // Navigation functions
+        function navigateTo(page) {
+            document.querySelector('.loading-overlay').classList.add('active');
+            setTimeout(() => { window.location.href = page; }, 300);
+        }
+
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `<span>${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}</span><span>${message}</span>`;
+            
+            document.querySelector('.toast-container').appendChild(toast);
+            
+            setTimeout(() => toast.classList.add('show'), 10);
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Mobile menu
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('.mobile-nav').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        document.querySelector('.mobile-nav-close').addEventListener('click', function() {
+            document.querySelector('.mobile-nav').classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        // Upload Modal
+        function openUploadModal() {
+            document.getElementById('uploadModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeUploadModal() {
+            document.getElementById('uploadModal').classList.remove('active');
+            document.body.style.overflow = '';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('uploadModal');
+            if (event.target === modal) {
+                closeUploadModal();
+            }
+        }
+
+        // Active nav link
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        document.querySelectorAll('.nav-links a, .mobile-nav-links a').forEach(link => {
+            const href = link.getAttribute('href');
+            if (href === currentPage) {
+                link.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>

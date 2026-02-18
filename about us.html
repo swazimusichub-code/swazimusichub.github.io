@@ -1,0 +1,1084 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swazi Music Hub - About Us / Mayelana Natsi</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f0e8;
+            color: #0a1c24;
+            line-height: 1.6;
+        }
+
+        /* Color System */
+        :root {
+            --deep-night: #0a1c24;
+            --teal-depths: #1e4a5f;
+            --african-sky: #2a6b84;
+            --savanna-sun: #e6b17e;
+            --terracotta: #d4945a;
+            --cream: #f5f0e8;
+            --forest: #2e7a5e;
+            --earth: #8b5a3c;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', 'Segoe UI', sans-serif;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .section-title {
+            font-size: 2.8em;
+            color: var(--deep-night);
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: var(--savanna-sun);
+            border-radius: 2px;
+        }
+
+        .section-title.center::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-subtitle {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1.4em;
+            color: var(--teal-depths);
+            margin-bottom: 20px;
+        }
+
+        .siswati-label {
+            font-style: italic;
+            color: var(--savanna-sun);
+            font-size: 0.9em;
+            margin-left: 5px;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: var(--deep-night);
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 800;
+            color: var(--savanna-sun);
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .logo span {
+            color: white;
+            font-size: 0.7em;
+            font-weight: 300;
+            margin-left: 5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1.1em;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--savanna-sun);
+        }
+
+        .btn-primary {
+            background: var(--savanna-sun);
+            color: var(--deep-night);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: var(--terracotta);
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.8em;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .about-hero {
+            background: linear-gradient(135deg, var(--deep-night) 0%, var(--teal-depths) 100%);
+            color: white;
+            padding: 80px 5%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-hero::before {
+            content: "♫";
+            position: absolute;
+            top: -150px;
+            right: -50px;
+            font-size: 400px;
+            opacity: 0.1;
+            transform: rotate(15deg);
+            color: var(--savanna-sun);
+        }
+
+        .about-hero::after {
+            content: "🎵";
+            position: absolute;
+            bottom: -100px;
+            left: -30px;
+            font-size: 300px;
+            opacity: 0.1;
+            transform: rotate(-10deg);
+            color: var(--savanna-sun);
+        }
+
+        .about-hero h1 {
+            font-size: 4em;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .about-hero h1 span {
+            color: var(--savanna-sun);
+            font-style: italic;
+        }
+
+        .about-hero p {
+            font-size: 1.3em;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+            position: relative;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 50px;
+            justify-content: center;
+            margin-top: 50px;
+            position: relative;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: 800;
+            color: var(--savanna-sun);
+        }
+
+        .stat-label {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        /* Story Section */
+        .story-section {
+            padding: 80px 5%;
+            background: white;
+        }
+
+        .story-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .story-content h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color: var(--deep-night);
+        }
+
+        .story-content p {
+            font-size: 1.1em;
+            color: var(--earth);
+            margin-bottom: 20px;
+        }
+
+        .story-image {
+            background: linear-gradient(135deg, var(--teal-depths), var(--african-sky));
+            border-radius: 20px;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8em;
+            color: white;
+            box-shadow: 0 30px 40px rgba(0,0,0,0.1);
+        }
+
+        /* Mission & Vision */
+        .mission-vision {
+            padding: 80px 5%;
+            background: var(--cream);
+        }
+
+        .mv-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+
+        .mv-card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 30px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            border-bottom: 4px solid var(--savanna-sun);
+        }
+
+        .mv-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 40px rgba(0,0,0,0.1);
+        }
+
+        .mv-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+            color: var(--savanna-sun);
+        }
+
+        .mv-card h3 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: var(--deep-night);
+        }
+
+        .mv-card p {
+            color: var(--earth);
+            font-size: 1.1em;
+        }
+
+        /* Values Section */
+        .values-section {
+            padding: 80px 5%;
+            background: white;
+            text-align: center;
+        }
+
+        .values-grid {
+            max-width: 1200px;
+            margin: 50px auto 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .value-card {
+            background: var(--cream);
+            padding: 40px 30px;
+            border-radius: 16px;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--savanna-sun);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.1);
+        }
+
+        .value-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .value-card h4 {
+            font-size: 1.4em;
+            margin-bottom: 15px;
+            color: var(--deep-night);
+        }
+
+        .value-card p {
+            color: var(--earth);
+        }
+
+        /* Team Section */
+        .team-section {
+            padding: 80px 5%;
+            background: linear-gradient(135deg, var(--teal-depths), var(--deep-night));
+            color: white;
+            text-align: center;
+        }
+
+        .team-section .section-title {
+            color: white;
+        }
+
+        .team-section .section-title::after {
+            background: var(--savanna-sun);
+        }
+
+        .team-grid {
+            max-width: 1200px;
+            margin: 50px auto 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        .team-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255,255,255,0.15);
+        }
+
+        .team-image {
+            height: 280px;
+            background: linear-gradient(135deg, var(--savanna-sun), var(--terracotta));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5em;
+        }
+
+        .team-info {
+            padding: 25px;
+        }
+
+        .team-info h4 {
+            font-size: 1.5em;
+            margin-bottom: 5px;
+            color: var(--savanna-sun);
+        }
+
+        .team-info p {
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+
+        .team-social {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .team-social a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.3em;
+            transition: all 0.3s;
+        }
+
+        .team-social a:hover {
+            color: var(--savanna-sun);
+            transform: scale(1.2);
+        }
+
+        /* Impact Stats */
+        .impact-section {
+            padding: 80px 5%;
+            background: white;
+            text-align: center;
+        }
+
+        .impact-grid {
+            max-width: 1200px;
+            margin: 50px auto 0;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .impact-card {
+            background: var(--cream);
+            padding: 40px 20px;
+            border-radius: 16px;
+            transition: all 0.3s;
+        }
+
+        .impact-card:hover {
+            transform: scale(1.05);
+            background: var(--savanna-sun);
+        }
+
+        .impact-card:hover .impact-number {
+            color: var(--deep-night);
+        }
+
+        .impact-number {
+            font-size: 3em;
+            font-weight: 800;
+            color: var(--teal-depths);
+            margin-bottom: 10px;
+            transition: color 0.3s;
+        }
+
+        .impact-label {
+            font-size: 1.1em;
+            color: var(--earth);
+        }
+
+        /* Testimonials */
+        .testimonials-section {
+            padding: 80px 5%;
+            background: var(--cream);
+            text-align: center;
+        }
+
+        .testimonials-grid {
+            max-width: 1200px;
+            margin: 50px auto 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            position: relative;
+            text-align: left;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 5em;
+            color: var(--savanna-sun);
+            opacity: 0.2;
+            font-family: serif;
+        }
+
+        .testimonial-text {
+            font-size: 1.1em;
+            color: var(--earth);
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .author-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--teal-depths), var(--african-sky));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8em;
+            color: white;
+        }
+
+        .author-info h5 {
+            font-size: 1.2em;
+            color: var(--deep-night);
+            margin-bottom: 5px;
+        }
+
+        .author-info p {
+            color: var(--earth);
+            font-size: 0.9em;
+        }
+
+        /* Partners Section */
+        .partners-section {
+            padding: 60px 5%;
+            background: white;
+            text-align: center;
+        }
+
+        .partners-grid {
+            max-width: 1000px;
+            margin: 40px auto 0;
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .partner-logo {
+            width: 120px;
+            height: 120px;
+            background: var(--cream);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            font-weight: bold;
+            color: var(--teal-depths);
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .partner-logo:hover {
+            transform: scale(1.1);
+            border-color: var(--savanna-sun);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 80px 5%;
+            background: linear-gradient(135deg, var(--deep-night), var(--teal-depths));
+            color: white;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 1.3em;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-large {
+            padding: 16px 50px;
+            font-size: 1.2em;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--deep-night);
+            color: white;
+            padding: 60px 5% 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            color: var(--savanna-sun);
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        .footer-col a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            transition: color 0.3s;
+        }
+
+        .footer-col a:hover {
+            color: var(--savanna-sun);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+            font-size: 1.5em;
+        }
+
+        .social-links a {
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--savanna-sun);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9em;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .about-hero h1 {
+                font-size: 2.5em;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .story-container {
+                grid-template-columns: 1fr;
+            }
+
+            .story-image {
+                order: -1;
+            }
+
+            .mission-vision .mv-container {
+                grid-template-columns: 1fr;
+            }
+
+            .impact-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .section-title {
+                font-size: 2.2em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .impact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">SWAZI MUSIC HUB <span>siSwati to the world</span></a>
+        
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="#" class="active">About</a>
+            <a href="#">Artists</a>
+            <a href="#">Music</a>
+            <a href="#">Events</a>
+            <a href="signin.html" class="btn-primary">Sign In</a>
+        </div>
+        
+        <div class="mobile-menu-btn">☰</div>
+    </nav>
+
+    <!-- About Hero Section -->
+    <section class="about-hero">
+        <h1>Mayelana <span>Natsi</span></h1>
+        <p>Discover the story behind Swazi Music Hub - preserving heritage, empowering artists, and sharing siSwati music with the world.</p>
+        
+        <div class="hero-stats">
+            <div class="stat-item">
+                <div class="stat-number">2023</div>
+                <div class="stat-label">Year Founded</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">500+</div>
+                <div class="stat-label">Artists</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">10K+</div>
+                <div class="stat-label">Tracks</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">50K+</div>
+                <div class="stat-label">Listeners</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Story -->
+    <section class="story-section">
+        <div class="story-container">
+            <div class="story-content">
+                <h2 class="section-title">Lendzaba Yetfu</h2>
+                <p class="section-subtitle">Our Story <span class="siswati-label">(Indzaba yetfu)</span></p>
+                
+                <p>Swazi Music Hub was born from a simple observation: Swazi music, despite its richness and diversity, lacked a dedicated digital home. Traditional rhythms, contemporary beats, and the voices of Eswatini's talented artists were scattered across platforms, often losing their cultural context.</p>
+                
+                <p>In 2023, a group of music lovers, tech entrepreneurs, and cultural preservationists came together with a vision. What if we could create a space where siSwati music isn't just streamed, but celebrated? Where artists get fair compensation, and listeners can discover the full spectrum of Swazi musical expression?</p>
+                
+                <p>Today, that vision is reality. Swazi Music Hub has grown from a small startup to the premier destination for Swazi music, connecting artists with fans across Eswatini and around the globe. We're proud to be part of the story of Swazi music, and we're just getting started.</p>
+            </div>
+            
+            <div class="story-image">
+                🎵
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission & Vision -->
+    <section class="mission-vision">
+        <div class="mv-container">
+            <div class="mv-card">
+                <div class="mv-icon">🎯</div>
+                <h3>Umsebenti Wetfu</h3>
+                <p class="siswati-label">Our Mission</p>
+                <p>To empower Swazi artists with cutting-edge digital tools and global distribution channels while preserving the authenticity and richness of siSwati music for worldwide audiences. We believe that every artist deserves a platform that respects their craft and connects them with listeners who will appreciate their unique voice.</p>
+            </div>
+            
+            <div class="mv-card">
+                <div class="mv-icon">👁️</div>
+                <h3>Lumbono Wetfu</h3>
+                <p class="siswati-label">Our Vision</p>
+                <p>To be the world's premier digital destination for Swazi music, creating a global ecosystem where siSwati musical heritage thrives, evolves, and inspires generations across borders. We envision a future where Swazi music is recognized and celebrated on every continent, and where our artists can build sustainable careers from their passion.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Values -->
+    <section class="values-section">
+        <h2 class="section-title center">Lizinga Letfu</h2>
+        <p class="section-subtitle">Our Core Values <span class="siswati-label">(Emagugu etfu)</span></p>
+        
+        <div class="values-grid">
+            <div class="value-card">
+                <div class="value-icon">🌟</div>
+                <h4>Authenticity</h4>
+                <p>We preserve and promote genuine Swazi musical expression, respecting traditional forms while embracing innovation.</p>
+            </div>
+            
+            <div class="value-card">
+                <div class="value-icon">🤝</div>
+                <h4>Community</h4>
+                <p>We build bridges between artists, fans, and cultural institutions, creating a supportive ecosystem for Swazi music.</p>
+            </div>
+            
+            <div class="value-card">
+                <div class="value-icon">⚖️</div>
+                <h4>Fairness</h4>
+                <p>We ensure artists receive equitable compensation and maintain control over their work and creative direction.</p>
+            </div>
+            
+            <div class="value-card">
+                <div class="value-icon">💡</div>
+                <h4>Innovation</h4>
+                <p>We continuously evolve our platform to meet the needs of artists and listeners in a changing digital landscape.</p>
+            </div>
+            
+            <div class="value-card">
+                <div class="value-icon">🌍</div>
+                <h4>Heritage</h4>
+                <p>We're committed to preserving Swazi musical traditions for future generations through digital archiving and education.</p>
+            </div>
+            
+            <div class="value-card">
+                <div class="value-icon">🚀</div>
+                <h4>Growth</h4>
+                <p>We create opportunities for artists to develop their careers and reach new audiences globally.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team-section">
+        <h2 class="section-title center">Bahlali Betfu</h2>
+        <p class="section-subtitle" style="color: var(--savanna-sun);">Our Team <span class="siswati-label" style="color: white;">(Tihloko tetfu)</span></p>
+        
+        <div class="team-grid">
+            <div class="team-card">
+                <div class="team-image">👤</div>
+                <div class="team-info">
+                    <h4>Musa Dlamini</h4>
+                    <p>Founder & CEO</p>
+                    <p style="font-size: 0.95em;">Former music producer with 15 years in the Swazi music industry</p>
+                    <div class="team-social">
+                        <a href="#">in</a>
+                        <a href="#">🐦</a>
+                        <a href="#">📧</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="team-card">
+                <div class="team-image">👤</div>
+                <div class="team-info">
+                    <h4>Thandiwe Nkosi</h4>
+                    <p>Head of Artist Relations</p>
+                    <p style="font-size: 0.95em;">Singer-songwriter and advocate for artist rights in Eswatini</p>
+                    <div class="team-social">
+                        <a href="#">in</a>
+                        <a href="#">🐦</a>
+                        <a href="#">📧</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="team-card">
+                <div class="team-image">👤</div>
+                <div class="team-info">
+                    <h4>Sipho Mamba</h4>
+                    <p>Technical Director</p>
+                    <p style="font-size: 0.95em;">Full-stack developer and digital preservation specialist</p>
+                    <div class="team-social">
+                        <a href="#">in</a>
+                        <a href="#">🐦</a>
+                        <a href="#">📧</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="team-card">
+                <div class="team-image">👤</div>
+                <div class="team-info">
+                    <h4>Nomvula Shongwe</h4>
+                    <p>Cultural Heritage Curator</p>
+                    <p style="font-size: 0.95em;">Ethnomusicologist specializing in Swazi traditional music</p>
+                    <div class="team-social">
+                        <a href="#">in</a>
+                        <a href="#">🐦</a>
+                        <a href="#">📧</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Stats -->
+    <section class="impact-section">
+        <h2 class="section-title center">Umthelela Wetfu</h2>
+        <p class="section-subtitle">Our Impact <span class="siswati-label">(Umthelela wetfu emphakatsini)</span></p>
+        
+        <div class="impact-grid">
+            <div class="impact-card">
+                <div class="impact-number">E2.5M+</div>
+                <div class="impact-label">Paid to Artists</div>
+            </div>
+            
+            <div class="impact-card">
+                <div class="impact-number">150+</div>
+                <div class="impact-label">Live Events</div>
+            </div>
+            
+            <div class="impact-card">
+                <div class="impact-number">25</div>
+                <div class="impact-label">Countries Reached</div>
+            </div>
+            
+            <div class="impact-card">
+                <div class="impact-number">1,000+</div>
+                <div class="impact-label">Tracks Preserved</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials-section">
+        <h2 class="section-title center">Lokushivo Ngatsi</h2>
+        <p class="section-subtitle">What Artists Say <span class="siswati-label">(Lokushivo baculi)</span></p>
+        
+        <div class="testimonials-grid">
+            <div class="testimonial-card">
+                <p class="testimonial-text">"Swazi Music Hub changed everything for my career. I went from playing local gigs to having listeners in Europe and the US. The platform understands our music and treats artists with respect."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">🎤</div>
+                    <div class="author-info">
+                        <h5>Jahboy</h5>
+                        <p>Afro Pop Artist</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <p class="testimonial-text">"As someone preserving traditional Sibhaca music, I was worried about finding an audience online. Swazi Music Hub created a space where our cultural heritage is valued and celebrated."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">🥁</div>
+                    <div class="author-info">
+                        <h5>Mswakayicile</h5>
+                        <p>Traditional Artist</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <p class="testimonial-text">"The analytics and fan engagement tools help me understand my audience. I've grown my following and actually earn sustainable income from my music for the first time."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">🎹</div>
+                    <div class="author-info">
+                        <h5>Sandziso Mamba</h5>
+                        <p>Gospel Artist</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners -->
+    <section class="partners-section">
+        <h2 class="section-title center">Bambisene Natsi</h2>
+        <p class="section-subtitle">Our Partners <span class="siswati-label">(Bambisene natsi)</span></p>
+        
+        <div class="partners-grid">
+            <div class="partner-logo">EPRS</div>
+            <div class="partner-logo">MTN</div>
+            <div class="partner-logo">EBC</div>
+            <div class="partner-logo">UNESCO</div>
+            <div class="partner-logo">SABC</div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <h2>Joyina Natsi Lamuhla</h2>
+        <p>Join us today and be part of the Swazi music revolution</p>
+        
+        <div class="cta-buttons">
+            <a href="#" class="btn-primary btn-large">🎤 Become an Artist</a>
+            <a href="#" class="btn-primary btn-large" style="background: white; color: var(--deep-night);">🎧 Start Listening</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Swazi Music Hub</h4>
+                <p style="color: rgba(255,255,255,0.7); margin-bottom: 20px;">siSwati music to the world. Discover, stream, and support Swazi artists.</p>
+                <div class="social-links">
+                    <a href="#">📘</a>
+                    <a href="#">🐦</a>
+                    <a href="#">📷</a>
+                    <a href="#">▶</a>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Explore</h4>
+                <a href="index.html">Home</a>
+                <a href="#">About Us</a>
+                <a href="#">Artists</a>
+                <a href="#">Music</a>
+                <a href="#">Events</a>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Support</h4>
+                <a href="#">Help Center</a>
+                <a href="#">Contact Us</a>
+                <a href="#">Artist Sign Up</a>
+                <a href="#">Report Issue</a>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <a href="#">Terms of Use</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Copyright</a>
+                <a href="#">Licensing</a>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>© 2025 Swazi Music Hub. Wonkhe emalungelo agciniwe. (All rights reserved)</p>
+            <p style="margin-top: 10px;">Made with ♥ in Eswatini</p>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            alert('Mobile menu would open here - Add your preferred mobile menu implementation');
+        });
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Animate stats on scroll
+        const observerOptions = {
+            threshold: 0.5
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.stat-item, .impact-card, .value-card').forEach(el => {
+            el.style.opacity = 0;
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1338 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swazi Music Hub - siSwati Music to the World</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f0e8;
+            color: #0a1c24;
+            line-height: 1.6;
+        }
+
+        /* Color System */
+        :root {
+            --deep-night: #0a1c24;
+            --teal-depths: #1e4a5f;
+            --african-sky: #2a6b84;
+            --savanna-sun: #e6b17e;
+            --terracotta: #d4945a;
+            --cream: #f5f0e8;
+            --forest: #2e7a5e;
+            --earth: #8b5a3c;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', 'Segoe UI', sans-serif;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .section-title {
+            font-size: 2.8em;
+            color: var(--deep-night);
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: var(--savanna-sun);
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1.4em;
+            color: var(--teal-depths);
+            margin-bottom: 20px;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: var(--deep-night);
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 800;
+            color: var(--savanna-sun);
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .logo span {
+            color: white;
+            font-size: 0.7em;
+            font-weight: 300;
+            margin-left: 5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1.1em;
+        }
+
+        .nav-links a:hover {
+            color: var(--savanna-sun);
+        }
+
+        .search-box {
+            background: rgba(255,255,255,0.1);
+            padding: 8px 15px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .search-box input {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1em;
+            width: 200px;
+            outline: none;
+        }
+
+        .search-box input::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .search-box button {
+            background: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2em;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.8em;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(165deg, var(--deep-night) 0%, var(--teal-depths) 50%, var(--african-sky) 100%);
+            color: white;
+            padding: 60px 5%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: "♫";
+            position: absolute;
+            top: -100px;
+            right: -50px;
+            font-size: 400px;
+            opacity: 0.1;
+            transform: rotate(15deg);
+            color: var(--savanna-sun);
+        }
+
+        .hero-content {
+            max-width: 600px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero h1 span {
+            color: var(--savanna-sun);
+            font-style: italic;
+        }
+
+        .hero p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 35px;
+            border: none;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: var(--savanna-sun);
+            color: var(--deep-night);
+        }
+
+        .btn-primary:hover {
+            background: var(--terracotta);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--deep-night);
+            transform: translateY(-3px);
+        }
+
+        /* Featured Artists Carousel */
+        .featured-section {
+            padding: 80px 5%;
+            background: var(--cream);
+        }
+
+        .carousel {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .artist-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .artist-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        .artist-image {
+            height: 250px;
+            background: linear-gradient(45deg, var(--teal-depths), var(--african-sky));
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4em;
+            color: white;
+        }
+
+        .artist-info {
+            padding: 20px;
+        }
+
+        .artist-info h3 {
+            font-size: 1.5em;
+            margin-bottom: 5px;
+            color: var(--deep-night);
+        }
+
+        .artist-info p {
+            color: var(--earth);
+            margin-bottom: 15px;
+            font-size: 0.95em;
+        }
+
+        .artist-stats {
+            display: flex;
+            gap: 15px;
+            font-size: 0.9em;
+            color: var(--teal-depths);
+        }
+
+        .follow-btn {
+            background: var(--savanna-sun);
+            color: var(--deep-night);
+            border: none;
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        .follow-btn:hover {
+            background: var(--terracotta);
+        }
+
+        /* Genre Navigation Strip */
+        .genre-strip {
+            background: white;
+            padding: 20px 5%;
+            display: flex;
+            gap: 30px;
+            overflow-x: auto;
+            white-space: nowrap;
+            border-bottom: 1px solid #eee;
+            scrollbar-width: thin;
+            scrollbar-color: var(--savanna-sun) var(--cream);
+        }
+
+        .genre-strip::-webkit-scrollbar {
+            height: 5px;
+        }
+
+        .genre-strip::-webkit-scrollbar-track {
+            background: var(--cream);
+        }
+
+        .genre-strip::-webkit-scrollbar-thumb {
+            background: var(--savanna-sun);
+            border-radius: 5px;
+        }
+
+        .genre-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            color: var(--deep-night);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            padding: 10px 0;
+            border-bottom: 3px solid transparent;
+        }
+
+        .genre-item:hover {
+            color: var(--savanna-sun);
+            border-bottom-color: var(--savanna-sun);
+        }
+
+        .genre-icon {
+            font-size: 1.8em;
+        }
+
+        /* Trending Tracks Grid */
+        .trending-section {
+            padding: 60px 5%;
+            background: white;
+        }
+
+        .track-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .track-card {
+            background: var(--cream);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .track-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+
+        .track-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--african-sky), var(--teal-depths));
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            color: white;
+        }
+
+        .play-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .track-card:hover .play-overlay {
+            opacity: 1;
+        }
+
+        .play-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--savanna-sun);
+            border: none;
+            font-size: 1.8em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .play-btn:hover {
+            transform: scale(1.1);
+            background: var(--terracotta);
+        }
+
+        .track-info {
+            padding: 15px;
+        }
+
+        .track-info h4 {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+
+        .track-info p {
+            color: var(--earth);
+            font-size: 0.9em;
+            margin-bottom: 8px;
+        }
+
+        .track-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--teal-depths);
+            font-size: 0.85em;
+        }
+
+        /* Featured Playlist */
+        .playlist-section {
+            padding: 60px 5%;
+            background: linear-gradient(135deg, var(--deep-night), var(--teal-depths));
+            color: white;
+        }
+
+        .playlist-feature {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .playlist-cover {
+            width: 100%;
+            max-width: 400px;
+            height: 400px;
+            background: linear-gradient(45deg, var(--savanna-sun), var(--terracotta));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5em;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+        }
+
+        .playlist-info h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .playlist-info p {
+            font-size: 1.1em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .playlist-tracks {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .playlist-tracks li {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .track-number {
+            color: var(--savanna-sun);
+            font-weight: bold;
+        }
+
+        /* New Releases */
+        .releases-section {
+            padding: 60px 5%;
+            background: var(--cream);
+        }
+
+        .releases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .release-card {
+            display: flex;
+            gap: 20px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+
+        .release-card:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .release-cover {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(45deg, var(--african-sky), var(--teal-depths));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            color: white;
+        }
+
+        .release-info h4 {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+
+        .release-info p {
+            color: var(--earth);
+            margin-bottom: 5px;
+        }
+
+        .release-date {
+            color: var(--teal-depths);
+            font-size: 0.9em;
+        }
+
+        /* Cultural Heritage Section */
+        .heritage-section {
+            padding: 80px 5%;
+            background: white;
+            text-align: center;
+        }
+
+        .heritage-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .heritage-content h2 {
+            font-size: 2.8em;
+            margin-bottom: 20px;
+        }
+
+        .heritage-content p {
+            font-size: 1.2em;
+            color: var(--earth);
+            margin-bottom: 40px;
+        }
+
+        .heritage-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .heritage-item {
+            padding: 30px;
+            background: var(--cream);
+            border-radius: 16px;
+            transition: all 0.3s;
+        }
+
+        .heritage-item:hover {
+            transform: translateY(-5px);
+            background: var(--savanna-sun);
+            color: var(--deep-night);
+        }
+
+        .heritage-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        /* Newsletter Section */
+        .newsletter {
+            padding: 60px 5%;
+            background: linear-gradient(135deg, var(--teal-depths), var(--african-sky));
+            color: white;
+            text-align: center;
+        }
+
+        .newsletter h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .newsletter p {
+            font-size: 1.2em;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 15px;
+            max-width: 500px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            min-width: 250px;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 40px;
+            font-size: 1em;
+            outline: none;
+        }
+
+        .newsletter-form button {
+            padding: 15px 40px;
+            background: var(--savanna-sun);
+            color: var(--deep-night);
+            border: none;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .newsletter-form button:hover {
+            background: var(--terracotta);
+            transform: translateY(-2px);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--deep-night);
+            color: white;
+            padding: 60px 5% 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            color: var(--savanna-sun);
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        .footer-col a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            transition: color 0.3s;
+        }
+
+        .footer-col a:hover {
+            color: var(--savanna-sun);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+            font-size: 1.5em;
+        }
+
+        .social-links a {
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--savanna-sun);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9em;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5em;
+            }
+
+            .playlist-feature {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .playlist-cover {
+                margin: 0 auto;
+            }
+
+            .section-title {
+                font-size: 2.2em;
+            }
+
+            .newsletter-form input,
+            .newsletter-form button {
+                width: 100%;
+            }
+        }
+
+        /* Mini Player (Sticky) */
+        .mini-player {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--deep-night);
+            color: white;
+            padding: 10px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+            border-top: 2px solid var(--savanna-sun);
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+
+        .mini-player.active {
+            transform: translateY(0);
+        }
+
+        .player-track {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .player-thumb {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, var(--savanna-sun), var(--terracotta));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+        }
+
+        .player-info h4 {
+            font-size: 1.1em;
+            margin-bottom: 3px;
+        }
+
+        .player-info p {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        .player-controls {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .player-controls button {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .player-controls button:hover {
+            color: var(--savanna-sun);
+            transform: scale(1.1);
+        }
+
+        .player-progress {
+            width: 300px;
+            height: 4px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .progress-fill {
+            width: 45%;
+            height: 100%;
+            background: var(--savanna-sun);
+            border-radius: 2px;
+            position: relative;
+        }
+
+        /* siSwati Labels */
+        .siswati-label {
+            font-style: italic;
+            color: var(--savanna-sun);
+            font-size: 0.9em;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="#" class="logo">SWAZI MUSIC HUB <span>siSwati music to the world</span></a>
+        
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="artists.html">Artists</a>
+            <a href="music.html">Music</a>
+            <a href="playlist.html">Playlists</a>
+            <a href="events.html">Events</a>
+            <a href="heritage.html">Heritage</a>
+            
+            <div class="search-box">
+                <input type="text" placeholder="(Search music)">
+                <button>🔍</button>
+            </div>
+            
+            <a href="sign in.html" class="btn-primary" style="padding: 8px 20px;">Sign In</a>
+        </div>
+        
+<!-- Loading Overlay -->
+<div class="loading-overlay">
+    <div class="spinner"></div>
+</div><div class="mobile-menu-btn">☰</div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Discover the <span>Heartbeat</span> of Eswatini</h1>
+            <p>Stream thousands of Swazi tracks, from traditional ceremonies to modern Afro-pop. Support local artists and share siSwati music with the world.</p>
+            <div class="hero-buttons">
+                <a href="music.html" class="btn btn-primary"> (Start Listening)</a>
+                <a href="sign in.html" class="btn btn-secondary"> (Join as Artist)</a>
+            </div>
+            <p style="margin-top: 30px; font-size: 1em; opacity: 0.8;">✨ 10,000+ tracks | 500+ artists | 50+ genres</p>
+        </div>
+    </section>
+
+    <!-- Genre Navigation Strip -->
+    <div class="genre-strip">
+        <div class="genre-item">
+            <span class="genre-icon">🥁</span>
+            <span>Maskandi</span>
+        </div>
+        <div class="genre-item">
+            <span class="genre-icon">🎤</span>
+            <span>Afro Pop</span>
+        </div>
+        <div class="genre-item">
+            <span class="genre-icon">🎹</span>
+            <span>Gospel</span>
+        </div>
+        <div class="genre-item">
+            <span class="genre-icon">🎸</span>
+            <span>Hip Hop</span>
+        </div>
+        <div class="genre-item">
+            <span class="genre-icon">🪘</span>
+            <span>Sicatsamiya</span>
+        </div>
+        <div class="genre-item">
+            <span class="genre-icon">🎺</span>
+            <span>Jazz</span>
+        </div>
+        <div class="genre-item">
+            <span class="genre-icon">🎻</span>
+            <span>Folk</span>
+        </div>
+        <div class="genre-item">
+            <span class="genre-icon">🎧</span>
+            <span>House</span>
+        </div>
+        <div class="genre-item">
+            <span class="genre-icon">🎤</span>
+            <span>Amapiano</span>
+        </div>
+    </div>
+
+    <!-- Featured Artists Section -->
+    <section class="featured-section">
+        <h2 class="section-title">Baculi Labadvumile</h2>
+        <p class="section-subtitle">Featured Artists <span class="siswati-label">(Baculi labakhetiwe)</span></p>
+        
+        <div class="carousel">
+            <!-- Artist Card 1 -->
+            <div class="artist-card">
+                <div class="artist-image">🎤</div>
+                <div class="artist-info">
+                    <h3>Jahboy</h3>
+                    <p>Afro Pop / Reggae</p>
+                    <div class="artist-stats">
+                        <span>❤️ 234K followers</span>
+                        <span>🎵 45 tracks</span>
+                    </div>
+                    <button class="follow-btn">(Follow)</button>
+                </div>
+            </div>
+            
+            <!-- Artist Card 2 -->
+            <div class="artist-card">
+                <div class="artist-image">🥁</div>
+                <div class="artist-info">
+                    <h3>Bholoja</h3>
+                    <p>Folk / Traditional</p>
+                    <div class="artist-stats">
+                        <span>❤️ 189K followers</span>
+                        <span>🎵 32 tracks</span>
+                    </div>
+                    <button class="follow-btn">(Follow)</button>
+                </div>
+            </div>
+            
+            <!-- Artist Card 3 -->
+            <div class="artist-card">
+                <div class="artist-image">🎹</div>
+                <div class="artist-info">
+                    <h3>Sandziso Mamba</h3>
+                    <p>Gospel</p>
+                    <div class="artist-stats">
+                        <span>❤️ 156K followers</span>
+                        <span>🎵 28 tracks</span>
+                    </div>
+                    <button class="follow-btn">(Follow)</button>
+                </div>
+            </div>
+            
+            <!-- Artist Card 4 -->
+            <div class="artist-card">
+                <div class="artist-image">🎸</div>
+                <div class="artist-info">
+                    <h3>Young Zesh</h3>
+                    <p>Hip Hop</p>
+                    <div class="artist-stats">
+                        <span>❤️ 145K followers</span>
+                        <span>🎵 37 tracks</span>
+                    </div>
+                    <button class="follow-btn">(Follow)</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trending Tracks -->
+    <section class="trending-section">
+        <h2 class="section-title">Tingoma Letishisako</h2>
+        <p class="section-subtitle">Trending Now <span class="siswati-label">(Letishisako nyalo)</span></p>
+        
+        <div class="track-grid">
+            <!-- Track 1 -->
+            <div class="track-card">
+                <div class="track-image">
+                    🎵
+                    <div class="play-overlay">
+                        <button class="play-btn" onclick="showPlayer()">▶</button>
+                    </div>
+                </div>
+                <div class="track-info">
+                    <h4>Maketala</h4>
+                    <p>Jahboy</p>
+                    <div class="track-meta">
+                        <span>❤️ 12.4K</span>
+                        <span>🎧 234K plays</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Track 2 -->
+            <div class="track-card">
+                <div class="track-image">
+                    🥁
+                    <div class="play-overlay">
+                        <button class="play-btn" onclick="showPlayer()">▶</button>
+                    </div>
+                </div>
+                <div class="track-info">
+                    <h4>Hlonipha</h4>
+                    <p>Bholoja</p>
+                    <div class="track-meta">
+                        <span>❤️ 8.2K</span>
+                        <span>🎧 156K plays</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Track 3 -->
+            <div class="track-card">
+                <div class="track-image">
+                    🎹
+                    <div class="play-overlay">
+                        <button class="play-btn" onclick="showPlayer()">▶</button>
+                    </div>
+                </div>
+                <div class="track-info">
+                    <h4>Hamba Nami</h4>
+                    <p>Sandziso Mamba</p>
+                    <div class="track-meta">
+                        <span>❤️ 15.7K</span>
+                        <span>🎧 312K plays</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Track 4 -->
+            <div class="track-card">
+                <div class="track-image">
+                    🎸
+                    <div class="play-overlay">
+                        <button class="play-btn" onclick="showPlayer()">▶</button>
+                    </div>
+                </div>
+                <div class="track-info">
+                    <h4>Senibeketele</h4>
+                    <p>Young Zesh</p>
+                    <div class="track-meta">
+                        <span>❤️ 6.8K</span>
+                        <span>🎧 98K plays</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Track 5 -->
+            <div class="track-card">
+                <div class="track-image">
+                    🪘
+                    <div class="play-overlay">
+                        <button class="play-btn" onclick="showPlayer()">▶</button>
+                    </div>
+                </div>
+                <div class="track-info">
+                    <h4>Ngubo YaBabe</h4>
+                    <p>Nsilikitsi</p>
+                    <div class="track-meta">
+                        <span>❤️ 5.3K</span>
+                        <span>🎧 76K plays</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Track 6 -->
+            <div class="track-card">
+                <div class="track-image">
+                    🎺
+                    <div class="play-overlay">
+                        <button class="play-btn" onclick="showPlayer()">▶</button>
+                    </div>
+                </div>
+                <div class="track-info">
+                    <h4>Tinyoni LetiShlanu</h4>
+                    <p>Boyzen Sz</p>
+                    <div class="track-meta">
+                        <span>❤️ 9.1K</span>
+                        <span>🎧 178K plays</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Playlist -->
+    <section class="playlist-section">
+        <div class="playlist-feature">
+            <div class="playlist-cover">
+                🎵
+            </div>
+            <div class="playlist-info">
+                <h2>Swazi Gold: Sibhaca Essentials</h2>
+                <p>The ultimate collection of traditional Sibhaca rhythms, carefully curated to showcase the best of Swazi dance music. Featuring legendary artists and modern interpretations.</p>
+                
+                <ul class="playlist-tracks">
+                    <li><span class="track-number">01</span> Siyabonga Gogo - Lodanda nemaLangei (4:32)</li>
+                    <li><span class="track-number">02</span> Sigiya Ngamandla - Ntsatsakusa MM (3:58)</li>
+                    <li><span class="track-number">03</span> Indlamu - Lihle Nzima (5:12)</li>
+                    <li><span class="track-number">04</span> Siyagiya - Limkokwing choir (4:45)</li>
+                </ul>
+                
+                <button class="btn btn-primary" onclick="showPlayer()">(Play All)</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Releases -->
+    <section class="releases-section">
+        <h2 class="section-title">Letikhishiwe Kulamalanga</h2>
+        <p class="section-subtitle">New Releases <span class="siswati-label"></span></p>
+        
+        <div class="releases-grid">
+            <!-- Release 1 -->
+            <div class="release-card">
+                <div class="release-cover">🎤</div>
+                <div class="release-info">
+                    <h4>Inhlitiyo Yami</h4>
+                    <p>ChaBoy</p>
+                    <div class="release-date">Released: 2 days ago</div>
+                </div>
+            </div>
+            
+            <!-- Release 2 -->
+            <div class="release-card">
+                <div class="release-cover">🥁</div>
+                <div class="release-info">
+                    <h4>Emagugu</h4>
+                    <p>LXD Black</p>
+                    <div class="release-date">Released: 5 days ago</div>
+                </div>
+            </div>
+            
+            <!-- Release 3 -->
+            <div class="release-card">
+                <div class="release-cover">🎹</div>
+                <div class="release-info">
+                    <h4>Nkosi Siyabonga</h4>
+                    <p>Sandziso Mamba</p>
+                    <div class="release-date">Released: 1 week ago</div>
+                </div>
+            </div>
+            
+            <!-- Release 4 -->
+            <div class="release-card">
+                <div class="release-cover">🎸</div>
+                <div class="release-info">
+                    <h4>City Lights</h4>
+                    <p>Allens</p>
+                    <div class="release-date">Released: 3 days ago</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cultural Heritage Section -->
+    <section class="heritage-section">
+        <div class="heritage-content">
+            <h2 class="section-title">Ligcabho Letfu</h2>
+            <p>Our cultural heritage lives through music. Explore the rich history of siSwati music, from traditional ceremonies to modern interpretations.</p>
+            
+            <div class="heritage-grid">
+                <div class="heritage-item">
+                    <div class="heritage-icon">🥁</div>
+                    <h3>Sibhaca</h3>
+                    <p>Traditional dance and drumming</p>
+                </div>
+                <div class="heritage-item">
+                    <div class="heritage-icon">👑</div>
+                    <h3>Incwala</h3>
+                    <p>Sacred ceremonial music</p>
+                </div>
+                <div class="heritage-item">
+                    <div class="heritage-icon">🎤</div>
+                    <h3>Ummiso</h3>
+                    <p>Tradional choral music</p>
+                </div>
+                <div class="heritage-item">
+                    <div class="heritage-icon">🪘</div>
+                    <h3>Tinkhondlo</h3>
+                    <p>Swazi poems</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <h2>Tfola Tindzaba Temculo</h2>
+        <p>Join our newsletter for new releases, artist features, and cultural events.</p>
+        
+        <form class="newsletter-form">
+            <input type="email" placeholder="Email address" required>
+            <button type="submit">Subscribe</button>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Swazi Music Hub</h4>
+                <p style="color: rgba(255,255,255,0.7); margin-bottom: 20px;">siSwati music to the world. Discover, stream, and support Swazi artists.</p>
+                <div class="social-links">
+                    <a href="#">📘</a>
+                    <a href="#">🐦</a>
+                    <a href="#">📷</a>
+                    <a href="#">▶</a>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Explore</h4>
+                <a href="artists.html">Baculi (Artists)</a>
+                <a href="music.html">Tingoma (Music)</a>
+                <a href="playlists.html">Tinhlelo (Playlists)</a>
+                <a href="events.html">Emicimbi (Events)</a>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Support</h4>
+                <a href="about us.html">About Us</a>
+                <a href="contact us.html">Contact</a>
+                <a href="sign in.html">Artist Sign Up</a>
+                <a href="help.html">Help Center</a>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <a href="ts&cs.html">Terms of Use</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="copyright.html">Copyright</a>
+                <a href="legal.html">Licensing</a>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>© 2025 Swazi Music Hub. All rights reserved</p>
+            <p style="margin-top: 10px;">Powered by SwaziPlay Tunes</p>
+        </div>
+    </footer>
+
+    <!-- Mini Player (Hidden by default) -->
+    <div class="mini-player" id="miniPlayer">
+        <div class="player-track">
+            <div class="player-thumb">🎵</div>
+            <div class="player-info">
+                <h4>Ngiyashisa</h4>
+                <p>Jahboy</p>
+            </div>
+        </div>
+        
+        <div class="player-controls">
+            <button>⏮️</button>
+            <button style="font-size: 2em;">⏸️</button>
+            <button>⏭️</button>
+            <div class="player-progress">
+                <div class="progress-fill"></div>
+            </div>
+            <span style="font-size: 0.9em;">1:24 / 3:45</span>
+            <button style="font-size: 1.2em;">❤️</button>
+            <button style="font-size: 1.2em;">🔊</button>
+        </div>
+    </div>
+
+    <script>
+        function showPlayer() {
+            const player = document.getElementById('miniPlayer');
+            player.classList.add('active');
+        }
+
+        // Close player when clicking outside (optional)
+        document.addEventListener('click', function(event) {
+            const player = document.getElementById('miniPlayer');
+            const playButtons = document.querySelectorAll('.play-btn');
+            
+            let clickedPlayButton = false;
+            playButtons.forEach(btn => {
+                if (btn.contains(event.target)) {
+                    clickedPlayButton = true;
+                }
+            });
+            
+            if (!clickedPlayButton && !player.contains(event.target)) {
+                // Optional: Add logic to hide player after timeout
+                // For now, keep visible after playing
+            }
+        });
+
+        // Mobile menu toggle (simplified)
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            alert('Mobile menu would open here - Add your preferred mobile menu implementation');
+        });
+
+        // Follow button interaction
+        document.querySelectorAll('.follow-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (this.textContent.includes('Follow')) {
+                    this.textContent = '(Following) ✓';
+                    this.style.background = '#2e7a5e';
+                    this.style.color = 'white';
+                } else {
+                    this.textContent = '(Follow)';
+                    this.style.background = '#e6b17e';
+                    this.style.color = '#0a1c24';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

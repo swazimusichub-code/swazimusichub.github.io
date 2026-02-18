@@ -1,0 +1,1775 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swazi Music Hub - Music / Umculo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f0e8;
+            color: #0a1c24;
+            line-height: 1.6;
+        }
+
+        /* Color System */
+        :root {
+            --deep-night: #0a1c24;
+            --teal-depths: #1e4a5f;
+            --african-sky: #2a6b84;
+            --savanna-sun: #e6b17e;
+            --terracotta: #d4945a;
+            --cream: #f5f0e8;
+            --forest: #2e7a5e;
+            --earth: #8b5a3c;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', 'Segoe UI', sans-serif;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .section-title {
+            font-size: 2.8em;
+            color: var(--deep-night);
+            margin-bottom: 10px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: var(--savanna-sun);
+            border-radius: 2px;
+        }
+
+        .section-title.center::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-subtitle {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1.4em;
+            color: var(--teal-depths);
+            margin-bottom: 20px;
+        }
+
+        .siswati-label {
+            font-style: italic;
+            color: var(--savanna-sun);
+            font-size: 0.9em;
+            margin-left: 5px;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: var(--deep-night);
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 800;
+            color: var(--savanna-sun);
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .logo span {
+            color: white;
+            font-size: 0.7em;
+            font-weight: 300;
+            margin-left: 5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1.1em;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--savanna-sun);
+        }
+
+        .btn-primary {
+            background: var(--savanna-sun);
+            color: var(--deep-night);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: var(--terracotta);
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.8em;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .music-hero {
+            background: linear-gradient(135deg, var(--deep-night) 0%, var(--teal-depths) 100%);
+            color: white;
+            padding: 60px 5%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .music-hero::before {
+            content: "♫♪♬";
+            position: absolute;
+            top: -80px;
+            right: -30px;
+            font-size: 250px;
+            opacity: 0.1;
+            transform: rotate(15deg);
+            color: var(--savanna-sun);
+        }
+
+        .music-hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .music-hero h1 span {
+            color: var(--savanna-sun);
+        }
+
+        .music-hero p {
+            font-size: 1.2em;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+            position: relative;
+        }
+
+        /* Main Player Bar (Sticky) */
+        .main-player {
+            background: var(--deep-night);
+            padding: 15px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 3px solid var(--savanna-sun);
+            border-bottom: 3px solid var(--savanna-sun);
+            position: sticky;
+            top: 80px;
+            z-index: 99;
+        }
+
+        .player-track-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            min-width: 250px;
+        }
+
+        .player-thumb {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--savanna-sun), var(--terracotta));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+        }
+
+        .player-track-details h4 {
+            color: white;
+            font-size: 1.1em;
+        }
+
+        .player-track-details p {
+            color: var(--savanna-sun);
+            font-size: 0.9em;
+        }
+
+        .player-controls {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .player-controls button {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.5em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .player-controls button:hover {
+            color: var(--savanna-sun);
+            transform: scale(1.1);
+        }
+
+        .player-progress {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex: 1;
+            max-width: 500px;
+        }
+
+        .progress-bar {
+            flex: 1;
+            height: 5px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 5px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .progress-fill {
+            width: 45%;
+            height: 100%;
+            background: var(--savanna-sun);
+            border-radius: 5px;
+            position: relative;
+        }
+
+        .progress-fill::after {
+            content: '';
+            position: absolute;
+            right: -6px;
+            top: -4px;
+            width: 13px;
+            height: 13px;
+            background: var(--savanna-sun);
+            border-radius: 50%;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .progress-bar:hover .progress-fill::after {
+            opacity: 1;
+        }
+
+        .time-display {
+            color: white;
+            font-size: 0.9em;
+            min-width: 90px;
+        }
+
+        .player-actions {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .player-actions button {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .player-actions button:hover {
+            color: var(--savanna-sun);
+        }
+
+        .volume-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .volume-slider {
+            width: 80px;
+            height: 4px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 2px;
+            cursor: pointer;
+        }
+
+        .volume-fill {
+            width: 70%;
+            height: 100%;
+            background: var(--savanna-sun);
+            border-radius: 2px;
+        }
+
+        /* Music Filter Bar */
+        .music-filter {
+            background: white;
+            padding: 20px 5%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            padding: 10px 25px;
+            border-radius: 30px;
+            background: var(--cream);
+            color: var(--deep-night);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .filter-tab:hover {
+            background: #e8e0d5;
+        }
+
+        .filter-tab.active {
+            background: var(--savanna-sun);
+            color: var(--deep-night);
+        }
+
+        .filter-sort {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .filter-select {
+            padding: 10px 20px;
+            border: 2px solid var(--cream);
+            border-radius: 30px;
+            background: white;
+            font-size: 0.95em;
+            cursor: pointer;
+            outline: none;
+            transition: all 0.3s;
+            color: var(--deep-night);
+            font-weight: 500;
+        }
+
+        .filter-select:hover, .filter-select:focus {
+            border-color: var(--savanna-sun);
+        }
+
+        /* Main Music Content */
+        .music-content {
+            padding: 40px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Featured Playlist Banner */
+        .featured-playlist {
+            background: linear-gradient(135deg, var(--teal-depths), var(--deep-night));
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 50px;
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 40px;
+            align-items: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .featured-playlist::before {
+            content: "♫";
+            position: absolute;
+            bottom: -50px;
+            right: -30px;
+            font-size: 200px;
+            opacity: 0.1;
+            transform: rotate(-10deg);
+            color: var(--savanna-sun);
+        }
+
+        .playlist-cover-large {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, var(--savanna-sun), var(--terracotta));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4em;
+            box-shadow: 0 20px 30px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+        }
+
+        .playlist-info-large h2 {
+            font-size: 2.2em;
+            margin-bottom: 15px;
+        }
+
+        .playlist-info-large p {
+            font-size: 1.1em;
+            margin-bottom: 20px;
+            opacity: 0.9;
+            max-width: 600px;
+        }
+
+        .playlist-meta {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 25px;
+        }
+
+        .playlist-meta span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .playlist-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-play {
+            background: var(--savanna-sun);
+            color: var(--deep-night);
+            border: none;
+            padding: 12px 35px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-play:hover {
+            background: var(--terracotta);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn-follow {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            padding: 12px 30px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-follow:hover {
+            background: white;
+            color: var(--deep-night);
+        }
+
+        /* Section Headers with Navigation */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .section-header h2 {
+            font-size: 2em;
+            color: var(--deep-night);
+        }
+
+        .section-nav {
+            display: flex;
+            gap: 10px;
+        }
+
+        .section-nav button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid var(--cream);
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.2em;
+        }
+
+        .section-nav button:hover {
+            background: var(--savanna-sun);
+            border-color: var(--savanna-sun);
+        }
+
+        /* Track Cards Grid */
+        .track-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .track-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .track-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.1);
+        }
+
+        .track-image {
+            height: 180px;
+            background: linear-gradient(135deg, var(--teal-depths), var(--african-sky));
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5em;
+            color: white;
+        }
+
+        .track-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .track-card:hover .track-overlay {
+            opacity: 1;
+        }
+
+        .track-play-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--savanna-sun);
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .track-play-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .track-info {
+            padding: 15px;
+        }
+
+        .track-info h4 {
+            font-size: 1.1em;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .track-info p {
+            color: var(--savanna-sun);
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .track-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--earth);
+            font-size: 0.85em;
+        }
+
+        /* Album Cards */
+        .album-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .album-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .album-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.15);
+        }
+
+        .album-image {
+            height: 200px;
+            background: linear-gradient(135deg, var(--savanna-sun), var(--terracotta));
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            color: white;
+        }
+
+        .album-info {
+            padding: 20px;
+        }
+
+        .album-info h4 {
+            font-size: 1.2em;
+            margin-bottom: 5px;
+        }
+
+        .album-info p {
+            color: var(--earth);
+            margin-bottom: 10px;
+        }
+
+        .album-year {
+            color: var(--teal-depths);
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        /* Playlist Cards */
+        .playlist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .playlist-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+            cursor: pointer;
+            display: flex;
+            gap: 15px;
+            padding: 15px;
+        }
+
+        .playlist-card:hover {
+            transform: translateX(8px);
+            box-shadow: 0 15px 25px rgba(0,0,0,0.1);
+        }
+
+        .playlist-cover {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--teal-depths), var(--african-sky));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2em;
+            color: white;
+        }
+
+        .playlist-details {
+            flex: 1;
+        }
+
+        .playlist-details h4 {
+            font-size: 1.1em;
+            margin-bottom: 5px;
+        }
+
+        .playlist-details p {
+            color: var(--savanna-sun);
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .playlist-stats {
+            color: var(--earth);
+            font-size: 0.85em;
+        }
+
+        /* Top Charts Table */
+        .charts-section {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 50px 0;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.05);
+        }
+
+        .charts-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .charts-header h2 {
+            font-size: 2em;
+            color: var(--deep-night);
+        }
+
+        .chart-tabs {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chart-tab {
+            padding: 8px 20px;
+            border-radius: 25px;
+            background: var(--cream);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .chart-tab:hover, .chart-tab.active {
+            background: var(--savanna-sun);
+        }
+
+        .chart-table {
+            width: 100%;
+        }
+
+        .chart-row {
+            display: grid;
+            grid-template-columns: 50px 80px 1fr 1fr 100px 80px;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            transition: background 0.3s;
+        }
+
+        .chart-row:hover {
+            background: var(--cream);
+        }
+
+        .chart-row.header {
+            font-weight: 700;
+            color: var(--teal-depths);
+            border-bottom: 2px solid var(--savanna-sun);
+        }
+
+        .chart-rank {
+            font-weight: 700;
+            color: var(--savanna-sun);
+        }
+
+        .chart-image {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--teal-depths), var(--african-sky));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5em;
+        }
+
+        .chart-play {
+            background: transparent;
+            border: none;
+            font-size: 1.3em;
+            cursor: pointer;
+            color: var(--earth);
+            transition: color 0.3s;
+        }
+
+        .chart-play:hover {
+            color: var(--savanna-sun);
+        }
+
+        .chart-duration {
+            color: var(--earth);
+        }
+
+        /* Genre Cloud */
+        .genre-cloud {
+            background: var(--cream);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 50px 0;
+            text-align: center;
+        }
+
+        .genre-cloud h2 {
+            margin-bottom: 30px;
+        }
+
+        .cloud-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cloud-tag {
+            padding: 10px 25px;
+            background: white;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.05);
+        }
+
+        .cloud-tag:hover {
+            background: var(--savanna-sun);
+            transform: scale(1.05);
+        }
+
+        .cloud-tag.large {
+            font-size: 1.3em;
+            padding: 15px 35px;
+        }
+
+        .cloud-tag.medium {
+            font-size: 1.1em;
+        }
+
+        /* New Releases Strip */
+        .new-releases {
+            background: linear-gradient(135deg, var(--teal-depths), var(--african-sky));
+            border-radius: 20px;
+            padding: 30px;
+            margin: 50px 0;
+            color: white;
+        }
+
+        .releases-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .releases-header h2 {
+            color: white;
+        }
+
+        .release-strip {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 20px;
+        }
+
+        .release-item {
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .release-item:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-5px);
+        }
+
+        .release-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .release-item h4 {
+            font-size: 1em;
+            margin-bottom: 5px;
+        }
+
+        .release-item p {
+            font-size: 0.85em;
+            opacity: 0.8;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--deep-night);
+            color: white;
+            padding: 60px 5% 30px;
+            margin-top: 50px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            color: var(--savanna-sun);
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        .footer-col a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            transition: color 0.3s;
+        }
+
+        .footer-col a:hover {
+            color: var(--savanna-sun);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+            font-size: 1.5em;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9em;
+        }
+
+        /* Mini Player (Now Playing Bar) */
+        .now-playing-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--deep-night);
+            padding: 10px 5%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 3px solid var(--savanna-sun);
+            z-index: 1000;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+
+        .now-playing-bar.active {
+            transform: translateY(0);
+        }
+
+        .now-playing-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .now-playing-thumb {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--savanna-sun), var(--terracotta));
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .now-playing-details h4 {
+            color: white;
+            font-size: 1em;
+        }
+
+        .now-playing-details p {
+            color: var(--savanna-sun);
+            font-size: 0.85em;
+        }
+
+        .now-playing-controls {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .now-playing-controls button {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.3em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .now-playing-controls button:hover {
+            color: var(--savanna-sun);
+        }
+
+        .close-player {
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 1.2em;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: all 0.3s;
+        }
+
+        .close-player:hover {
+            opacity: 1;
+            color: var(--savanna-sun);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 1024px) {
+            .main-player {
+                flex-wrap: wrap;
+                gap: 15px;
+            }
+            
+            .player-progress {
+                order: 3;
+                max-width: 100%;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .music-hero h1 {
+                font-size: 2.5em;
+            }
+
+            .featured-playlist {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .playlist-cover-large {
+                margin: 0 auto;
+            }
+
+            .playlist-meta {
+                justify-content: center;
+            }
+
+            .playlist-actions {
+                justify-content: center;
+            }
+
+            .filter-tabs {
+                width: 100%;
+                overflow-x: auto;
+                padding-bottom: 10px;
+            }
+
+            .filter-sort {
+                width: 100%;
+            }
+
+            .filter-select {
+                flex: 1;
+            }
+
+            .chart-row {
+                grid-template-columns: 30px 50px 1fr 80px 50px;
+                font-size: 0.9em;
+            }
+
+            .chart-image {
+                width: 40px;
+                height: 40px;
+            }
+
+            .main-player {
+                top: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">SWAZI MUSIC HUB <span>siSwati to the world</span></a>
+        
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="artists.html">Artists</a>
+            <a href="music.html" class="active">Music</a>
+            <a href="events.html">Events</a>
+            <a href="sign in.html" class="btn-primary">Sign In</a>
+        </div>
+        
+        <div class="mobile-menu-btn">☰</div>
+    </nav>
+
+    <!-- Main Player Bar (Sticky) -->
+    <div class="main-player">
+        <div class="player-track-info">
+            <div class="player-thumb">🎵</div>
+            <div class="player-track-details">
+                <h4>uDlala Ngenhlitiyo</h4>
+                <p>Boyzen Sz</p>
+            </div>
+        </div>
+        
+        <div class="player-controls">
+            <button>⏮️</button>
+            <button style="font-size: 2em;">⏸️</button>
+            <button>⏭️</button>
+        </div>
+        
+        <div class="player-progress">
+            <span class="time-display">0:00 / 1:03</span>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div><audio src="C:\Users\PC\Desktop\the Swazi Music Hub\assets\Alex Beats Boyzen Sz Duet.mp3"></audio>
+        </div>
+        
+        <div class="player-actions">
+            <button>❤️</button>
+            <button>↻</button>
+            <div class="volume-control">
+                <button>🔊</button>
+                <div class="volume-slider">
+                    <div class="volume-fill"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Music Hero -->
+    <section class="music-hero">
+        <h1>Umculo <span>WaseSwatini</span></h1>
+        <p>Stream thousands of Swazi tracks - from traditional rhythms to modern hits</p>
+    </section>
+
+    <!-- Music Filter Bar -->
+    <section class="music-filter">
+        <div class="filter-tabs">
+            <div class="filter-tab active" onclick="switchMusicTab('all')">Konkhe (All)</div>
+            <div class="filter-tab" onclick="switchMusicTab('tracks')">Tingoma (Tracks)</div>
+            <div class="filter-tab" onclick="switchMusicTab('albums')">Tifihlobo (Albums)</div>
+            <div class="filter-tab" onclick="switchMusicTab('playlists')">Tinhlelo (Playlists)</div>
+            <div class="filter-tab" onclick="switchMusicTab('charts')">Tishadi (Charts)</div>
+        </div>
+        
+        <div class="filter-sort">
+            <select class="filter-select">
+                <option>(Popular)</option>
+                <option>(Newest)</option>
+                <option>(Alphabetical)</option>
+            </select>
+            <select class="filter-select">
+                <option>(All Genres)</option>
+                <option>Traditional</option>
+                <option>Afro Pop</option>
+                <option>Gospel</option>
+                <option>Hip Hop</option>
+                <option>Jazz</option>
+            </select>
+        </div>
+    </section>
+
+    <!-- Main Music Content -->
+    <div class="music-content">
+        <!-- Featured Playlist Banner -->
+        <div class="featured-playlist">
+            <div class="playlist-cover-large">
+                🎵
+            </div>
+            <div class="playlist-info-large">
+                <h2>Swazi Gold: Sibhaca Essentials</h2>
+                <p>The ultimate collection of traditional Sibhaca rhythms, carefully curated to showcase the best of Swazi dance music.</p>
+                <div class="playlist-meta">
+                    <span>🎵 45 tracks</span>
+                    <span>⏱️ 2hr 34min</span>
+                    <span>❤️ 12.4K likes</span>
+                </div>
+                <div class="playlist-actions">
+                    <button class="btn-play" onclick="playPlaylist()">▶ Lalela Konkhe (Play All)</button>
+                    <button class="btn-follow" onclick="toggleFollowPlaylist(this)">Landzela (Follow)</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recently Played -->
+        <div class="section-header">
+            <h2><span class="siswati-label">(Recently Played)</span></h2>
+            <div class="section-nav">
+                <button>←</button>
+                <button>→</button>
+            </div>
+        </div>
+        
+        <div class="track-grid">
+            <div class="track-card" onclick="playTrack('ngiyashisa')">
+                <div class="track-image">
+                    🎵
+                    <div class="track-overlay">
+                        <button class="track-play-btn">▶</button>
+                    </div>
+                </div>
+                <div class="track-info">
+                    <h4>Ngiyashisa</h4>
+                    <p>Boyzen Sz</p>
+                    <div class="track-meta">
+                        <span>❤️ 12.4K</span>
+                        <span>3:45</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="track-card" onclick="playTrack('siyalilanda')">
+                <div class="track-image">
+                    🥁
+                    <div class="track-overlay">
+                        <button class="track-play-btn">▶</button>
+                    </div>
+                </div>
+                <div class="track-info">
+                    <h4>Siyalilanda</h4>
+                    <p>Bholoja</p>
+                    <div class="track-meta">
+                        <span>❤️ 8.2K</span>
+                        <span>4:12</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="track-card" onclick="playTrack('jehova')">
+                <div class="track-image">
+                    🎹
+                    <div class="track-overlay">
+                        <button class="track-play-btn">▶</button>
+                    </div>
+                </div>
+                <div class="track-info">
+                    <h4>Jehova Uyangizwa</h4>
+                    <p>Sandziso Mamba</p>
+                    <div class="track-meta">
+                        <span>❤️ 15.7K</span>
+                        <span>5:23</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="track-card" onclick="playTrack('2025flow')">
+                <div class="track-image">
+                    🎸
+                    <div class="track-overlay">
+                        <button class="track-play-btn">▶</button>
+                    </div>
+                </div>
+                <div class="track-info">
+                    <h4>2025 Flow</h4>
+                    <p>Void</p>
+                    <div class="track-meta">
+                        <span>❤️ 6.8K</span>
+                        <span>3:18</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="track-card" onclick="playTrack('sibhaca')">
+                <div class="track-image">
+                    🪘
+                    <div class="track-overlay">
+                        <button class="track-play-btn">▶</button>
+                    </div>
+                </div>
+                <div class="track-info">
+                    <h4>Sibhaca King</h4>
+                    <p>Mswakayicile</p>
+                    <div class="track-meta">
+                        <span>❤️ 5.3K</span>
+                        <span>4:56</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="track-card" onclick="playTrack('mantabane')">
+                <div class="track-image">
+                    🎺
+                    <div class="track-overlay">
+                        <button class="track-play-btn">▶</button>
+                    </div>
+                </div>
+                <div class="track-info">
+                    <h4>Mantabane</h4>
+                    <p>Black Coffee</p>
+                    <div class="track-meta">
+                        <span>❤️ 9.1K</span>
+                        <span>6:42</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Popular Albums -->
+        <div class="section-header">
+            <h2> <span class="siswati-label">(Popular Albums)</span></h2>
+            <a href="#" style="color: var(--teal-depths); font-weight: 600;">Bona konkhe →</a>
+        </div>
+        
+        <div class="album-grid">
+            <div class="album-card" onclick="openAlbum('Boyzen Sz-king')">
+                <div class="album-image">🎤</div>
+                <div class="album-info">
+                    <h4>The King</h4>
+                    <p>Boyzen Sz</p>
+                    <span class="album-year">2024 • 14 tracks</span>
+                </div>
+            </div>
+            
+            <div class="album-card" onclick="openAlbum('bholoja-roots')">
+                <div class="album-image">🥁</div>
+                <div class="album-info">
+                    <h4>Roots & Rhythm</h4>
+                    <p>Bholoja</p>
+                    <span class="album-year">2023 • 12 tracks</span>
+                </div>
+            </div>
+            
+            <div class="album-card" onclick="openAlbum('sandziso-gospel')">
+                <div class="album-image">🎹</div>
+                <div class="album-info">
+                    <h4>Jehova Uyangizwa</h4>
+                    <p>Sandziso Mamba</p>
+                    <span class="album-year">2024 • 10 tracks</span>
+                </div>
+            </div>
+            
+            <div class="album-card" onclick="openAlbum('void-2025')">
+                <div class="album-image">🎸</div>
+                <div class="album-info">
+                    <h4>2025 Vision</h4>
+                    <p>Void</p>
+                    <span class="album-year">2025 • 15 tracks</span>
+                </div>
+            </div>
+            
+            <div class="album-card" onclick="openAlbum('mswaka-tradition')">
+                <div class="album-image">🪘</div>
+                <div class="album-info">
+                    <h4>Sibhaca King</h4>
+                    <p>Mswakayicile</p>
+                    <span class="album-year">2023 • 8 tracks</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Charts -->
+        <div class="charts-section">
+            <div class="charts-header">
+                <h2><span class="siswati-label">(Top Charts)</span></h2>
+                <div class="chart-tabs">
+                    <div class="chart-tab active">(Today)</div>
+                    <div class="chart-tab">(This Week)</div>
+                    <div class="chart-tab">(This Month)</div>
+                </div>
+            </div>
+            
+            <div class="chart-table">
+                <div class="chart-row header">
+                    <div>#</div>
+                    <div></div>
+                    <div>Track</div>
+                    <div>Artist</div>
+                    <div>Plays</div>
+                    <div>Duration</div>
+                </div>
+                
+                <div class="chart-row" onclick="playTrack('ngiyashisa')">
+                    <div class="chart-rank">1</div>
+                    <div class="chart-image">🎤</div>
+                    <div>Ngiyashisa</div>
+                    <div>Boyzen Sz</div>
+                    <div>234K</div>
+                    <div class="chart-duration">3:45 <button class="chart-play">▶</button></div>
+                </div>
+                
+                <div class="chart-row" onclick="playTrack('jehova')">
+                    <div class="chart-rank">2</div>
+                    <div class="chart-image">🎹</div>
+                    <div>Jehova Uyangizwa</div>
+                    <div>Sandziso Mamba</div>
+                    <div>189K</div>
+                    <div class="chart-duration">5:23 <button class="chart-play">▶</button></div>
+                </div>
+                
+                <div class="chart-row" onclick="playTrack('siyalilanda')">
+                    <div class="chart-rank">3</div>
+                    <div class="chart-image">🥁</div>
+                    <div>Siyalilanda</div>
+                    <div>Bholoja</div>
+                    <div>156K</div>
+                    <div class="chart-duration">4:12 <button class="chart-play">▶</button></div>
+                </div>
+                
+                <div class="chart-row" onclick="playTrack('2025flow')">
+                    <div class="chart-rank">4</div>
+                    <div class="chart-image">🎸</div>
+                    <div>2025 Flow</div>
+                    <div>Void</div>
+                    <div>98K</div>
+                    <div class="chart-duration">3:18 <button class="chart-play">▶</button></div>
+                </div>
+                
+                <div class="chart-row" onclick="playTrack('mantabane')">
+                    <div class="chart-rank">5</div>
+                    <div class="chart-image">🎺</div>
+                    <div>Mantabane</div>
+                    <div>Black Coffee</div>
+                    <div>87K</div>
+                    <div class="chart-duration">6:42 <button class="chart-play">▶</button></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Curated Playlists -->
+        <div class="section-header">
+            <h2><span class="siswati-label">(Curated Playlists)</span></h2>
+            <a href="#" style="color: var(--teal-depths); font-weight: 600;">Bona konkhe →</a>
+        </div>
+        
+        <div class="playlist-grid">
+            <div class="playlist-card" onclick="openPlaylist('sibhaca-essentials')">
+                <div class="playlist-cover">🥁</div>
+                <div class="playlist-details">
+                    <h4>Sibhaca Essentials</h4>
+                    <p>Traditional</p>
+                    <div class="playlist-stats">45 tracks • 2.3K likes</div>
+                </div>
+            </div>
+            
+            <div class="playlist-card" onclick="openPlaylist('swazi-gospel')">
+                <div class="playlist-cover">🎹</div>
+                <div class="playlist-details">
+                    <h4>Swazi Gospel Hits</h4>
+                    <p>Gospel</p>
+                    <div class="playlist-stats">32 tracks • 1.8K likes</div>
+                </div>
+            </div>
+            
+            <div class="playlist-card" onclick="openPlaylist('afro-pop')">
+                <div class="playlist-cover">🎤</div>
+                <div class="playlist-details">
+                    <h4>Afro Pop Swazi</h4>
+                    <p>Afro Pop</p>
+                    <div class="playlist-stats">28 tracks • 1.5K likes</div>
+                </div>
+            </div>
+            
+            <div class="playlist-card" onclick="openPlaylist('hip-hop')">
+                <div class="playlist-cover">🎸</div>
+                <div class="playlist-details">
+                    <h4>Swazi Hip Hop</h4>
+                    <p>Hip Hop</p>
+                    <div class="playlist-stats">34 tracks • 1.2K likes</div>
+                </div>
+            </div>
+            
+            <div class="playlist-card" onclick="openPlaylist('chill')">
+                <div class="playlist-cover">🎵</div>
+                <div class="playlist-details">
+                    <h4>Chill Swazi Vibes</h4>
+                    <p>Relaxation</p>
+                    <div class="playlist-stats">22 tracks • 978 likes</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Genre Cloud -->
+        <div class="genre-cloud">
+            <h2><span class="siswati-label">(Browse by Genre)</span></h2>
+            <div class="cloud-tags">
+                <span class="cloud-tag large">Traditional</span>
+                <span class="cloud-tag large">Afro Pop</span>
+                <span class="cloud-tag medium">Gospel</span>
+                <span class="cloud-tag large">Hip Hop</span>
+                <span class="cloud-tag medium">Jazz</span>
+                <span class="cloud-tag">Maskandi</span>
+                <span class="cloud-tag medium">Folk</span>
+                <span class="cloud-tag">Amapiano</span>
+                <span class="cloud-tag">House</span>
+                <span class="cloud-tag">Reggae</span>
+                <span class="cloud-tag medium">Soul</span>
+                <span class="cloud-tag">R&B</span>
+                <span class="cloud-tag large">Gospel</span>
+                <span class="cloud-tag">Contemporary</span>
+            </div>
+        </div>
+
+        <!-- New Releases -->
+        <div class="new-releases">
+            <div class="releases-header">
+                <h2><span class="siswati-label" style="color: var(--savanna-sun);">(New Releases)</span></h2>
+                <a href="#" style="color: white; font-weight: 600;">Bona konkhe →</a>
+            </div>
+            
+            <div class="release-strip">
+                <div class="release-item" onclick="playTrack('new1')">
+                    <div class="release-icon">🎤</div>
+                    <h4>Inhlitiyo Yami</h4>
+                    <p>Boyzen Sz</p>
+                </div>
+                
+                <div class="release-item" onclick="playTrack('new2')">
+                    <div class="release-icon">🥁</div>
+                    <h4>Emagugu</h4>
+                    <p>Bholoja</p>
+                </div>
+                
+                <div class="release-item" onclick="playTrack('new3')">
+                    <div class="release-icon">🎹</div>
+                    <h4>Nkosi Sibonga</h4>
+                    <p>Sandziso Mamba</p>
+                </div>
+                
+                <div class="release-item" onclick="playTrack('new4')">
+                    <div class="release-icon">🎸</div>
+                    <h4>City Lights</h4>
+                    <p>Void</p>
+                </div>
+                
+                <div class="release-item" onclick="playTrack('new5')">
+                    <div class="release-icon">🎺</div>
+                    <h4>Umuhle</h4>
+                    <p>Lihle</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <!-- Footer -->
+     <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Swazi Music Hub</h4>
+                <p style="color: rgba(255,255,255,0.7); margin-bottom: 20px;">siSwati music to the world. Discover, stream, and support Swazi artists.</p>
+                <div class="social-links">
+                    <a href="#">📘</a>
+                    <a href="#">🐦</a>
+                    <a href="#">📷</a>
+                    <a href="#">▶</a>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Explore</h4>
+                <a href="artists.html">(Artists)</a>
+                <a href="music.html">(Music)</a>
+                <a href="playlists.html">(Playlists)</a>
+                <a href="events.html">(Events)</a>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Support</h4>
+                <a href="about us.html">About Us</a>
+                <a href="contact us.html">Contact</a>
+                <a href="sign in.html">Artist Sign Up</a>
+                <a href="help.html">Help Center</a>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <a href="ts&cs.html">Terms of Use</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="copyright.html">Copyright</a>
+                <a href="legal.html">Licensing</a>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>© 2025 Swazi Music Hub. All rights reserved</p>
+            <p style="margin-top: 10px;">Powered by SwaziPlay Tunes</p>
+        </div>
+    </footer>
+
+    <!-- Now Playing Bar (Hidden by default) -->
+    <div class="now-playing-bar" id="nowPlaying">
+        <div class="now-playing-info">
+            <div class="now-playing-thumb">🎵</div>
+            <div class="now-playing-details">
+                <h4>Ngiyashisa</h4>
+                <p>Boyzen Sz</p>
+            </div>
+        </div>
+        
+        <div class="now-playing-controls">
+            <button>⏮️</button>
+            <button style="font-size: 1.8em;">⏸️</button>
+            <button>⏭️</button>
+        </div>
+        
+        <button class="close-player" onclick="closePlayer()">✕</button>
+    </div>
+
+    <script>
+        // Track playback simulation
+        function playTrack(trackId) {
+            const player = document.getElementById('nowPlaying');
+            player.classList.add('active');
+            
+            // Simulate different tracks
+            const tracks = {
+                'ngiyashisa': { title: 'Ngiyashisa', artist: 'Boyzen Sz', icon: '🎵' },
+                'siyalilanda': { title: 'Siyalilanda', artist: 'Bholoja', icon: '🥁' },
+                'jehova': { title: 'Jehova Uyangizwa', artist: 'Sandziso Mamba', icon: '🎹' },
+                '2025flow': { title: '2025 Flow', artist: 'Void', icon: '🎸' },
+                'sibhaca': { title: 'Sibhaca King', artist: 'Mswakayicile', icon: '🪘' },
+                'mantabane': { title: 'Mantabane', artist: 'Black Coffee', icon: '🎺' }
+            };
+            
+            const track = tracks[trackId] || { title: 'Ngiyashisa', artist: 'Boyzen Sz', icon: '🎵' };
+            
+            document.querySelector('.now-playing-thumb').textContent = track.icon;
+            document.querySelector('.now-playing-details h4').textContent = track.title;
+            document.querySelector('.now-playing-details p').textContent = track.artist;
+        }
+
+        function playPlaylist() {
+            const player = document.getElementById('nowPlaying');
+            player.classList.add('active');
+            document.querySelector('.now-playing-thumb').textContent = '🥁';
+            document.querySelector('.now-playing-details h4').textContent = 'Sibhaca Essentials';
+            document.querySelector('.now-playing-details p').textContent = 'Various Artists';
+        }
+
+        function openAlbum(albumId) {
+            alert(`Opening album: ${albumId} - This would navigate to the album page`);
+        }
+
+        function openPlaylist(playlistId) {
+            alert(`Opening playlist: ${playlistId} - This would navigate to the playlist page`);
+        }
+
+        function closePlayer() {
+            document.getElementById('nowPlaying').classList.remove('active');
+        }
+
+        function switchMusicTab(tab) {
+            const tabs = document.querySelectorAll('.filter-tab');
+            tabs.forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            alert(`Switching to ${tab} view - This would filter the content in a real implementation`);
+        }
+
+        function toggleFollowPlaylist(btn) {
+            if (btn.textContent === 'Landzela (Follow)') {
+                btn.textContent = 'Landzelile (Following) ✓';
+                btn.style.background = 'var(--forest)';
+                btn.style.borderColor = 'var(--forest)';
+            } else {
+                btn.textContent = 'Landzela (Follow)';
+                btn.style.background = 'transparent';
+                btn.style.borderColor = 'white';
+            }
+        }
+
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            alert('Mobile menu would open here - Add your preferred mobile menu implementation');
+        });
+
+        // Animate on scroll
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.track-card, .album-card, .playlist-card, .chart-row').forEach(el => {
+            el.style.opacity = 0;
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s';
+            observer.observe(el);
+        });
+
+        // Progress bar interaction (simulated)
+        document.querySelector('.progress-bar').addEventListener('click', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const width = rect.width;
+            const percentage = (x / width) * 100;
+            document.querySelector('.progress-fill').style.width = percentage + '%';
+        });
+
+        // Volume control interaction
+        document.querySelector('.volume-slider').addEventListener('click', function(e) {
+            const rect = this.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const width = rect.width;
+            const percentage = (x / width) * 100;
+            document.querySelector('.volume-fill').style.width = percentage + '%';
+        });
+    </script>
+</body>
+</html>

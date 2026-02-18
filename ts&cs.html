@@ -1,0 +1,798 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swazi Music Hub - Terms of Use / Imigomo Yekusebentisa</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f0e8;
+            color: #0a1c24;
+            line-height: 1.6;
+        }
+
+        /* Color System - Same as index */
+        :root {
+            --deep-night: #0a1c24;
+            --teal-depths: #1e4a5f;
+            --african-sky: #2a6b84;
+            --savanna-sun: #e6b17e;
+            --terracotta: #d4945a;
+            --cream: #f5f0e8;
+            --forest: #2e7a5e;
+            --earth: #8b5a3c;
+        }
+
+        /* Typography - Same as index */
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', 'Segoe UI', sans-serif;
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        /* Navigation - Exactly same as index */
+        .navbar {
+            background: var(--deep-night);
+            padding: 1rem 5%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .logo {
+            font-size: 1.8em;
+            font-weight: 800;
+            color: var(--savanna-sun);
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .logo span {
+            color: white;
+            font-size: 0.7em;
+            font-weight: 300;
+            margin-left: 5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1.1em;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--savanna-sun);
+        }
+
+        .btn-primary {
+            background: var(--savanna-sun);
+            color: var(--deep-night);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: var(--terracotta);
+            transform: translateY(-2px);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.8em;
+            color: white;
+            cursor: pointer;
+            background: transparent;
+            border: none;
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--deep-night);
+            z-index: 1001;
+            padding: 80px 20px 20px;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-nav.active {
+            transform: translateX(0);
+        }
+
+        .mobile-nav-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 2em;
+            color: white;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+        }
+
+        .mobile-nav-links {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .mobile-nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.5em;
+            padding: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
+
+        .mobile-nav-links a:hover,
+        .mobile-nav-links a.active {
+            color: var(--savanna-sun);
+            padding-left: 25px;
+        }
+
+        /* Hero Section - Index style */
+        .page-hero {
+            background: linear-gradient(165deg, var(--deep-night) 0%, var(--teal-depths) 50%, var(--african-sky) 100%);
+            color: white;
+            padding: 60px 5%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-hero::before {
+            content: "⚖️";
+            position: absolute;
+            top: -50px;
+            right: -30px;
+            font-size: 200px;
+            opacity: 0.1;
+            transform: rotate(15deg);
+            color: var(--savanna-sun);
+        }
+
+        .page-hero h1 {
+            font-size: 3.5em;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .page-hero h1 span {
+            color: var(--savanna-sun);
+            font-style: italic;
+        }
+
+        .page-hero p {
+            font-size: 1.2em;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+            position: relative;
+        }
+
+        .last-updated {
+            background: var(--savanna-sun);
+            color: var(--deep-night);
+            display: inline-block;
+            padding: 10px 30px;
+            border-radius: 40px;
+            margin-top: 30px;
+            font-weight: 600;
+            font-size: 1.1em;
+            position: relative;
+        }
+
+        /* Content Section - Index card style */
+        .content-section {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 5%;
+        }
+
+        .legal-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            border-bottom: 4px solid transparent;
+        }
+
+        .legal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            border-bottom-color: var(--savanna-sun);
+        }
+
+        .legal-card h2 {
+            font-size: 2.2em;
+            color: var(--deep-night);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .legal-card h2 .section-icon {
+            color: var(--savanna-sun);
+            font-size: 1.2em;
+        }
+
+        .legal-card h3 {
+            color: var(--teal-depths);
+            margin: 25px 0 15px;
+            font-size: 1.4em;
+        }
+
+        .legal-card p {
+            color: var(--earth);
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        .legal-card ul, .legal-card ol {
+            margin: 15px 0 15px 30px;
+            color: var(--earth);
+        }
+
+        .legal-card li {
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        .legal-card .note-box {
+            background: var(--cream);
+            padding: 25px;
+            border-radius: 16px;
+            border-left: 4px solid var(--savanna-sun);
+            margin: 25px 0;
+        }
+
+        .legal-card .note-box strong {
+            color: var(--deep-night);
+            font-size: 1.1em;
+        }
+
+        /* TOC - Index style */
+        .toc-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+            border: 2px dashed var(--savanna-sun);
+        }
+
+        .toc-card h3 {
+            font-size: 2em;
+            color: var(--deep-night);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .toc-item {
+            background: var(--cream);
+            padding: 15px 20px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+        }
+
+        .toc-item:hover {
+            background: var(--savanna-sun);
+            transform: translateX(10px);
+        }
+
+        .toc-number {
+            background: var(--deep-night);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9em;
+        }
+
+        /* siswati label */
+        .siswati-label {
+            font-style: italic;
+            color: var(--savanna-sun);
+            font-size: 0.9em;
+            margin-left: 5px;
+        }
+
+        /* Footer - Exactly same as index */
+        .footer {
+            background: var(--deep-night);
+            color: white;
+            padding: 60px 5% 30px;
+            margin-top: 50px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h4 {
+            color: var(--savanna-sun);
+            margin-bottom: 20px;
+            font-size: 1.3em;
+        }
+
+        .footer-col a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 10px;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        .footer-col a:hover {
+            color: var(--savanna-sun);
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+            font-size: 1.5em;
+        }
+
+        .social-links a {
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--savanna-sun);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.6);
+            font-size: 0.9em;
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 2000;
+        }
+
+        .toast {
+            background: white;
+            color: var(--deep-night);
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateX(400px);
+            transition: transform 0.3s;
+            margin-top: 10px;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--forest);
+        }
+
+        .toast.error {
+            border-left: 4px solid #ff6b6b;
+        }
+
+        .toast.info {
+            border-left: 4px solid var(--savanna-sun);
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .loading-overlay.active {
+            display: flex;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--cream);
+            border-top-color: var(--savanna-sun);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .page-hero h1 {
+                font-size: 2.5em;
+            }
+
+            .legal-card {
+                padding: 25px;
+            }
+
+            .legal-card h2 {
+                font-size: 1.8em;
+            }
+
+            .toc-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation - Exactly same as index -->
+    <nav class="navbar">
+        <a href="index.html" class="logo">SWAZI MUSIC HUB <span>siSwati to the world</span></a>
+        
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="artists.html">Artists</a>
+            <a href="music.html">Music</a>
+            <a href="events.html">Events</a>
+            <a href="help.html">Help</a>
+            <a href="signin.html" class="btn-primary">Sign In</a>
+        </div>
+        
+        <button class="mobile-menu-btn">☰</button>
+    </nav>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav">
+        <button class="mobile-nav-close">&times;</button>
+        <div class="mobile-nav-links">
+            <a href="index.html">🏠 Home</a>
+            <a href="about.html">📖 About</a>
+            <a href="artists.html">🎤 Artists</a>
+            <a href="music.html">🎵 Music</a>
+            <a href="events.html">📅 Events</a>
+            <a href="help.html">❓ Help</a>
+            <a href="signin.html" class="btn-primary" style="text-align: center;">🔑 Sign In</a>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Hero Section - Index style gradient -->
+    <section class="page-hero">
+        <h1>Imigomo <span>Yekusebentisa</span></h1>
+        <p>Terms of Use - Please read these terms carefully before using Swazi Music Hub</p>
+        <div class="last-updated">Last Updated: February 15, 2025</div>
+    </section>
+
+    <!-- Content Section -->
+    <div class="content-section">
+        <!-- Table of Contents -->
+        <div class="toc-card">
+            <h3>📋 Table of Contents / Tikutsi</h3>
+            <div class="toc-grid">
+                <div class="toc-item" onclick="scrollToSection('acceptance')">
+                    <span class="toc-number">1</span> Acceptance of Terms
+                </div>
+                <div class="toc-item" onclick="scrollToSection('eligibility')">
+                    <span class="toc-number">2</span> Eligibility
+                </div>
+                <div class="toc-item" onclick="scrollToSection('accounts')">
+                    <span class="toc-number">3</span> User Accounts
+                </div>
+                <div class="toc-item" onclick="scrollToSection('content')">
+                    <span class="toc-number">4</span> User Content
+                </div>
+                <div class="toc-item" onclick="scrollToSection('intellectual')">
+                    <span class="toc-number">5</span> Intellectual Property
+                </div>
+                <div class="toc-item" onclick="scrollToSection('prohibited')">
+                    <span class="toc-number">6</span> Prohibited Activities
+                </div>
+                <div class="toc-item" onclick="scrollToSection('termination')">
+                    <span class="toc-number">7</span> Termination
+                </div>
+                <div class="toc-item" onclick="scrollToSection('disclaimers')">
+                    <span class="toc-number">8</span> Disclaimers
+                </div>
+                <div class="toc-item" onclick="scrollToSection('limitation')">
+                    <span class="toc-number">9</span> Limitation of Liability
+                </div>
+                <div class="toc-item" onclick="scrollToSection('indemnification')">
+                    <span class="toc-number">10</span> Indemnification
+                </div>
+                <div class="toc-item" onclick="scrollToSection('governing')">
+                    <span class="toc-number">11</span> Governing Law
+                </div>
+                <div class="toc-item" onclick="scrollToSection('changes')">
+                    <span class="toc-number">12</span> Changes to Terms
+                </div>
+            </div>
+        </div>
+
+        <!-- Section 1 -->
+        <div class="legal-card" id="acceptance">
+            <h2><span class="section-icon">1.</span> Acceptance of Terms / Kuvuma Imigomo</h2>
+            <p>By accessing or using Swazi Music Hub ("the Platform"), you agree to be bound by these Terms of Use. If you do not agree to these terms, please do not use our services.</p>
+            
+            <div class="note-box">
+                <strong>📘 siSwati:</strong> Ngekusebentisa i-Swazi Music Hub, uyavumelana nayo yonkhe imigomo lelandzelako. Uma ungavumelani, ungayisebentisi le Platform.
+            </div>
+            
+            <p>These terms constitute a legally binding agreement between you and Swazi Music Hub (Pty) Ltd, registered in Eswatini. Your access to and use of the Platform is conditioned upon your acceptance of and compliance with these terms.</p>
+        </div>
+
+        <!-- Section 2 -->
+        <div class="legal-card" id="eligibility">
+            <h2><span class="section-icon">2.</span> Eligibility / Kufaneleka</h2>
+            <p>To use Swazi Music Hub, you must:</p>
+            <ul>
+                <li>Be at least 13 years of age (or the age of majority in your jurisdiction)</li>
+                <li>Have the legal capacity to enter into binding contracts</li>
+                <li>Not be located in a country subject to Eswatini government embargo</li>
+                <li>Not be a person barred from using the Platform under applicable laws</li>
+            </ul>
+        </div>
+
+        <!-- Section 3 -->
+        <div class="legal-card" id="accounts">
+            <h2><span class="section-icon">3.</span> User Accounts / Tikhawundi Tabatsebenzisi</h2>
+            <p>When you create an account with us, you must provide accurate, complete, and current information. Failure to do so constitutes a breach of these terms.</p>
+            
+            <h3>Account Responsibilities:</h3>
+            <ul>
+                <li>You are responsible for maintaining the security of your account</li>
+                <li>You are fully responsible for all activities that occur under your account</li>
+                <li>You must notify us immediately of any unauthorized use</li>
+                <li>We cannot and will not be liable for any loss or damage from your failure to comply</li>
+            </ul>
+        </div>
+
+        <!-- Section 4 -->
+        <div class="legal-card" id="content">
+            <h2><span class="section-icon">4.</span> User Content / Lokufakwe Ngabatsetsebenzisi</h2>
+            <p>By uploading, posting, or submitting content to Swazi Music Hub, you grant us a worldwide, non-exclusive, royalty-free license to use, reproduce, modify, adapt, publish, and distribute such content.</p>
+            
+            <h3>Your Warranties:</h3>
+            <ul>
+                <li>You own the content or have the right to grant these licenses</li>
+                <li>The content does not violate any third-party rights</li>
+                <li>The content complies with applicable laws and regulations</li>
+                <li>The content is not defamatory, obscene, or otherwise objectionable</li>
+            </ul>
+        </div>
+
+        <!-- Section 5 -->
+        <div class="legal-card" id="intellectual">
+            <h2><span class="section-icon">5.</span> Intellectual Property / Lwati Lwemvelo</h2>
+            <p>The Platform and its original content, features, and functionality are owned by Swazi Music Hub and protected by international copyright, trademark, and other intellectual property laws.</p>
+            
+            <div class="note-box">
+                <strong>© Copyright:</strong> You may not copy, modify, distribute, sell, or lease any part of our Platform without our written permission.
+            </div>
+        </div>
+
+        <!-- Section 6 -->
+        <div class="legal-card" id="prohibited">
+            <h2><span class="section-icon">6.</span> Prohibited Activities / Letingavumelekile</h2>
+            <ul>
+                <li><strong>Illegal Activities:</strong> Using the Platform for any illegal purpose</li>
+                <li><strong>Copyright Infringement:</strong> Uploading content you don't own or have rights to</li>
+                <li><strong>Harassment:</strong> Harassing, abusing, or harming others</li>
+                <li><strong>Impersonation:</strong> Impersonating any person or entity</li>
+                <li><strong>Scraping:</strong> Using automated means to access the Platform</li>
+                <li><strong>Malware:</strong> Uploading viruses or malicious code</li>
+                <li><strong>Spam:</strong> Sending unsolicited communications</li>
+            </ul>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="legal-card" style="text-align: center;">
+            <h2>📞 Questions? / Imibuto?</h2>
+            <p style="font-size: 1.2em;">If you have any questions about these Terms, please contact us:</p>
+            <p style="margin-top: 20px;">
+                <strong>Email:</strong> legal@swazimusichub.com<br>
+                <strong>Phone:</strong> +268 2404 1234<br>
+                <strong>Address:</strong> 123 Somhlolo Road, Mbabane, Eswatini
+            </p>
+        </div>
+    </div>
+
+    <!-- Footer - Exactly same as index -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Swazi Music Hub</h4>
+                <p>siSwati music to the world.</p>
+                <div class="social-links">
+                    <a href="#" onclick="showToast('Social links coming soon!', 'info')">📘</a>
+                    <a href="#" onclick="showToast('Social links coming soon!', 'info')">🐦</a>
+                    <a href="#" onclick="showToast('Social links coming soon!', 'info')">📷</a>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Explore</h4>
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="artists.html">Artists</a>
+                <a href="music.html">Music</a>
+                <a href="events.html">Events</a>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Support</h4>
+                <a href="help.html">Help Center</a>
+                <a href="#" onclick="showToast('Contact form coming soon!', 'info')">Contact Us</a>
+                <a href="#" onclick="showToast('FAQ coming soon!', 'info')">FAQ</a>
+            </div>
+            
+            <div class="footer-col">
+                <h4>Legal</h4>
+                <a href="terms.html">Terms of Use</a>
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="copyright.html">Copyright</a>
+                <a href="licensing.html">Licensing</a>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>© 2025 Swazi Music Hub. Wonkhe emalungelo agciniwe.</p>
+        </div>
+    </footer>
+
+    <!-- Toast Container -->
+    <div class="toast-container"></div>
+
+    <script>
+        // Navigation functions
+        function navigateTo(page) {
+            const loadingOverlay = document.querySelector('.loading-overlay');
+            loadingOverlay.classList.add('active');
+            setTimeout(() => {
+                window.location.href = page;
+            }, 300);
+        }
+
+        function showToast(message, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <span>${type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️'}</span>
+                <span>${message}</span>
+            `;
+            
+            const container = document.querySelector('.toast-container');
+            container.appendChild(toast);
+            
+            setTimeout(() => toast.classList.add('show'), 10);
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Mobile menu
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('.mobile-nav').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        document.querySelector('.mobile-nav-close').addEventListener('click', function() {
+            document.querySelector('.mobile-nav').classList.remove('active');
+            document.body.style.overflow = '';
+        });
+
+        // Scroll to section
+        function scrollToSection(sectionId) {
+            const element = document.getElementById(sectionId);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Mobile nav links
+        document.querySelectorAll('.mobile-nav-links a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (this.getAttribute('href').startsWith('#')) {
+                    e.preventDefault();
+                    const href = this.getAttribute('href');
+                    const section = document.querySelector(href);
+                    if (section) {
+                        document.querySelector('.mobile-nav').classList.remove('active');
+                        document.body.style.overflow = '';
+                        section.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }
+            });
+        });
+
+        // Set active nav link
+        const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+        document.querySelectorAll('.nav-links a, .mobile-nav-links a').forEach(link => {
+            const href = link.getAttribute('href');
+            if (href === currentPage) {
+                link.classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>
